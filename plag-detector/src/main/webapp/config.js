@@ -25,7 +25,7 @@
             })
             .when("/results",{
                 templateUrl:"views/templates/result.view.client.html",
-                controller: 'loginController',
+                controller: 'resultController',
                 controllerAs: 'model'
             })
             .when("/register",{
