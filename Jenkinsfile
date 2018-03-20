@@ -21,15 +21,6 @@ pipeline {
            }
        }
     }
-   
-   stage('SonarQube') {
-            steps {
-                withSonarQubeEnv('SonarQube') {
-                        sh 'mvn -f plag-detector/pom.xml clean install'
-                        sh 'mvn -f plag-detector/pom.xml sonar:sonar'
-                }
-            }
-        }
 
 }
 
