@@ -1,0 +1,10 @@
+edu/northeastern/cs5500/database/UserConnection.class
+edu/northeastern/cs5500/controller/hello/HelloController.class
+edu/northeastern/cs5500/controller/hello/HelloObject.class
+edu/northeastern/cs5500/ServletInitializer.class
+edu/northeastern/cs5500/PlagDetectorApplication.class
+edu/northeastern/cs5500/controller/user/UserService.class
+edu/northeastern/cs5500/Demo.class
+edu/northeastern/cs5500/controller/user/User.class
+edu/northeastern/cs5500/controller/user/UserController.class
+edu/northeastern/cs5500/controller/hello/HelloRepository.class

@@ -1,0 +1,411 @@
+
+html,
+body {
+    /*background: #16181d;*/
+    padding: 10px;
+    font-family: 'Varela Round';
+}
+
+/*=== 2. Anchor Link ===*/
+a {
+    color: #aaaaaa;
+    transition: all ease-in-out 200ms;
+}
+
+a:hover {
+    color: #333333;
+    text-decoration: none;
+}
+
+/*=== 3. Text Outside the Box ===*/
+.etc-login-form {
+    color: #919191;
+    padding: 10px 20px;
+}
+
+.etc-login-form p {
+    margin-bottom: 5px;
+}
+
+/*=== 4. Main Form ===*/
+.login-form-1 {
+    max-width: 300px;
+    border-radius: 5px;
+    display: inline-block;
+}
+
+.main-login-form {
+    position: relative;
+}
+
+.login-form-1 .form-control {
+    border: 0;
+    box-shadow: 0 0 0;
+    border-radius: 0;
+    background: transparent;
+    color: #555555;
+    padding: 7px 0;
+    font-weight: bold;
+    height: auto;
+}
+
+.login-form-1 .form-control::-webkit-input-placeholder {
+    color: #999999;
+}
+
+.login-form-1 .form-control:-moz-placeholder,
+.login-form-1 .form-control::-moz-placeholder,
+.login-form-1 .form-control:-ms-input-placeholder {
+    color: #999999;
+}
+
+.login-form-1 .form-group {
+    margin-bottom: 0;
+    border-bottom: 2px solid #efefef;
+    padding-right: 20px;
+    position: relative;
+}
+
+.login-form-1 .form-group:last-child {
+    border-bottom: 0;
+}
+
+.login-group {
+    background: #ffffff;
+    color: #999999;
+    border-radius: 8px;
+    padding: 10px 20px;
+}
+
+.login-group-checkbox {
+    padding: 5px 0;
+}
+
+
+.logo {
+    padding: 15px 0;
+    font-size: 25px;
+    color: #aaaaaa;
+    font-weight: bold;
+}
+
+.navbar-default {
+    background-color: #2a3140;
+    border-color: #333;
+    opacity: 0.8;
+}
+
+/* title */
+.navbar-default .navbar-brand {
+    color: #00ccff;
+}
+
+.glyphicon-user {
+    color: #00ccff;
+}
+
+.poster {
+    margin: 5%;
+    box-shadow: 10px 8px 17px 0px #4a4343;
+    opacity: 0.7;
+}
+
+.poster:hover {
+    zoom: 100%;
+    opacity: 1;
+    cursor : pointer;
+}
+
+.search-bar {
+    background-color: #2a3140;
+    border-color: #333333;
+    color: white;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+.search-button {
+    background-color: #2a3140;
+    border-color: #333333;
+}
+
+.search-gly {
+    color: white;
+}
+
+.search-button:hover {
+    background-color: #2a3140;
+    border-color: #00ccff ;
+}
+
+.display-grid-layout {
+    margin-top: 2%;
+}
+
+.row {
+    margin-right: 0;
+}
+
+.form-control {
+    background-color: #2a3140;
+    border-color: #333333;
+    color : white;
+}
+
+.loginControl {
+    margin-top: 5%;
+}
+
+html, body, .container-table {
+    height: 100%;
+}
+.container-table {
+    display: table;
+}
+.vertical-center-row {
+    display: table-cell;
+    vertical-align: middle;
+    horiz-align: center;
+}
+
+.login-form-control {
+    margin-top: 3%;
+    background-color: #2a3140;
+    border-color: #333333;
+    color : white;
+}
+
+.register-label {
+    color: #337ab7;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+.details-data {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    color: white;
+}
+
+.comment-section{
+    height: 250px;
+}
+
+.h-scroll {
+    height: 90vh; /* %-height of the viewport */
+    position: fixed;
+    overflow-y: scroll;
+}
+
+.single-comment, .user-single-comment {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    color: white;
+    background-color: #2a3140;
+    border-color: #333;
+    box-shadow: 5px 4px 17px 0px #4a4343;
+}
+
+.details-section {
+    height: 250px;
+}
+
+.a-link:hover {
+    color: white;
+}
+
+.source-panel {
+    background-color: #16181d;
+    border-color: #333;
+    border: none;
+}
+
+.link-wrapping {
+    word-wrap: break-word;
+    overflow: hidden;
+    overflow-wrap: break-word;
+    vertical-align: middle;
+}
+
+.media-links {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    color:#aaaaaa;
+    margin-top: 3%;
+}
+
+.media-links:hover {
+    color:white;
+    border-color: #66afe9;
+    cursor: pointer;
+}
+
+.brand-name {
+    font-size: x-large;
+    font-family: 'Pacifico', cursive;
+    /*font-family: 'Kaushan Script', cursive;*/
+}
+
+.brand-name:hover {
+    color: white;
+    cursor: pointer;
+}
+
+.user-block{
+    height: 80%;
+    background-color: #0f0f0f;
+}
+
+.user-view-block{
+    padding-left: 3%;
+    height: 550px;
+}
+
+.pre-scrollable {
+    max-height: 550px;
+    overflow-y: scroll;
+    padding-bottom: 35px;
+}
+
+.user-menu {
+    padding-top: 15%;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+.user-name {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    color: white;
+    padding-bottom: 10%;
+}
+
+.user-gly {
+    color: #2a3140;
+}
+
+.logout-gly , .admin-label {
+    color: #00ccff;
+}
+
+.logout-label {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+.admin-label {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+.logout-gly:hover , .profile-gly:hover, .admin-label:hover , .logout-label:hover{
+    color: white;
+    cursor: pointer;
+}
+
+.user-button {
+    background-color: black;
+}
+
+.user-action-gly {
+    float: left;
+    color: #2a3140;
+}
+
+.remove-gly {
+    font-size: 15px;
+    float: right;
+    padding-top: 1%;
+    padding-left: 5%;
+}
+
+.remove-gly:hover {
+    color:red;
+}
+
+.ok-gly {
+    font-size: 15px;
+    float: right;
+    padding-top: 1%;
+    padding-left: 5%;
+}
+
+.ok-gly:hover {
+    color:green;
+}
+
+.cog-gly {
+    font-size: 15px;
+    float: right;
+    padding-top: 1%;
+    padding-left: 5%;
+}
+
+.cog-gly:hover{
+    color: white;
+}
+
+.data-numbers {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 50px;
+}
+
+
+.poster-wrapper {
+    position: relative;
+}
+
+.poster-gly {
+    position: absolute;
+    top:7px;
+    left:80px;
+}
+
+
+.edit-com {
+    border-color: #00ccff;
+}
+
+.user-type-class {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    padding: 1%;
+}
+
+.empty-movie-label{
+    font-size: x-large;
+    font-family: 'Pacifico', cursive;
+    color: #00ccff;
+}
+
+.show-grid {
+    height: 80%;
+    padding-bottom: 5%;
+}
+
+
+.detail-caption {
+    position: absolute;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    padding: 25%;
+    color:white;
+}
+
+.poster:hover + .detail-caption {
+    position: absolute;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    padding: 25%;
+    color:white;
+    cursor : pointer;
+}
+
+.detail-caption:hover + .poster {
+    zoom: 100%;
+    opacity: 1;
+    cursor : pointer;
+}
+
+.signup-box{
+    padding-top: 15px;
+}
+
+input[type="text"]:disabled{background-color:#d3d3d3;
+color: #0a568c}
+
+.wordwrap {
+    white-space: pre-line;      /* CSS3 */
+    white-space: -moz-pre-wrap; /* Firefox */
+    /*white-space: -pre-wrap;     !* Opera <7 *!*/
+    /*white-space: -o-pre-wrap;   !* Opera 7 *!*/
+    word-wrap: break-word;      /* IE */
+}
