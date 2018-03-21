@@ -10,7 +10,7 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import edu.northeastern.cs5500.controller.user.User;
+import edu.northeastern.cs5500.models.Person.User;
 
 @Transactional
 @Repository
