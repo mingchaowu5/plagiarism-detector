@@ -2,8 +2,8 @@ package edu.northeastern.cs5500;
 
 public class Config {
 	
-	private static final String username = "varunnandu";
-	private static final String password = "varun123";
+	private static final String username = getUser();
+	private static final String password = getPass();
 	public static String getUsername() {
 		return username;
 	}
@@ -11,7 +11,13 @@ public class Config {
 		return password;
 	}
 	
+	public static String getUser() {
+		return "varunnandu";
+	}
 	
+	public static String getPass() {
+		return "varun123";
+	}
 	
 
 }
