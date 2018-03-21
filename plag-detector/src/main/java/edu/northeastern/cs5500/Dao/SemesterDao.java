@@ -17,6 +17,9 @@ public class SemesterDao {
 	private static final String URL = "jdbc:mysql://plag-detector.c05al3v5c9ha.us-east-2.rds.amazonaws.com:3306/cs5500";
 	private static final String USERNAME = "varunnandu";
 	private static final String PASSWORD = "varun123";
+	private String jdbcConnect = "com.mysql.jdbc.Driver";
+	private String idString = "id";
+	private String nameString = "name";
 	public static SemesterDao instance = null;
 	public static SemesterDao getInstance() {
 		if (instance == null) {
@@ -32,14 +35,14 @@ public class SemesterDao {
 		Statement statement = null;
 		ResultSet results = null;
 		try {
-			Class.forName("com.mysql.jdbc.Driver");
+			Class.forName(jdbcConnect);
 			connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
 			statement = connection.createStatement();
 			String sql = "select * from Semester";
 			results = statement.executeQuery(sql);
 			while(results.next()) {
-				int id = results.getInt("id");
-				String name = results.getString("name");
+				int id = results.getInt(idString);
+				String name = results.getString(nameString);
 				Semester sem = new Semester(id, name);
 				listOfSemesters.add(sem);
 			}
@@ -51,7 +54,9 @@ public class SemesterDao {
 			e.printStackTrace();
 		} finally {
 			try {
-				connection.close();
+				if(results != null) results.close();
+				if(statement != null) statement.close();
+				if(connection != null) connection.close();
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -68,15 +73,15 @@ public class SemesterDao {
 		PreparedStatement statement = null;
 		ResultSet results = null;
 		try {
-			Class.forName("com.mysql.jdbc.Driver");
+			Class.forName(jdbcConnect);
 			connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
 			String sql = "select * from Semester WHERE Semester.id = ?";
 			statement = connection.prepareStatement(sql);
 			statement.setInt(1, semesterId);
 			results = statement.executeQuery();
 			if(results.next()) {
-				int id = results.getInt("id");
-				String name = results.getString("name");
+				int id = results.getInt(idString);
+				String name = results.getString(nameString);
 				sem = new Semester(id, name);
 			}
 		} catch (ClassNotFoundException e) {
@@ -87,7 +92,9 @@ public class SemesterDao {
 			e.printStackTrace();
 		} finally {
 			try {
-				connection.close();
+				if(results != null) results.close();
+				if(statement != null) statement.close();
+				if(connection != null) connection.close();
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
