@@ -9,6 +9,9 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.jboss.logging.Logger;
+import org.jboss.logging.Logger.Level;
+
 import edu.northeastern.cs5500.Config;
 import edu.northeastern.cs5500.models.Course.Course;
 
@@ -51,10 +54,10 @@ public class CourseDao {
 			}
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			Logger.getLogger("context").log(Level.ERROR, e);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			Logger.getLogger("context").log(Level.ERROR, e);
 		} finally {
 			try {
 				if(results != null) results.close();
@@ -62,7 +65,7 @@ public class CourseDao {
 				if(connection != null) connection.close();
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				Logger.getLogger("context").log(Level.ERROR, e);
 			}
 		}
 		return listOfCourses;
@@ -91,10 +94,10 @@ public class CourseDao {
 			}
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			Logger.getLogger("context").log(Level.ERROR, e);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			Logger.getLogger("context").log(Level.ERROR, e);
 		} finally {
 			try {
 				if(results != null) results.close();
@@ -102,7 +105,7 @@ public class CourseDao {
 				if(connection != null) connection.close();
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				Logger.getLogger("context").log(Level.ERROR, e);
 			}
 		}
 		return listOfCourses;
@@ -130,10 +133,10 @@ public class CourseDao {
 			}
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			Logger.getLogger("context").log(Level.ERROR, e);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			Logger.getLogger("context").log(Level.ERROR, e);
 		} finally {
 			try {
 				if(results != null) results.close();
@@ -141,7 +144,7 @@ public class CourseDao {
 				if(connection != null) connection.close();
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				Logger.getLogger("context").log(Level.ERROR, e);
 			}
 		}
 		return listOfCourses;
