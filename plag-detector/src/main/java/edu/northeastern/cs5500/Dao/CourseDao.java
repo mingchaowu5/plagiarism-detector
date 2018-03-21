@@ -59,14 +59,26 @@ public class CourseDao {
 			// TODO Auto-generated catch block
 			Logger.getLogger("context").log(Level.ERROR, e);
 		} finally {
-			try {
-				if(results != null) results.close();
-				if(statement != null) statement.close();
-				if(connection != null) connection.close();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				Logger.getLogger("context").log(Level.ERROR, e);
-			}
+			if (results != null) {
+		        try {
+		        	results.close();
+		        } catch (SQLException e) { 
+		        	Logger.getLogger("context").log(Level.ERROR, e);}
+		    }
+		    if (statement != null) {
+		        try {
+		        	statement.close();
+		        } catch (SQLException e) { 
+		        	Logger.getLogger("context").log(Level.ERROR, e);
+		        	}
+		    }
+		    if (connection != null) {
+		        try {
+		            connection.close();
+		        } catch (SQLException e) { 
+		        	Logger.getLogger("context").log(Level.ERROR, e);
+		        }
+		    }
 		}
 		return listOfCourses;
 		
@@ -99,14 +111,26 @@ public class CourseDao {
 			// TODO Auto-generated catch block
 			Logger.getLogger("context").log(Level.ERROR, e);
 		} finally {
-			try {
-				if(results != null) results.close();
-				if(statement != null) statement.close();
-				if(connection != null) connection.close();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				Logger.getLogger("context").log(Level.ERROR, e);
-			}
+			if (results != null) {
+		        try {
+		        	results.close();
+		        } catch (SQLException e) { 
+		        	Logger.getLogger("context").log(Level.ERROR, e);}
+		    }
+		    if (statement != null) {
+		        try {
+		        	statement.close();
+		        } catch (SQLException e) { 
+		        	Logger.getLogger("context").log(Level.ERROR, e);
+		        	}
+		    }
+		    if (connection != null) {
+		        try {
+		            connection.close();
+		        } catch (SQLException e) { 
+		        	Logger.getLogger("context").log(Level.ERROR, e);
+		        }
+		    }
 		}
 		return listOfCourses;
 		
@@ -138,14 +162,26 @@ public class CourseDao {
 			// TODO Auto-generated catch block
 			Logger.getLogger("context").log(Level.ERROR, e);
 		} finally {
-			try {
-				if(results != null) results.close();
-				if(statement != null) statement.close();
-				if(connection != null) connection.close();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				Logger.getLogger("context").log(Level.ERROR, e);
-			}
+			if (results != null) {
+		        try {
+		        	results.close();
+		        } catch (SQLException e) { 
+		        	Logger.getLogger("context").log(Level.ERROR, e);}
+		    }
+		    if (statement != null) {
+		        try {
+		        	statement.close();
+		        } catch (SQLException e) { 
+		        	Logger.getLogger("context").log(Level.ERROR, e);
+		        	}
+		    }
+		    if (connection != null) {
+		        try {
+		            connection.close();
+		        } catch (SQLException e) { 
+		        	Logger.getLogger("context").log(Level.ERROR, e);
+		        }
+		    }
 		}
 		return listOfCourses;
 		
