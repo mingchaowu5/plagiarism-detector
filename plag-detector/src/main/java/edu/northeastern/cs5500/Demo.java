@@ -7,8 +7,8 @@ import org.apache.commons.io.FileUtils;
 import it.zielke.moji.SocketClient;
 
 public class Demo {
-	private static final String sFiles = "/Users/takyon/Desktop/Files";
-	private static final String sBase = "/Users/takyon/Desktop/Base";
+	private static final String sFiles = "/Users/varunnandu/Desktop/NLP/HW01";
+	private static final String sBase = "/Users/varunnandu/Desktop/NLP/HW01";
 	
 	public static void main(String[] args) throws Exception {
 		// a list of students' source code files located in the prepared
