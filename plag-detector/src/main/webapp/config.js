@@ -1,6 +1,4 @@
-/**
- * Created by harsharahul on 07/02/17.
- */
+
 (function() {
     angular
         .module('PlagApp')
@@ -31,6 +29,11 @@
             .when("/register",{
                 templateUrl:"views/templates/register.view.client.html",
                 controller: 'registerController',
+                controllerAs: 'model'
+            })
+            .when("/dashboard",{
+                templateUrl:"views/templates/professorDashboard.view.client.html",
+                controller: 'professorDashboardController',
                 controllerAs: 'model'
             })
             .otherwise({
