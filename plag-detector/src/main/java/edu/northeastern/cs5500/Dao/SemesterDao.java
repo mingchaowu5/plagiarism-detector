@@ -10,6 +10,9 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.jboss.logging.Logger;
+import org.jboss.logging.Logger.Level;
+
 import edu.northeastern.cs5500.Config;
 import edu.northeastern.cs5500.models.Semester.Semester;
 
@@ -21,7 +24,7 @@ public class SemesterDao {
 	private String jdbcConnect = "com.mysql.jdbc.Driver";
 	private String idString = "id";
 	private String nameString = "name";
-	public static SemesterDao instance = null;
+	private static SemesterDao instance = null;
 	public static SemesterDao getInstance() {
 		if (instance == null) {
 			instance = new SemesterDao();
@@ -49,10 +52,10 @@ public class SemesterDao {
 			}
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			Logger.getLogger("context").log(Level.ERROR, e);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			Logger.getLogger("context").log(Level.ERROR, e);
 		} finally {
 			try {
 				if(results != null) results.close();
@@ -60,7 +63,7 @@ public class SemesterDao {
 				if(connection != null) connection.close();
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				Logger.getLogger("context").log(Level.ERROR, e);
 			}
 		}
 		return listOfSemesters;
@@ -87,10 +90,10 @@ public class SemesterDao {
 			}
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			Logger.getLogger("context").log(Level.ERROR, e);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			Logger.getLogger("context").log(Level.ERROR, e);
 		} finally {
 			try {
 				if(results != null) results.close();
@@ -98,7 +101,7 @@ public class SemesterDao {
 				if(connection != null) connection.close();
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				Logger.getLogger("context").log(Level.ERROR, e);
 			}
 		}
 		return sem;

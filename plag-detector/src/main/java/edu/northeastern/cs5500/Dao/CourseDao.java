@@ -21,7 +21,7 @@ public class CourseDao {
 	private String idString = "id";
 	private String nameString = "name";
 	private String semesterString = "semester";
-	public static CourseDao instance = null;
+	private static CourseDao instance = null;
 	public static CourseDao getInstance() {
 		if (instance == null) {
 			instance = new CourseDao();
