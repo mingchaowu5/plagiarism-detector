@@ -10,13 +10,14 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import edu.northeastern.cs5500.Config;
 import edu.northeastern.cs5500.models.Semester.Semester;
 
 public class SemesterDao {
 	
 	private static final String URL = "jdbc:mysql://plag-detector.c05al3v5c9ha.us-east-2.rds.amazonaws.com:3306/cs5500";
-	private static final String USERNAME = "varunnandu";
-	private static final String PASSWORD = "varun123";
+	private static final String USERNAME = Config.getUsername();
+	private static final String PASSWORD = Config.getPassword();
 	private String jdbcConnect = "com.mysql.jdbc.Driver";
 	private String idString = "id";
 	private String nameString = "name";
