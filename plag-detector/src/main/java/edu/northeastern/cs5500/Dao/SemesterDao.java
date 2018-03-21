@@ -3,6 +3,7 @@ package edu.northeastern.cs5500.Dao;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -58,6 +59,41 @@ public class SemesterDao {
 		}
 		return listOfSemesters;
 		
+	}
+	
+	public Semester findSemesterById(int semesterId) {
+		Semester sem = null;
+	
+		Connection connection = null;
+		PreparedStatement statement = null;
+		ResultSet results = null;
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+			String sql = "select * from Semester WHERE Semester.id = ?";
+			statement = connection.prepareStatement(sql);
+			statement.setInt(1, semesterId);
+			results = statement.executeQuery();
+			if(results.next()) {
+				int id = results.getInt("id");
+				String name = results.getString("name");
+				sem = new Semester(id, name);
+			}
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			try {
+				connection.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return sem;
 	}
 
 }
