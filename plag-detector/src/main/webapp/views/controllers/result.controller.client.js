@@ -5,7 +5,7 @@
         .controller("resultController", resultController);
 
     function resultController($location, $routeParams,$rootScope) {
-        var vm = this;
+        // var vm = this;
 
         var nodes = null;
         var edges = null;
@@ -62,6 +62,7 @@
                 }
             };
             network = new vis.Network(container, data, options);
+            console.log(network);
         }
 
         draw();
