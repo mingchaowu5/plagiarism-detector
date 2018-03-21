@@ -17,6 +17,10 @@ public class CourseDao {
 	private static final String URL = "jdbc:mysql://plag-detector.c05al3v5c9ha.us-east-2.rds.amazonaws.com:3306/cs5500";
 	private static final String USERNAME = "varunnandu";
 	private static final String PASSWORD = "varun123";
+	private String jdbcConnect = "com.mysql.jdbc.Driver";
+	private String idString = "id";
+	private String nameString = "name";
+	private String semesterString = "semester";
 	public static CourseDao instance = null;
 	public static CourseDao getInstance() {
 		if (instance == null) {
@@ -32,15 +36,16 @@ public class CourseDao {
 		Statement statement = null;
 		ResultSet results = null;
 		try {
-			Class.forName("com.mysql.jdbc.Driver");
+			Class.forName(jdbcConnect);
 			connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+			
 			statement = connection.createStatement();
 			String sql = "select * from Courses";
 			results = statement.executeQuery(sql);
 			while(results.next()) {
-				int id = results.getInt("id");
-				String name = results.getString("name");
-				int semester = results.getInt("semester");
+				int id = results.getInt(idString);
+				String name = results.getString(nameString);
+				int semester = results.getInt(semesterString);
 				Course c = new Course(id, name, semester);
 				listOfCourses.add(c);
 			}
@@ -52,7 +57,9 @@ public class CourseDao {
 			e.printStackTrace();
 		} finally {
 			try {
-				connection.close();
+				if(results != null) results.close();
+				if(statement != null) statement.close();
+				if(connection != null) connection.close();
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -68,15 +75,15 @@ public class CourseDao {
 		Statement statement = null;
 		ResultSet results = null;
 		try {
-			Class.forName("com.mysql.jdbc.Driver");
+			Class.forName(jdbcConnect);
 			connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
 			statement = connection.createStatement();
 			String sql = "select * from Courses WHERE Courses.semester = '"+ semesterId +"'";
 			results = statement.executeQuery(sql);
 			while(results.next()) {
-				int id = results.getInt("id");
-				String name = results.getString("name");
-				int semester = results.getInt("semester");
+				int id = results.getInt(idString);
+				String name = results.getString(nameString);
+				int semester = results.getInt(semesterString);
 				Course c = new Course(id, name, semester);
 				listOfCourses.add(c);
 			}
@@ -88,7 +95,9 @@ public class CourseDao {
 			e.printStackTrace();
 		} finally {
 			try {
-				connection.close();
+				if(results != null) results.close();
+				if(statement != null) statement.close();
+				if(connection != null) connection.close();
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -104,15 +113,15 @@ public class CourseDao {
 		Statement statement = null;
 		ResultSet results = null;
 		try {
-			Class.forName("com.mysql.jdbc.Driver");
+			Class.forName(jdbcConnect);
 			connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
 			statement = connection.createStatement();
 			String sql = "select Courses.id, Courses.name, Courses.semester from Courses join ProfessorCourseMapping on Courses.id = ProfessorCourseMapping.course WHERE ProfessorCourseMapping.professor = '"+ professorId +"'";
 			results = statement.executeQuery(sql);
 			while(results.next()) {
-				int id = results.getInt("id");
-				String name = results.getString("name");
-				int semester = results.getInt("semester");
+				int id = results.getInt(idString);
+				String name = results.getString(nameString);
+				int semester = results.getInt(semesterString);
 				Course c = new Course(id, name, semester);
 				listOfCourses.add(c);
 			}
@@ -124,7 +133,9 @@ public class CourseDao {
 			e.printStackTrace();
 		} finally {
 			try {
-				connection.close();
+				if(results != null) results.close();
+				if(statement != null) statement.close();
+				if(connection != null) connection.close();
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
