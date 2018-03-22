@@ -7,8 +7,9 @@ public class Course {
 	private int semester;
 	
 	
+	public Course() {
+	}
 	public Course(int courseId, String name, int semester) {
-		super();
 		this.courseId = courseId;
 		this.name = name;
 		this.semester = semester;

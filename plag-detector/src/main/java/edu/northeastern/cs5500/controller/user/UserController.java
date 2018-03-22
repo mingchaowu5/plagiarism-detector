@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import edu.northeastern.cs5500.models.Person.User;
+
 @RestController
 @RequestMapping("/rest/user")
 public class UserController {
@@ -26,8 +28,8 @@ public class UserController {
 	
 	@GetMapping(value = "/login")
 	public ResponseEntity<?> login(@RequestParam(value = "username") String username, 
-			@RequestParam(value = "password")String password){
-		User user = userService.login(username, password);
+			@RequestParam(value = "password")String password, @RequestParam(value = "type")String type){
+		User user = userService.login(username, password, type);
 		if(user == null)
 			return ResponseEntity.noContent().build();
 		
