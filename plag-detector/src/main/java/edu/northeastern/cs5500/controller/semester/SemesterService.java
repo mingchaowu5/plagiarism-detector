@@ -22,4 +22,8 @@ public class SemesterService {
 		return this.semesterConnection.getAllSemester();
 	}
 	
+	public Semester getSemesterById(int id) {
+		return this.semesterConnection.findSemesterById(id);
+	}
+	
 }
