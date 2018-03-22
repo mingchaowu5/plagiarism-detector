@@ -18,15 +18,15 @@ public class CourseService {
 	 * @return
 	 */
 	public List<Course> getAllCourses(){
-		return this.courseConnection.findAllCourses();
+		return this.courseConnection.getAllCourses();
 	}
 	
 	public List<Course> getAllCoursesForSemester(int id){
-		return this.courseConnection.findAllCoursesForSemester(id);
+		return this.courseConnection.getAllCoursesForSemester(id);
 	}
 	
 	public List<Course> getAllCoursesForProfessor(int id){
-		return this.courseConnection.findAllCoursesForProfessor(id);
+		return this.courseConnection.getAllCoursesForProfessor(id);
 	}
 	
 }
