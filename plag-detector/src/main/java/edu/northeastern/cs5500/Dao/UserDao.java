@@ -1,5 +1,7 @@
 package edu.northeastern.cs5500.Dao;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -87,6 +89,49 @@ public class UserDao {
 		
 	
 	}
+	
+	public List<User> findAllUsers(){
+		try {
+		String sql = "Select * from User";
+		RowMapper<User> rowMapper = new BeanPropertyRowMapper<>(User.class);
+		List<User> results = this.jdbcTemplate.query(sql, rowMapper);
+		return results;
+		}
+		catch(Exception e) {
+			return null;
+		}
+	}
+	
+	public Integer getTypeFromUsernamePassword(String username, String password) {
+		try {
+			String sql = "Select * from User where User.username = ? AND User.password = ?";
+			RowMapper<User> rowMapper = new BeanPropertyRowMapper<>(User.class);
+			User user =  jdbcTemplate.queryForObject(sql, rowMapper, username, password);
+			try {
+				String sql2 = "Select * from Student where Student.id = ?";
+				RowMapper<Student> map1 = new BeanPropertyRowMapper<>(Student.class);
+				Student s =  jdbcTemplate.queryForObject(sql2, map1, user.getId());
+				return 1;
+			} catch(Exception e) {
+				try {
+					String sql3 = "Select * from Professor where Professor.id = ?";
+					RowMapper<Professor> map2 = new BeanPropertyRowMapper<>(Professor.class);
+					Professor p =  jdbcTemplate.queryForObject(sql3, map2, user.getId());
+					return 0;
+				} catch(Exception ee) {
+					return -1;
+				}
+				
+			}
+			
+			
+			}
+			catch(Exception e) {
+				return null;
+			}
+	}
+	
+	
 	
 public Integer findId(final User user) {
 		
