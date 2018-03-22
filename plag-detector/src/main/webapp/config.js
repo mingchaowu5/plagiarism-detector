@@ -31,14 +31,19 @@
                 controller: 'registerController',
                 controllerAs: 'model'
             })
-            .when("/dashboard",{
+            .when("/dashboard/:pid",{
                 templateUrl:"views/templates/professorDashboard.view.client.html",
                 controller: 'professorDashboardController',
                 controllerAs: 'model'
             })
+            .when("/student/:sid",{
+                templateUrl:"views/templates/studentDashboard.view.client.html",
+                controller: 'studentDashboardController',
+                controllerAs: 'model'
+            })
             .otherwise({
                 templateUrl:"views/templates/result.view.client.html",
-                controller: 'loginController',
+                controller: 'resultController',
                 controllerAs: 'model'
             })
     }

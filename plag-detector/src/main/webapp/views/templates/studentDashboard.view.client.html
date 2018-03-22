@@ -1,18 +1,18 @@
 <div class="container-fluid">
-    <div class="col-lg-4 col-md-4 col-sm-6">
-        <ul class="list-group">
-            <li class="list-group-item" ng-repeat="sems in model.semesters">
-                <div class="text-center">
-                    {{sems.name}}
-                    <span class="pull-right">
-                        <a ng-click="model.fetchCourses(sems.ID)" style="cursor: pointer">
-                            <span class="glyphicon glyphicon glyphicon-chevron-right "></span>
-                        </a>
-                    </span>
-                </div>
-            </li>
-        </ul>
-    </div>
+    <!--<div class="col-lg-4 col-md-4 col-sm-6">-->
+        <!--<ul class="list-group">-->
+            <!--<li class="list-group-item" ng-repeat="sems in model.semesters">-->
+                <!--<div class="text-center">-->
+                    <!--{{sems.name}}-->
+                    <!--<span class="pull-right">-->
+                        <!--<a ng-click="model.fetchCourses(sems.ID)" style="cursor: pointer">-->
+                            <!--<span class="glyphicon glyphicon glyphicon-chevron-right "></span>-->
+                        <!--</a>-->
+                    <!--</span>-->
+                <!--</div>-->
+            <!--</li>-->
+        <!--</ul>-->
+    <!--</div>-->
     <div class="col-lg-4 col-md-4 col-sm-6">
         <ul class="list-group">
             <li class="list-group-item" ng-repeat="course in model.courses">

@@ -19,9 +19,15 @@
                 .then(function (response) {
                     var user = response.data;
                     if(user){
-                        // $rootScope.currentUser = user;
+                         $rootScope.currentUser = user;
                         // $location.url("/");
                         console.log("User found... logging in");
+                        if(user.role == "PROFESSOR"){
+                            $location.url("/dashboard/"+user.id);
+                        }
+                        else {
+                            $location.url("/student/"+user.id);
+                        }
 
                     }
                     else {

@@ -17,6 +17,12 @@
            type="password"
            placeholder="password"/>
 
+    <label class="register-label user-type-class">
+        <input class="form-group radio-inline" type="radio" name="TYPE" value="STUDENT"  ng-model="user.role">
+        Student</label>
+    <label class="register-label user-type-class">
+        <input class="form-group radio-inline" type="radio" name="TYPE" value="PROFESSOR" ng-model="user.role" >
+        Professor</label>
 
     <a class="btn btn-primary btn-block"
        ng-click="model.login(user)">
