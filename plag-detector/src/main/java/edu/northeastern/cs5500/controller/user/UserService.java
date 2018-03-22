@@ -3,13 +3,14 @@ package edu.northeastern.cs5500.controller.user;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import edu.northeastern.cs5500.database.UserConnection;
+import edu.northeastern.cs5500.Dao.UserDao;
+import edu.northeastern.cs5500.models.Person.User;
 
 @Service
 public class UserService {
 
 	@Autowired
-	private UserConnection userConnection;
+	private UserDao userConnection;
 	
 	public User addUser(final User user) {
 		return userConnection.addNewUser(user);
