@@ -20,31 +20,51 @@ public class CourseDao {
 	private JdbcTemplate jdbcTemplate;
 
 	public List<Course> getAllCourses() {
+		try {
 		String sql = "Select * from Courses";
 		RowMapper<Course> rowMapper = new BeanPropertyRowMapper<>(Course.class);
 		List<Course> results = this.jdbcTemplate.query(sql, rowMapper);
 		return results;
+		}
+		catch(Exception e) {
+			return null;
+		}
 	}
 
 	public List<Course> getAllCoursesForSemester(int id) {
+		try {
 		String sql = "Select * from Courses WHERE Courses.semester = ?";
 		RowMapper<Course> rowMapper = new BeanPropertyRowMapper<>(Course.class);
 		List<Course> results = this.jdbcTemplate.query(sql, rowMapper, id);
 		return results;
+		}
+		catch(Exception e) {
+			return null;
+		}
 	}
 
 	public List<Course> getAllCoursesForProfessor(int id) {
+		try {
 		String sql = "Select Courses.* from Courses join ProfessorCourseMapping on Courses.id = ProfessorCourseMapping.course WHERE ProfessorCourseMapping.professor = ?";
 		RowMapper<Course> rowMapper = new BeanPropertyRowMapper<>(Course.class);
 		List<Course> results = this.jdbcTemplate.query(sql, rowMapper, id);
 		return results;
+		}
+		catch(Exception e) {
+			return null;
+		}
 	}
 
 	public List<Course> getAllCoursesForStudent(int studentId) {
+		try {
 		String sql = "Select Courses.* from Courses join StudentCourseMapping on Courses.id = StudentCourseMapping.course WHERE StudentCourseMapping.student = ?";
 		RowMapper<Course> rowMapper = new BeanPropertyRowMapper<>(Course.class);
 		List<Course> results = this.jdbcTemplate.query(sql, rowMapper, studentId);
 		return results;
+		}
+		catch(Exception e) {
+			return null;
+		}
 	}
 
 }

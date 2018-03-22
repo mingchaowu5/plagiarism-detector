@@ -18,10 +18,15 @@ public class SemesterDao {
 	private JdbcTemplate jdbcTemplate;
 	
 	public List<Semester> getAllSemester(){
+		try {
 		String sql = "Select * from Semester";
 		RowMapper<Semester> rowMapper = new BeanPropertyRowMapper<>(Semester.class);
 		List<Semester> results = this.jdbcTemplate.query(sql, rowMapper);
 		return results;
+		}
+		catch(Exception e) {
+			return null;
+		}
 	}
 	
 	public Semester findSemesterById(int semesterId) {

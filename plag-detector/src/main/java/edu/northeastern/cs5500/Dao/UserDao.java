@@ -24,12 +24,22 @@ public class UserDao {
 	 */
 	public User addNewUser(final User user) {
 		String str = null;
+		try {
 		String sql = "INSERT INTO User(id, firstName, lastName, userName, password) VALUES(?, ?, ?, ?, ?)";
 		jdbcTemplate.update(sql, user, user.getId(), user.getFirstName(), user.getLastName(), user.getUsername(), user.getPassword());
+		}
+		catch(Exception e) {
+			return null;
+		}
 		if(user instanceof Student) {
 			str = "Student";
+			try {
 			String sql2 = "INSERT INTO Student (id, universityID) VALUES(?, ?)";
-			jdbcTemplate.update(sql2, user, user.getId(), ((Student) user).getUniversityId());	
+			jdbcTemplate.update(sql2, user, user.getId(), ((Student) user).getUniversityId());
+			}
+			catch(Exception e) {
+				return null;
+			}
 		
 		}
 		else if(user instanceof Professor){
@@ -44,15 +54,29 @@ public class UserDao {
 	
 	public User login(final String username, final String password, String type) {
 		if(type.equals("Professor")) {
-			String sql = "SELECT * FROM User join Professor on  Professor.id = User.id WHERE User.username = ? AND User.password = ?";
-			RowMapper<Professor> mapper = new BeanPropertyRowMapper<>(Professor.class);
-			Professor user =  jdbcTemplate.queryForObject(sql, mapper, username, password);
-			return user;
+			try {
+				String sql = "SELECT * FROM User join Professor on  Professor.id = User.id WHERE User.username = ? AND User.password = ?";
+				RowMapper<Professor> mapper = new BeanPropertyRowMapper<>(Professor.class);
+				Professor user =  jdbcTemplate.queryForObject(sql, mapper, username, password);
+				return user;
+				
+			}
+			catch(Exception e) {
+				return null;
+			}
+			
 		} else if(type.equals("Student")) {
+			
+			try {
 			String sql = "SELECT * FROM User join Student on  Student.id = User.id WHERE User.username = ? AND User.password = ?";
 			RowMapper<Student> mapper = new BeanPropertyRowMapper<>(Student.class);
 			Student user =  jdbcTemplate.queryForObject(sql, mapper, username, password);
 			return user;
+			}
+			catch(Exception e) {
+				return null;
+			}
+			
 		}
 		else {
 			return null;
