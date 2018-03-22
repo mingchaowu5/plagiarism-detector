@@ -25,17 +25,18 @@ public class UserDao {
 	public User addNewUser(final User user) {
 		String str = null;
 		try {
-		String sql = "INSERT INTO User(id, firstName, lastName, userName, password) VALUES(?, ?, ?, ?, ?)";
-		jdbcTemplate.update(sql, user, user.getId(), user.getFirstName(), user.getLastName(), user.getUsername(), user.getPassword());
+		String sql = "INSERT INTO User(firstName, lastName, userName, password) VALUES( ?, ?, ?, ?)";
+		jdbcTemplate.update(sql, user, user.getFirstName(), user.getLastName(), user.getUsername(), user.getPassword());
 		}
 		catch(Exception e) {
 			return null;
 		}
+		int rId = findId(user);
 		if(user instanceof Student) {
 			str = "Student";
 			try {
 			String sql2 = "INSERT INTO Student (id, universityID) VALUES(?, ?)";
-			jdbcTemplate.update(sql2, user, user.getId(), ((Student) user).getUniversityId());
+			jdbcTemplate.update(sql2, user, rId, ((Student) user).getUniversityId());
 			}
 			catch(Exception e) {
 				return null;
@@ -45,7 +46,7 @@ public class UserDao {
 		else if(user instanceof Professor){
 			str = "Professor";
 			String sql2 = "INSERT INTO Professor (id, officeLocation) VALUES(?, ?)";
-			jdbcTemplate.update(sql2, user, user.getId(), ((Professor) user).getOfficeLocation());	
+			jdbcTemplate.update(sql2, user, rId, ((Professor) user).getOfficeLocation());	
 		}
 		
 		
@@ -85,5 +86,19 @@ public class UserDao {
 		
 		
 	
+	}
+	
+public Integer findId(final User user) {
+		
+		try {
+			String sql = "SELECT * FROM User WHERE User.username = ? AND User.password = ?";
+			RowMapper<User> mapper = new BeanPropertyRowMapper<>(User.class);
+			User u =  jdbcTemplate.queryForObject(sql, mapper, user.getUsername(), user.getPassword());
+			return u.getId();
+			
+		}
+		catch(Exception e) {
+			return null;
+		}
 	}
 }
