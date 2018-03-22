@@ -5,7 +5,7 @@
                 <div class="text-center">
                     {{sems.name}}
                     <span class="pull-right">
-                        <a ng-click="model.fetchCourses(sems.ID)" style="cursor: pointer">
+                        <a ng-click="model.fetchCourses(sems.id)" style="cursor: pointer">
                             <span class="glyphicon glyphicon glyphicon-chevron-right "></span>
                         </a>
                     </span>
@@ -19,7 +19,7 @@
                 <div class="text-center">
                     {{course.name}}
                     <span class="pull-right">
-                        <a ng-click="model.fetchAssignments(course.ID)" style="cursor: pointer">
+                        <a ng-click="model.fetchAssignments(course.id)" style="cursor: pointer">
                             <span class="glyphicon glyphicon glyphicon-chevron-right "></span>
                         </a>
                     </span>
@@ -33,7 +33,7 @@
                 <div class="text-center">
                     {{assignment.name}}
                     <span class="pull-right">
-                        <a ng-click="model.fetchAssignments(course.ID)" style="cursor: pointer">
+                        <a ng-click="model.fetchAssignments(assignment.id)" style="cursor: pointer">
                             <span class="glyphicon glyphicon glyphicon-chevron-right "></span>
                         </a>
                     </span>
