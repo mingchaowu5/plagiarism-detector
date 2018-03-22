@@ -30,10 +30,15 @@ public class SemesterDao {
 	}
 	
 	public Semester findSemesterById(int semesterId) {
+		try {
 		String sql = "select * from Semester WHERE Semester.id = ?";
 		RowMapper<Semester> rowMapper = new BeanPropertyRowMapper<>(Semester.class);
 		Semester sem = jdbcTemplate.queryForObject(sql, rowMapper, semesterId);
 		return sem;
+		}
+		catch(Exception e) {
+			return null;
+		}
 		
 	}
 
