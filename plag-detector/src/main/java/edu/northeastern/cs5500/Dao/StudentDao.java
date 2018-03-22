@@ -35,7 +35,7 @@ public class StudentDao {
 	
 	public List<Student> findAllStudentsForAssignment(int assignmentId) {
 		try {
-		String sql = "Select * from StudentAssignmentMapping join Student on Student.id = StudentAssignmentMapping.student WHERE StudentAssignmentMapping.assignment = ?";
+		String sql = "Select Student.id, Student.universityID from StudentAssignmentMapping join Student on Student.id = StudentAssignmentMapping.student WHERE StudentAssignmentMapping.assignment = ?";
 		RowMapper<Student> rowMapper = new BeanPropertyRowMapper<>(Student.class);
 		List<Student> results = this.jdbcTemplate.query(sql, rowMapper, assignmentId);
 		return results;
