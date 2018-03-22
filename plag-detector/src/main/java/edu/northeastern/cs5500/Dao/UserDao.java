@@ -24,7 +24,7 @@ public class UserDao {
 	 */
 	public User addNewUser(final User user) {
 		String str = null;
-		String sql = "INSERT INTO User(id, firstName, lastName, lastName, userName, password) VALUES(?, ?, ?, ?, ?, ?)";
+		String sql = "INSERT INTO User(id, firstName, lastName, userName, password) VALUES(?, ?, ?, ?, ?)";
 		jdbcTemplate.update(sql, user, user.getId(), user.getFirstName(), user.getLastName(), user.getUsername(), user.getPassword());
 		if(user instanceof Student) {
 			str = "Student";
