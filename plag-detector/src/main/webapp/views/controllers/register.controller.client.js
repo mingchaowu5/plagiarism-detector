@@ -38,38 +38,64 @@
             if(!user){
                 vm.error = "Please give a valid Input";
             }
-            // if(!user.role)
-            //     user.role = "SHOW";
+            if(!user.role)
+                user.role = "Professor";
 
-            var checkPromise = UserService.findUserByCredentials(user.username,null,true);
+            /**
+             * hardcoding university ID
+             */
+            user.uid = 100;
 
-            checkPromise
-                .then(function (res) {
-                    var promise = UserService.register(user);
+            var promise = UserService.register(user);
 
-                    promise
-                        .then(function (response) {
-                            if(response){
-                                var user = response.data;
+            promise
+                .then(function (response) {
+                    if(response){
+                        var user = response.data;
 
-                                $rootScope.currentUser = user;
+                        $rootScope.currentUser = user;
 
-                                $location.url("/results");
+                        $location.url("/results");
 
-                            }
-                            else{
-                                vm.error = "Error in creating user";
-                            }
-                        })
-                        .catch(function (err) {
-
-                            vm.error = "Error in  creating User";
-                        })
-
+                    }
+                    else{
+                        vm.error = "Error in creating user";
+                    }
                 })
                 .catch(function (err) {
-                    vm.error = "Username Not available, Please use another Username";
+
+                    vm.error = "Error in  creating User";
                 })
+
+            // var checkPromise = UserService.findUserByCredentials(user.username,null,true);
+            //
+            // checkPromise
+            //     .then(function (res) {
+            //         var promise = UserService.register(user);
+            //
+            //         promise
+            //             .then(function (response) {
+            //                 if(response){
+            //                     var user = response.data;
+            //
+            //                     $rootScope.currentUser = user;
+            //
+            //                     $location.url("/results");
+            //
+            //                 }
+            //                 else{
+            //                     vm.error = "Error in creating user";
+            //                 }
+            //             })
+            //             .catch(function (err) {
+            //
+            //                 vm.error = "Error in  creating User";
+            //             })
+            //
+            //     })
+            //     .catch(function (err) {
+            //         vm.error = "Username Not available, Please use another Username";
+            //     })
 
 
         }
