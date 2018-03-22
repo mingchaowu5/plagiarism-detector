@@ -19,7 +19,8 @@ public class UserController {
 	
 	@GetMapping(value = "/register")
 	public ResponseEntity<User> register(@RequestParam(value = "email") String email, @RequestParam(value = "username") String username, 
-			@RequestParam(value = "password")String password) {
+			@RequestParam(value = "password")String password, @RequestParam(value = "firstname")String firstname, 
+			@RequestParam(value = "lastname")String lastname, @RequestParam(value = "type")String type, @RequestParam(value = "uid")String uid) {
 		User user = new User();
 		user.setEmail(email); user.setPassword(password); user.setUsername(username);
 		User createdUser = userService.addUser(user);

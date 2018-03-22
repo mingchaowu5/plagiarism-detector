@@ -14,15 +14,15 @@
         return api;
 
         function getAllSemesters() {
-            return $http.get("/rest/professor/allSemesters");
+            return $http.get("/rest/semester/all");
         }
 
         function fetchCourses(semID) {
-            return $http.get("/rest/professor/course/" + semID);
+            return $http.get("/rest/course/semester?id=" + semID);
         }
 
         function fetchAssignments(courseId) {
-            return $http.get("/rest/professor/assignments/" + courseId);
+            return $http.get("/rest/assignment/course?id=" + courseId);
         }
 
 

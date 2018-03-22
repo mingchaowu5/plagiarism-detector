@@ -27,7 +27,8 @@
         }
 
         function register(user) {
-            return $http.get("/rest/user/register?email=" + user.email + "&username=" + user.username + "&password=" + user.password);
+            return $http.get("/rest/user/register?email=" + user.email + "&username=" + user.username + "&password=" + user.password
+            + "&firstname="+ user.firstname + "&lastname="+ user.lastname + "&type="+ user.role +  "&uid="+ user.uid);
         }
 
         function logout(user) {
@@ -36,7 +37,7 @@
 
 
         function login(user) {
-            return $http.get("/rest/user/login?username=" +user.username + "&password=" + user.password);
+            return $http.get("/rest/user/login?username=" +user.username + "&password=" + user.password +"&type="+ user.role);
         }
 
 

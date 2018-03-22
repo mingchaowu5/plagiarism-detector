@@ -22,7 +22,7 @@
                          $rootScope.currentUser = user;
                         // $location.url("/");
                         console.log("User found... logging in");
-                        if(user.role == "PROFESSOR"){
+                        if(user.officeLocation){
                             $location.url("/dashboard/"+user.id);
                         }
                         else {
