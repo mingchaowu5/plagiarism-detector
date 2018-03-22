@@ -4,9 +4,6 @@ package edu.northeastern.cs5500.controller.demo;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import jplag.ExitException;
-import jplag.Program;
-import jplag.options.CommandLineOptions;
 
 @RestController
 @RequestMapping("/rest/demo")
@@ -20,7 +17,7 @@ public class JPlagController {
 	 */
 	@GetMapping(value = "/all")
 	public String jplagConnection() {
-		String[] tm = {"/home/ec2-user/assignments","-","/home/ec2-user/results"};
+		/*String[] tm = {"/home/ec2-user/assignments","-","/home/ec2-user/results"};
 		CommandLineOptions op;
 		try {
 			op = new CommandLineOptions(tm);
@@ -28,7 +25,7 @@ public class JPlagController {
 			p.run();
 		} catch (ExitException e) {
 			e.printStackTrace();
-		}
+		}*/
 		return "Ok";
 	}
 	
