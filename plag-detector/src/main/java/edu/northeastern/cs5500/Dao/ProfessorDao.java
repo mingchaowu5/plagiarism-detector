@@ -20,9 +20,14 @@ public class ProfessorDao {
 	private JdbcTemplate jdbcTemplate;
 	
 	public List<Professor> findAllProfessors(){
+		try {
 		String sql = "Select * from User join Professor on User.id = Professor.id";
 		RowMapper<Professor> rowMapper = new BeanPropertyRowMapper<>(Professor.class);
 		List<Professor> results = this.jdbcTemplate.query(sql, rowMapper);
 		return results;
+		}
+		catch(Exception e) {
+			return null;
+		}
 	}
 }
