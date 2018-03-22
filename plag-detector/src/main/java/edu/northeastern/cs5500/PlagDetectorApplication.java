@@ -24,13 +24,5 @@ public class PlagDetectorApplication extends SpringBootServletInitializer{
 
 	public static void main(String[] args) {
 		SpringApplication.run(PlagDetectorApplication.class, args);
-		
-		SemesterDao sem1 = SemesterDao.getInstance();
-		
-		List<Semester> seml = sem1.findAllSemesters();
-		
-		for(Semester s:seml) {
-			System.out.println(s.getName());
-		}
 	}
 }

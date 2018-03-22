@@ -16,7 +16,7 @@ public class UserService {
 		return userConnection.addNewUser(user);
 	}
 	
-	public User login(final String username, final String password) {
-		return userConnection.login(username, password);
+	public User login(final String username, final String password, final String type) {
+		return userConnection.login(username, password, type);
 	}
 }
