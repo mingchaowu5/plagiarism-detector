@@ -1,3 +1,21 @@
-<form action="upload.php" method="post" enctype="multipart/form-data">
-    <input type="file" name="fileToUpload" id="fileToUpload">
-    <input type="submit" value="Upload Image" name="submit"></form>
+<div class="container-fluid">
+    <div class="row text-center">
+        <h3>Please upload the Zip file of your entire project</h3>
+    </div>
+    <div class="row col-md-4 col-md-push-4 text-center">
+        <form action="/rest/file/uploadFile" method="post" enctype="multipart/form-data">
+            <div style="padding: 25px">
+                <input class="input-sm" type="file" name="fileToUpload" id="fileToUpload">
+                <input class="input-sm" type="s_id" name="studentID">
+                <input class="input-sm" type="a_id" name="assignmentID">
+            </div>
+            <div style="padding: 25px">
+                <input class="btn btn-info" type="submit" value="Upload Project" name="submit">
+            </div>
+        </form>
+    </div>
+
+
+</div>
+
+
