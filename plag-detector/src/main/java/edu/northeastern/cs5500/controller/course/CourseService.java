@@ -29,4 +29,8 @@ public class CourseService {
 		return this.courseConnection.getAllCoursesForProfessor(id);
 	}
 	
+	public List<Course> getAllCoursesForStudent(int id){
+		return this.courseConnection.getAllCoursesForStudent(id);
+	}
+	
 }

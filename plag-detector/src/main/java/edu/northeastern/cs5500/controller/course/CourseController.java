@@ -39,4 +39,10 @@ public class CourseController {
 		return new ResponseEntity<>(courses, HttpStatus.OK);
 	}
 	
+	@GetMapping(value = "/student")
+	public ResponseEntity<List<Course>> coursesForStudent(@RequestParam(value = "id") int id) {
+		List<Course> courses = this.courseService.getAllCoursesForStudent(id);
+		return new ResponseEntity<>(courses, HttpStatus.OK);
+	}
+	
 }
