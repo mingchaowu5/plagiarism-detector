@@ -2,7 +2,7 @@ package edu.northeastern.cs5500.models.Course;
 
 public class Course {
 	
-	private int courseId;
+	private int id;
 	private String name;
 	private int semester;
 	
@@ -10,15 +10,15 @@ public class Course {
 	public Course() {
 	}
 	public Course(int courseId, String name, int semester) {
-		this.courseId = courseId;
+		this.id = courseId;
 		this.name = name;
 		this.semester = semester;
 	}
 	public int getCourseId() {
-		return courseId;
+		return id;
 	}
 	public void setCourseId(int courseId) {
-		this.courseId = courseId;
+		this.id = courseId;
 	}
 	public String getName() {
 		return name;
