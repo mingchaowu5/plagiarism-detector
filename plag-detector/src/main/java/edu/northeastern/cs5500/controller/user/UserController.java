@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import edu.northeastern.cs5500.models.Person.Professor;
+import edu.northeastern.cs5500.models.Person.Student;
 import edu.northeastern.cs5500.models.Person.User;
 
 @RestController
@@ -21,9 +23,22 @@ public class UserController {
 	public ResponseEntity<User> register(@RequestParam(value = "email") String email, @RequestParam(value = "username") String username, 
 			@RequestParam(value = "password")String password, @RequestParam(value = "firstname")String firstname, 
 			@RequestParam(value = "lastname")String lastname, @RequestParam(value = "type")String type, @RequestParam(value = "uid")String uid) {
-		User user = new User();
+	
+	User createdUser = null;	
+	if(type.equals("Professor")) {
+		Professor user = new Professor();
 		user.setEmail(email); user.setPassword(password); user.setUsername(username);
-		User createdUser = userService.addUser(user);
+		user.setFirstName(firstname); user.setLastName(lastname); user.setOfficeLocation(uid);
+		createdUser = userService.addUser(user);
+	} else {
+		Student user = new Student();
+		Integer i = new Integer(uid);
+		user.setEmail(email); user.setPassword(password); user.setUsername(username);
+		user.setFirstName(firstname); user.setLastName(lastname); user.setUniversityId(i);
+		createdUser = userService.addUser(user);
+	}
+	if(createdUser == null)
+		return ResponseEntity.noContent().build();
 		return new ResponseEntity<>(createdUser, HttpStatus.OK);
 	}
 	
