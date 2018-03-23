@@ -21,7 +21,7 @@
                 controller: 'loginController',
                 controllerAs: 'model'
             })
-            .when("/results",{
+            .when("/results/:aid",{
                 templateUrl:"views/templates/result.view.client.html",
                 controller: 'resultController',
                 controllerAs: 'model'
