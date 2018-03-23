@@ -3,7 +3,7 @@ package edu.northeastern.cs5500.models.Person;
 public class Student extends User{
 
 	private int id;
-	private int universityId;
+	private int universityID;
 	public Student() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -20,10 +20,10 @@ public class Student extends User{
 		this.id = id;
 	}
 	public int getUniversityId() {
-		return universityId;
+		return universityID;
 	}
 	public void setUniversityId(int universityId) {
-		this.universityId = universityId;
+		this.universityID = universityId;
 	}
 	
 	

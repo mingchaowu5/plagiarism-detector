@@ -32,13 +32,14 @@ public class UserController {
 		createdUser = userService.addUser(user);
 	} else {
 		Student user = new Student();
-		Integer i = new Integer(uid);
+		Integer iuid = Integer.parseInt(uid);
 		user.setEmail(email); user.setPassword(password); user.setUsername(username);
-		user.setFirstName(firstname); user.setLastName(lastname); user.setUniversityId(i);
+		user.setFirstName(firstname); user.setLastName(lastname); user.setUniversityId(iuid);
 		createdUser = userService.addUser(user);
 	}
-	if(createdUser == null)
-		return ResponseEntity.noContent().build();
+		if(createdUser == null)
+			return ResponseEntity.noContent().build();
+	
 		return new ResponseEntity<>(createdUser, HttpStatus.OK);
 	}
 	

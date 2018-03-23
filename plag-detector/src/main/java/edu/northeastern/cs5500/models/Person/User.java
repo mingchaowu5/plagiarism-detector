@@ -6,7 +6,7 @@ public class User {
 	private String firstName;
 	private String lastName;
 	private String email;
-	private String username;
+	private String userName;
 	private String password;
 	
 	
@@ -36,10 +36,10 @@ public class User {
 		this.password = password;
 	}
 	public String getUsername() {
-		return username;
+		return userName;
 	}
 	public void setUsername(String username) {
-		this.username = username;
+		this.userName = username;
 	}
 	public String getEmail() {
 		return email;
@@ -52,7 +52,7 @@ public class User {
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
-		this.username = username;
+		this.userName = username;
 		this.password = password;
 	}
 	
