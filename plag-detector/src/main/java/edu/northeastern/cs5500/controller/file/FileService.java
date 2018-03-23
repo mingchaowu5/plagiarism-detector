@@ -18,9 +18,11 @@ import net.lingala.zip4j.exception.ZipException;
 @Service
 public class FileService {
 	
-	private String path = "/Users/takyon/Documents/homework2/assignment/";
+	private String fixedPath = "/Users/takyon/Documents/homework2/assignment/";
+	private String path = null;
 	
 	public FileStructure uploadFile(MultipartFile file, int s_id, int a_id) throws IOException{
+		path = fixedPath;
 		this.createFolder(path);
 		path += a_id + "/";
 		this.createFolder(path);
