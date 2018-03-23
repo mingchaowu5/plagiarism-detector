@@ -44,7 +44,13 @@
             /**
              * hardcoding university ID
              */
-            user.uid = 100;
+            if(user.role == "Professor"){
+            		user.uid = "Kariotis";
+            }
+            else{
+            		user.uid = 100;
+            	}
+            
 
             var promise = UserService.register(user);
 

@@ -27,8 +27,9 @@ public class UserDao {
 	public User addNewUser(final User user) {
 		String str = null;
 		try {
-		String sql = "INSERT INTO User(firstName, lastName, userName, password) VALUES( ?, ?, ?, ?)";
-		jdbcTemplate.update(sql, user, user.getFirstName(), user.getLastName(), user.getUsername(), user.getPassword());
+		String sql = "INSERT INTO User(firstName, lastName, email, userName, password) VALUES(?, ?, ?, ?, ?)";
+		//jdbcTemplate.update(sql, user, user.getFirstName(), user.getLastName(), user.getEmail(), user.getUsername(), user.getPassword());
+		jdbcTemplate.update(sql, new Object[] {user.getFirstName(), user.getLastName(), user.getEmail(), user.getUsername(), user.getPassword()});
 		}
 		catch(Exception e) {
 			return null;
@@ -37,8 +38,9 @@ public class UserDao {
 		if(user instanceof Student) {
 			str = "Student";
 			try {
-			String sql2 = "INSERT INTO Student (id, universityID) VALUES(?, ?)";
-			jdbcTemplate.update(sql2, user, rId, ((Student) user).getUniversityId());
+				String sql2 = "INSERT INTO Student (id, universityID) VALUES(?, ?)";
+				//jdbcTemplate.update(sql2, user, rId, ((Student) user).getUniversityId());
+				jdbcTemplate.update(sql2, new Object[] {rId, ((Student) user).getUniversityId()});
 			}
 			catch(Exception e) {
 				return null;
@@ -48,7 +50,8 @@ public class UserDao {
 		else if(user instanceof Professor){
 			str = "Professor";
 			String sql2 = "INSERT INTO Professor (id, officeLocation) VALUES(?, ?)";
-			jdbcTemplate.update(sql2, user, rId, ((Professor) user).getOfficeLocation());	
+			//jdbcTemplate.update(sql2, user, rId, ((Professor) user).getOfficeLocation());	
+			jdbcTemplate.update(sql2, new Object[] {rId, ((Professor) user).getOfficeLocation()});	
 		}
 		
 		

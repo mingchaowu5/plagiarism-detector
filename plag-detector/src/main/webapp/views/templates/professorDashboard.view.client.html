@@ -25,6 +25,17 @@
                     </span>
                 </div>
             </li>
+            <li class="list-group-item">
+                <div>
+                    <input ng-disabled="model.editBarDisable" ng-model="model.editingComment"  type="text" class="form-control comment-bar"
+               placeholder="Edit comment here">
+                <span class="input-group-btn">
+                <a ng-click="model.okClick(model.editingComment)" class="btn btn-default search-button" type="button">
+                    <span class="glyphicon glyphicon-ok search-gly"></span>
+                </a>
+                    </span>
+                </div>
+            </li>
         </ul>
     </div>
     <div class="col-lg-4 col-md-4 col-sm-6">
