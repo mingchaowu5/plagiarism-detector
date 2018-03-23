@@ -30,7 +30,7 @@ public class ResultsDao {
 	
 	}
 	
-	public List<FileResults> findAllFileResultsForSTudentAssignment(int fileId) {
+	public List<FileResults> findAllFileResultsForStudentAssignment(int fileId) {
 		try {
 		String sql = "Select * from FileFileResults WHERE FileFileResults.studentAssignmentFile1 = ? or FileFileResults.studentAssignmentFile2=?";
 		RowMapper<FileResults> rowMapper = new BeanPropertyRowMapper<>(FileResults.class);
@@ -52,7 +52,7 @@ public class ResultsDao {
 	
 	}
 	
-	public List<StudentResults> findAllStudentResultsForSTudentAssignment(int saId) {
+	public List<StudentResults> findAllStudentResultsForStudentAssignment(int saId) {
 		try {
 		String sql = "Select * from StudentStudentResults WHERE StudentStudentResults.studentAssignment1 = ? or StudentStudentResults.studentAssignment2=?";
 		RowMapper<StudentResults> rowMapper = new BeanPropertyRowMapper<>(StudentResults.class);

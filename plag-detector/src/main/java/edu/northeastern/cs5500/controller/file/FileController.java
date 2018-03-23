@@ -7,10 +7,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
-import edu.northeastern.cs5500.models.file.File;
+import edu.northeastern.cs5500.models.file.FileStructure;
 
 @RestController
 @RequestMapping("/rest/file")
@@ -24,13 +25,13 @@ public class FileController {
 	 * @return
 	 */
 	@PostMapping(value = "/uploadFile")
-	public ResponseEntity<File> uploadFile(@RequestPart(value = "file") MultipartFile multiPartFile, 
-			@RequestPart(value = "s_id") int student_id, @RequestPart(value = "a_id") int assignment_id) {
-		File file = null;
+	public ResponseEntity<FileStructure> uploadFile(@RequestPart(value = "file") MultipartFile multiPartFile,
+			@RequestParam(value = "a_id") int assignment_id, @RequestParam(value = "s_id") int student_id) {
+		FileStructure file = null;
 		try {
 			file = this.fileService.uploadFile(multiPartFile, student_id, assignment_id);
 		}catch(IOException e) {
-			
+			return ResponseEntity.noContent().build();
 		}
 		return new ResponseEntity<>(file, HttpStatus.OK);
 	}
