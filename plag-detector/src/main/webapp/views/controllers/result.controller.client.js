@@ -4,8 +4,8 @@
         .module("PlagApp")
         .controller("resultController", resultController);
 
-    function resultController($location, $routeParams,$rootScope) {
-        // var vm = this;
+    function resultController($location, $routeParams,$rootScope,$scope) {
+         var vm = this;
 
         var nodes = null;
         var edges = null;
@@ -62,9 +62,68 @@
                 }
             };
             network = new vis.Network(container, data, options);
-            console.log(network);
+            // console.log(network);
+            network.on('select', OnClick);
         }
 
+        function OnClick(params) {
+            console.log(params);
+            console.log(edges);
+            console.log(nodes);
+            
+            if(params.edges.length == 1 && params.nodes.length == 0){
+                edges.forEach(function(element) {
+                    if(element.id == params.edges[0]){
+                        vm.selectedEdgeInfo = element;
+
+                        nodes.forEach(elementLow => {
+                            if(element.to == elementLow.id){
+                                console.log(elementLow.label);
+                                vm.selectedNodeInfo = elementLow.label;
+                                 $scope.$apply();                        
+                                
+                            }
+                        });
+
+                        nodes.forEach(elementLow => {
+                            if(element.from == elementLow.id){
+                                console.log(elementLow.label);
+                                vm.selectedNodeInfo2 = elementLow.label;
+                        $scope.$apply();                        
+                                
+                            }
+                        });
+                        document.getElementById("myButton").click();
+                    }
+                })
+            }
+            else{
+                nodes.forEach(element => {
+                    if(params.nodes[0] == element.id){
+                        console.log(element.label);
+                        document.getElementById("myButton").click();
+                        vm.selectedNodeInfo = element.label;
+                        $scope.$apply();
+                    }
+                });
+            }
+            
+            // element = fetchNodeWithID(nodes, params.nodes[0])
+            
+            
+            
+            
+            
+            // document.getElementById('selection').innerHTML = 'Selection: ' + params.nodes;
+        }
+
+        function fetchNodeWithID(nodes, id) {
+            nodes.forEach(element => {
+                if(id == element.id){
+                    return element
+                }
+            });
+        }
         draw();
     }
 })();
