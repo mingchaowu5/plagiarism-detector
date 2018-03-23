@@ -25,11 +25,32 @@
         <h4 class="modal-title">Detail Plagarism Information</h4>
       </div>
       <div class="modal-body">
-        <h3>{{model.selectedNodeInfo}}</h3>
-        <h2>Plagarised Percentage</h2>
-        <h3>{{model.nodePercentage}}%</h3>
-        <h3>{{model.edgePercentage}}%</h3>
-        <h3>{{model.selectedNodeInfo2}}</h3>
+          <div class="row">
+                <h3>{{model.selectedNodeInfo}}</h3>
+                <h2>Plagarised Percentage</h2>
+                <h3>{{model.nodePercentage}}%</h3>
+                <h3>{{model.edgePercentage}}%</h3>
+                <h3>{{model.selectedNodeInfo2}}</h3>
+          </div>
+          <div class="row"> 
+                <table>
+                    <tr>
+                        <th>name 1</th>
+                        <th>name 2</th>
+                        <th>percentage similarity</th>
+                        <th>file 1</th>
+                        <th>file 2</th>                            
+                    </tr>
+                    <tr ng-repeat="row in model.results">
+                        <tr>{{row.name1}}</tr>
+                        <tr>{{row.name2}}</tr>
+                        <tr>{{row.value}}</tr>
+                        <tr>{{row.file1}}</tr>
+                        <tr>{{row.file2}}</tr>
+                    </tr>
+                </table>
+          </div>
+        
         
       </div>
       <div class="modal-footer">

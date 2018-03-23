@@ -93,8 +93,22 @@
             console.log(params);
             console.log(edges);
             console.log(nodes);
+
+            
             
             if(params.edges.length == 1 && params.nodes.length == 0){
+
+                var promise = ResultsService.fetchEdgeStudents(params.edges[0].to, params.edges[0].from, vm.assignmentID);
+
+                promise
+                    .then(function (params) {
+                        if(params.data){
+                            vm.results = params.data;
+                        }
+                    })
+                    .catch(function (err) {
+                        console.log("error in fetching the edge stdunets info")
+                    })
                 edges.forEach(function(element) {
                     if(element.id == params.edges[0]){
                         vm.selectedEdgeInfo = element;
