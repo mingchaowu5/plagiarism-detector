@@ -12,6 +12,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 
 import org.jsoup.Jsoup;
@@ -27,10 +28,11 @@ import edu.northeastern.cs5500.models.Results.StudentResults;
 import edu.northeastern.cs5500.models.extras.Edge;
 import edu.northeastern.cs5500.models.extras.Graph;
 import edu.northeastern.cs5500.models.extras.Node;
+import edu.northeastern.cs5500.models.file.FileStructure;
 /*import jplag.ExitException;
 import jplag.Program;
-import jplag.options.CommandLineOptions;
-*/
+import jplag.options.CommandLineOptions;*/
+
 
 @Service
 public class ResultService {
@@ -45,8 +47,9 @@ public class ResultService {
 	private String tempPath = "/Users/takyon/Documents/homework2/temp/";
 	private String resultPath = "/Users/takyon/Documents/homework2/result/";
 	private int assignmentId;
-	private Map<Integer, Set<String>> sets = new HashMap<>();
 	private Map<String, Integer> fileUser = new HashMap<>();
+	private Map<String, Map<String, Double>> map = new HashMap<>();
+	private Map<String, Integer> fileIdMap = new HashMap<>();
 
 	/**
 	 * Connect to the database layer and get the semesters
@@ -64,13 +67,13 @@ public class ResultService {
 			Node node = new Node();
 			node.setLabel(s.getEmail());
 			node.setId(s.getId());
-			int stud_assign_id = studentDao.findStudentAssignmentId(s.getId(), id);
-			List<StudentResults> sResults = resultsDao.findAllStudentResultsForStudentAssignment(stud_assign_id);
+			int studAssignId = studentDao.findStudentAssignmentId(s.getId(), id);
+			List<StudentResults> sResults = resultsDao.findAllStudentResultsForStudentAssignment(studAssignId);
 			int i = 0;
 			for(StudentResults sr : sResults) {
 				i += sr.getResult();
 				int tempId = sr.getStudentAssignment2();
-				if(sr.getStudentAssignment1() != stud_assign_id) {
+				if(sr.getStudentAssignment1() != studAssignId) {
 					tempId = sr.getStudentAssignment1();
 				}
 				tempId = studentDao.findStudentIdFromStudentAssignment(tempId);
@@ -88,13 +91,37 @@ public class ResultService {
 		}
 		graph.setNodes(nodes);
 		graph.setEdges(edges);
+		saveFileData(id);
 		return graph;
+	}
+	
+	private void saveFileData(int aid) {
+		this.fetchFileMatching(aid);
+		for(Entry<String, Map<String, Double>> entry : map.entrySet()) {
+			String key = entry.getKey();
+			Map<String, Double> files = map.get(key);
+			for(Entry<String, Double> fEntry : files.entrySet()) {
+				String fKey = fEntry.getKey();	
+				resultsDao.addFileResults(fileIdMap.get(key), fileIdMap.get(fKey), (int)Math.round(files.get(fKey)));
+			}
+		}
+	}
+	
+	private void fetchFileMatching(int aid) {
+		List<Student> students = studentDao.findAllStudentsForAssignment(aid);
+		for(Student s : students) {
+			int sid = s.getId();
+			List<FileStructure> files = studentDao.findAllFileStructuresStudent(sid, aid);		
+			for(FileStructure fs : files) {
+				fileIdMap.put(sid + "-" + fs.getFile(), fs.getId());
+			}
+		}
 	}
 	
 	public void run(int id) throws IOException{
 		this.assignmentId = id;
 		List<Student> students = studentDao.findAllStudentsForAssignment(id);
-		int ids[] = new int[students.size()];
+		int[] ids = new int[students.size()];
 		int i = 0;
 		for(Student s : students) {
 			ids[i++] = s.getId();
@@ -105,7 +132,7 @@ public class ResultService {
 		this.readResults(results, ids);
 	}
 	
-	private void findFiles(int ids[]) throws IOException{
+	private void findFiles(int[] ids) throws IOException{
 		for(int i = 0;i<ids.length;++i) {
 			String newPath = path + this.assignmentId + "/" + ids[i];
 			Set<String> files = new HashSet<>();
@@ -114,6 +141,8 @@ public class ResultService {
 			subdirs.add(f);
 			for(File file : subdirs) {
 				File[] allFiles = file.listFiles();
+				if(allFiles == null || allFiles.length == 0)
+					continue;
 				for(File aF : allFiles) {
 					if(!aF.isDirectory()) {
 						files.add(ids[i] + "-" + aF.getName());
@@ -142,12 +171,13 @@ public class ResultService {
 		if(!folder.exists()) {
     			folder.mkdir();
     		}
-		File dest = new File(tempPath + source.getName());
 		Files.copy(Paths.get(source.getAbsolutePath()), Paths.get(tempPath + stu + "-" +source.getName()),
                 StandardCopyOption.REPLACE_EXISTING);
 	}
 	
 	private List<File> getSubdirs(File file) {
+		if(!file.exists() || file == null)
+			return new ArrayList<>();
 	    List<File> subdirs = Arrays.asList(file.listFiles(new FileFilter() {
 	        public boolean accept(File f) {
 	            return f.isDirectory();
@@ -172,8 +202,8 @@ public class ResultService {
 				result[i][j] = 0.0;
 			}
 		}
-		/*String[] tm = {tempPath, "-l", "python3", "-r", resultPath, "-s"};
-		CommandLineOptions op;
+		String[] tm = {tempPath, "-l", "python3", "-r", resultPath, "-s"};
+		/*CommandLineOptions op;
 		try {
 			op = new CommandLineOptions(tm);
 			Program p = new Program(op);
@@ -200,8 +230,6 @@ public class ResultService {
 	}
 	
 	private void getResults(double[][] userResult) throws IOException {
-		Map<String, Map<String, Double>> map = new HashMap<>();
-		List<String> downServers = new ArrayList<>();
 		File input = new File(resultPath + "/index.html");
 		Document doc = Jsoup.parse(input, "UTF-8");
 		Element table = doc.select("table").get(2); //select the first table.
@@ -216,7 +244,7 @@ public class ResultService {
 		    		String per = cols.get(j).select("font").text();
 		    		double d = Double.parseDouble(per.substring(1, per.length() - 2));
 		    		userResult[fileUser.get(key)][fileUser.get(filename)] += d;
-		    		tMap.put(per, d);
+		    		tMap.put(filename, d);
 		    }
 		    map.put(key, tMap);
 		}

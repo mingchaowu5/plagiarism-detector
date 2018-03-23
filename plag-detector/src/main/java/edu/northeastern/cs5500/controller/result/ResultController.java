@@ -29,4 +29,10 @@ public class ResultController {
 		Graph graph = resultService.getResultForStudent(id);
 		return new ResponseEntity<>(graph, HttpStatus.OK);
 	}	
+	
+	@GetMapping(value = "files")
+	public ResponseEntity<Graph> fileResult(@RequestParam(value = "sid1") int sid1, @RequestParam(value = "sid2") int sid2,
+			@RequestParam(value = "aid1") int aid) throws IOException{
+		return null;
+	}	
 }
