@@ -24,15 +24,17 @@ import org.springframework.stereotype.Service;
 import edu.northeastern.cs5500.Dao.ResultsDao;
 import edu.northeastern.cs5500.Dao.StudentDao;
 import edu.northeastern.cs5500.models.Person.Student;
+import edu.northeastern.cs5500.models.Results.FileResults;
 import edu.northeastern.cs5500.models.Results.StudentResults;
 import edu.northeastern.cs5500.models.extras.Edge;
 import edu.northeastern.cs5500.models.extras.Graph;
 import edu.northeastern.cs5500.models.extras.Node;
+import edu.northeastern.cs5500.models.file.FilePath;
+import edu.northeastern.cs5500.models.file.FileResult;
 import edu.northeastern.cs5500.models.file.FileStructure;
 /*import jplag.ExitException;
 import jplag.Program;
 import jplag.options.CommandLineOptions;*/
-
 
 @Service
 public class ResultService {
@@ -50,6 +52,7 @@ public class ResultService {
 	private Map<String, Integer> fileUser = new HashMap<>();
 	private Map<String, Map<String, Double>> map = new HashMap<>();
 	private Map<String, Integer> fileIdMap = new HashMap<>();
+	private Map<String, String> fileNames = new HashMap<>();
 
 	/**
 	 * Connect to the database layer and get the semesters
@@ -95,6 +98,39 @@ public class ResultService {
 		return graph;
 	}
 	
+	public List<FileResult> getFileResultsForStudents(int sid1, int sid2, int aid) {
+		List<FileStructure> files = studentDao.findAllFileStructuresStudent(sid1, aid);
+		List<FileStructure> temp = studentDao.findAllFileStructuresStudent(sid2, aid);
+		Set<Integer> fileS2 = new HashSet<>();
+		for(FileStructure fs : temp) {
+			fileS2.add(fs.getId());
+		}
+		List<FileResult> results = new ArrayList<>();
+		
+		for(FileStructure fr : files) {
+			FilePath path = resultsDao.findFileDetailsForId(fr.getId());
+			List<FileResults> list = resultsDao.findAllFileResultsForStudentAssignment(fr.getId());
+			for(FileResults fs : list) {
+				if(fileS2.contains(fs.getStudentAssignmentFile1()) || fileS2.contains(fs.getStudentAssignmentFile2())) {
+					FileResult result = new FileResult();
+					result.setFile1(this.resultPath + path.getFile());
+					result.setId1(fr.getId());
+					result.setName1(path.getName());
+					int id = fs.getStudentAssignmentFile1();
+					if(fr.getId() == fs.getStudentAssignmentFile1())
+						id = fs.getStudentAssignmentFile2();
+					FilePath tPath = resultsDao.findFileDetailsForId(id);
+					result.setId2(id);
+					result.setName2(tPath.getName());
+					result.setFile2(this.resultPath+tPath.getFile());
+					result.setValue(fs.getResult());
+					results.add(result);
+				}
+			}
+		}
+		return results;
+	}
+	
 	private void saveFileData(int aid) {
 		this.fetchFileMatching(aid);
 		for(Entry<String, Map<String, Double>> entry : map.entrySet()) {
@@ -113,7 +149,10 @@ public class ResultService {
 			int sid = s.getId();
 			List<FileStructure> files = studentDao.findAllFileStructuresStudent(sid, aid);		
 			for(FileStructure fs : files) {
-				fileIdMap.put(sid + "-" + fs.getFile(), fs.getId());
+				String key = sid + "-" + fs.getFile();
+				fileIdMap.put(key, fs.getId());
+				if(this.fileNames.containsKey(key))
+					resultsDao.addFilePaths(fs.getId(), this.fileNames.get(key));
 			}
 		}
 	}
@@ -239,12 +278,14 @@ public class ResultService {
 		    Elements cols = row.select("td");
 		    String key = cols.get(0).text();
 		    Map<String, Double> tMap = new HashMap<>();
+		    fileNames.put(key, "match" + i + "-0" + ".html");
 		    for(int j = 2;j<cols.size();++j) {
 		    		String filename = cols.get(j).select("a").text();
 		    		String per = cols.get(j).select("font").text();
 		    		double d = Double.parseDouble(per.substring(1, per.length() - 2));
 		    		userResult[fileUser.get(key)][fileUser.get(filename)] += d;
 		    		tMap.put(filename, d);
+		    		fileNames.put(filename, "match" + i + "-" + (j-1) + ".html");
 		    }
 		    map.put(key, tMap);
 		}
