@@ -1,64 +1,76 @@
 package edu.northeastern.cs5500.controller.file;
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
+
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+
+import edu.northeastern.cs5500.models.file.FileStructure;
+import net.lingala.zip4j.core.ZipFile;
+import net.lingala.zip4j.exception.ZipException;
 
 
 @Service
 public class FileService {
-
 	
-	/**
-	 * Connect to the database layer and get the semesters
-	 * @return
-	 */
-	public edu.northeastern.cs5500.models.file.File uploadFile(MultipartFile multiPartFile, int student_id, int assignment_id) throws IOException{
-		edu.northeastern.cs5500.models.file.File file = new edu.northeastern.cs5500.models.file.File();
-		//File convertFile = this.convertMultiPartToFile(multiPartFile);
-		String filePath = "/home/ec2-user/files/" + assignment_id + "/" + student_id;
-		String fileName = multiPartFile.getOriginalFilename();
-	    File newFile = new File(filePath + fileName);
-	    OutputStream outputStream = null;
-	    InputStream inputStream = null;
-	    try {
-	        inputStream = multiPartFile.getInputStream();
-
-	        if (!newFile.exists() && !newFile.createNewFile()) {
-	            return file;
-	        }
-	        outputStream = new FileOutputStream(newFile);
-	        int read = 0;
-	        byte[] bytes = new byte[1024];
-
-	        while ((read = inputStream.read(bytes)) != -1) {
-	            outputStream.write(bytes, 0, read);
-	        }
-	    } catch (IOException e) {
-	        e.printStackTrace();
-	    }finally {
-	    		inputStream.close();
-	    		outputStream.close();
-	    }
-	    //return newFile.getAbsolutePath();
-		return file;
+	private String path = "/Users/takyon/Documents/homework2/assignment/";
+	
+	public FileStructure uploadFile(MultipartFile file, int s_id, int a_id) throws IOException{
+		this.createFolder(path);
+		path += a_id + "/";
+		this.createFolder(path);
+		path += s_id + "/";
+		this.createFolder(path);
+		if(!file.isEmpty()) {
+			return copyFile(file);
+		}
+		return null;
 	}
 	
-	private File convertMultiPartToFile(MultipartFile file) throws IOException {
-		File convFile = new File(file.getOriginalFilename());
-		FileOutputStream fos = null;
-		try {	
-	        fos = new FileOutputStream(convFile);
-	        fos.write(file.getBytes());
-	        fos.close();
-	    }catch(IOException e) {
-	    		fos.close();
-	    }
-        return convFile;
-    }
+	private FileStructure copyFile(MultipartFile file) throws IOException{
+		FileStructure structure = null;
+		String fileName = file.getOriginalFilename();
+        InputStream is = file.getInputStream();
+        Files.copy(is, Paths.get(path + fileName),
+                StandardCopyOption.REPLACE_EXISTING);
+        extractZip(fileName);
+        deleteZip(fileName);
+        structure = new FileStructure();
+        structure.setFile(fileName);
+		return structure;
+	}
+	
+	private void deleteZip(String fileName) throws IOException{
+		File file = new File(path + fileName);
+        if(file.exists()) {
+        		file.delete();
+        }
+	}
+	
+	private void extractZip(String fileName) {
+		String source  = path + fileName;
+		String destination = path ;  
+
+		try {
+			ZipFile zipFile = new ZipFile(source);
+			zipFile.extractAll(destination);
+			
+		} catch (ZipException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private void createFolder(String folder) throws IOException{
+		File file = new File(folder);
+		if(!file.exists()) {
+			file.mkdir();
+		}
+	}
+	
 	
 }

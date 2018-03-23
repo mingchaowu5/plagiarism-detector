@@ -21,7 +21,7 @@ public class StudentDao {
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 	
-	public Integer addFileForStudentAssignment(int studentId, int assignmentId, String fname) {
+	public void addFileForStudentAssignment(int studentId, int assignmentId, String fname) {
 		int saId = findStudentAssignmentId(studentId, assignmentId);
 		try {
 		String sql = "INSERT INTO StudentAssignmentFileMapping (studentAssignment, file) VALUES(?, ?)";
@@ -29,8 +29,6 @@ public class StudentDao {
 		}
 		catch(Exception e) {
 		}
-		int myId = findStudentFileId(saId,fname);
-		return myId;
 		
 	}
 	
@@ -64,7 +62,7 @@ public Integer findStudentFileId(int saId, String fname) {
 	
 	public List<Student> findAllStudentsForAssignment(int assignmentId) {
 		try {
-		String sql = "Select Student.id, Student.universityID from StudentAssignmentMapping join Student on Student.id = StudentAssignmentMapping.student WHERE StudentAssignmentMapping.assignment = ?";
+		String sql = "Select Student.id, User.firstName, User.lastName, User.email, User.userName, User.password, Student.universityID from StudentAssignmentMapping join Student on Student.id = StudentAssignmentMapping.student join User on User.id = Student.id WHERE StudentAssignmentMapping.assignment = ?";
 		RowMapper<Student> rowMapper = new BeanPropertyRowMapper<>(Student.class);
 		List<Student> results = this.jdbcTemplate.query(sql, rowMapper, assignmentId);
 		return results;
@@ -88,4 +86,17 @@ public Integer findStudentFileId(int saId, String fname) {
 	}
 
 
+	public Integer findStudentIdFromStudentAssignment(int sa) {
+		
+		try {
+			String sql = "SELECT * FROM StudentAssignmentMapping WHERE StudentAssignmentMapping.id = ?";
+			RowMapper<StudentAssignmentMap> mapper = new BeanPropertyRowMapper<>(StudentAssignmentMap.class);
+			StudentAssignmentMap user =  jdbcTemplate.queryForObject(sql, mapper, sa);
+			return user.getStudent();
+			
+		}
+		catch(Exception e) {
+			return null;
+		}
+	}
 }
