@@ -111,6 +111,7 @@
                                 
                             }
                         });
+                        vm.edgePercentage = element.value;
                         document.getElementById("myButton").click();
                     }
                 })
@@ -121,6 +122,7 @@
                         console.log(element.label);
                         document.getElementById("myButton").click();
                         vm.selectedNodeInfo = element.label;
+                        vm.nodePercentage = element.value;
                         $scope.$apply();
                     }
                 });
