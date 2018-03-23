@@ -6,7 +6,7 @@
 
     function studentDashboardController(StudentService, $location, $routeParams,$rootScope) {
         var vm = this;
-        vm.fetchCourses = fetchCourses;
+        // vm.fetchCourses = fetchCourses;
         vm.fetchAssignments = fetchAssignments;
         vm.studentName = "xyz";
         vm.studentId = $routeParams.sid;
@@ -54,10 +54,6 @@
                 })
         }
         init();
-
-        function fetchCourses(semID) {
-
-        }
 
         function fetchAssignments(courseId) {
             var promise = StudentService.fetchAssignments(courseId);

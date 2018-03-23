@@ -33,10 +33,12 @@ public class CourseDao {
 
 	public List<Course> getAllCoursesForSemester(int id) {
 		try {
-		String sql = "Select * from Courses WHERE Courses.semester = ?";
+		String sql = "Select Courses.id, Courses.name, Courses.semester from Courses WHERE Courses.semester = ?";
 		RowMapper<Course> rowMapper = new BeanPropertyRowMapper<>(Course.class);
 		List<Course> results = this.jdbcTemplate.query(sql, rowMapper, id);
+		
 		return results;
+		
 		}
 		catch(Exception e) {
 			return null;
@@ -45,7 +47,7 @@ public class CourseDao {
 
 	public List<Course> getAllCoursesForProfessor(int id) {
 		try {
-		String sql = "Select Courses.* from Courses join ProfessorCourseMapping on Courses.id = ProfessorCourseMapping.course WHERE ProfessorCourseMapping.professor = ?";
+		String sql = "Select Courses.id, Courses.name, Courses.semester from Courses join ProfessorCourseMapping on Courses.id = ProfessorCourseMapping.course WHERE ProfessorCourseMapping.professor = ?";
 		RowMapper<Course> rowMapper = new BeanPropertyRowMapper<>(Course.class);
 		List<Course> results = this.jdbcTemplate.query(sql, rowMapper, id);
 		return results;
@@ -57,7 +59,7 @@ public class CourseDao {
 
 	public List<Course> getAllCoursesForStudent(int studentId) {
 		try {
-		String sql = "Select Courses.* from Courses join StudentCourseMapping on Courses.id = StudentCourseMapping.course WHERE StudentCourseMapping.student = ?";
+		String sql = "Select Courses.id, Courses.name, Courses.semester from Courses join StudentCourseMapping on Courses.id = StudentCourseMapping.course WHERE StudentCourseMapping.student = ?";
 		RowMapper<Course> rowMapper = new BeanPropertyRowMapper<>(Course.class);
 		List<Course> results = this.jdbcTemplate.query(sql, rowMapper, studentId);
 		return results;

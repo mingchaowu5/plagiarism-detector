@@ -11,6 +11,7 @@
         var nodes = null;
         var edges = null;
         var network = null;
+        var THRESHOLDVALUE = 30;
 
         function init() {
             var promise = ResultsService.assignmentResults(vm.assignmentID);
@@ -27,11 +28,10 @@
                     console.log("Error in fetching result for the assignemnt ID -> "+ vm.assignmentID);
                 })
         }
-        init()
+        // init()
 
         function draw() {
-            // create people.
-            // value corresponds with the age of the person
+            
             // nodes = [
             //     {id: 1,  value: 2,  label: 'Algie' },
             //     {id: 2,  value: 31, label: 'Alston'},
@@ -41,12 +41,11 @@
             //     {id: 6,  value: 15, label: 'Langdon'},
             //     {id: 7,  value: 6,  label: 'Lee'},
             //     {id: 8,  value: 5,  label: 'Merlin'},
-            //     {id: 9,  value: 30, label: 'Mick'},
+            //     {id: 9,  value: 35, label: 'Mick'},
             //     {id: 10, value: 18, label: 'Tod'},
             // ];
 
-            // // create connections between people
-            // // value corresponds with the amount of contact between two people
+            
             // edges = [
             //     {from: 2, to: 8, value: 3},
             //     {from: 2, to: 9, value: 5},
@@ -60,6 +59,12 @@
             //     {from: 5, to: 3, value: 1},
             //     {from: 2, to: 7, value: 4}
             // ];
+
+            nodes.forEach(function (element) {
+                if(element.value > THRESHOLDVALUE){
+                    element.color = 'pink'
+                }
+            })
 
             // Instantiate our network object.
             var container = document.getElementById('mynetwork');
