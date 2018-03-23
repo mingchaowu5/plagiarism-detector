@@ -10,32 +10,32 @@
         vm.fetchAssignments = fetchAssignments;
         vm.professorName = "xyz";
 
-        vm.semesters = [{
-                name: "Spring2018",
-                ID: 111
-            },
-            {
-                name:"Fall2017",
-                ID:222
-            }];
+        // vm.semesters = [{
+        //         name: "Spring2018",
+        //         ID: 111
+        //     },
+        //     {
+        //         name:"Fall2017",
+        //         ID:222
+        //     }];
 
-        vm.courses = [{
-                name: "MapReduce",
-                ID: 111
-            },
-            {
-                name:"DataMining",
-                ID:222
-            }];
+        // vm.courses = [{
+        //         name: "MapReduce",
+        //         ID: 111
+        //     },
+        //     {
+        //         name:"DataMining",
+        //         ID:222
+        //     }];
 
-        vm.assignments = [{
-            name: "assignment-1",
-            ID: 111
-        },
-            {
-                name:"assignment-2",
-                ID:222
-            }];
+        // vm.assignments = [{
+        //     name: "assignment-1",
+        //     ID: 111
+        // },
+        //     {
+        //         name:"assignment-2",
+        //         ID:222
+        //     }];
 
 
         function init() {
