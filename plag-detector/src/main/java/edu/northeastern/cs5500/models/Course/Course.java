@@ -9,25 +9,25 @@ public class Course {
 	
 	public Course() {
 	}
-	public Course(int courseId, String name, int semester) {
-		this.id = courseId;
+	public Course(int id, String name, int semester) {
+		this.id = id;
 		this.name = name;
 		this.semester = semester;
 	}
-	public int getCourseId() {
-		return id;
+	public int getId() {
+		return this.id;
 	}
-	public void setCourseId(int courseId) {
-		this.id = courseId;
+	public void setId(int id) {
+		this.id = id;
 	}
 	public String getName() {
-		return name;
+		return this.name;
 	}
 	public void setName(String name) {
 		this.name = name;
 	}
 	public int getSemester() {
-		return semester;
+		return this.semester;
 	}
 	public void setSemester(int semester) {
 		this.semester = semester;

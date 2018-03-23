@@ -17,12 +17,12 @@
             return $http.get("/rest/professor/allSemesters");
         }
 
-        function fetchCourses(semID) {
-            return $http.get("/rest/professor/course/" + semID);
+        function fetchCourses(sid) {
+            return $http.get("/rest/course/student?id=" + sid);
         }
 
         function fetchAssignments(courseId) {
-            return $http.get("/rest/professor/assignments/" + courseId);
+            return $http.get("/rest/assignment/course?id=" + courseId);
         }
 
 

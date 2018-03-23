@@ -16,9 +16,9 @@
                 controller: 'loginController',
                 controllerAs: 'model'
             })
-            .when("/main", {
+            .when("/main/:sid/:aid", {
                 templateUrl:'views/templates/dataUpload.view.client.html',
-                controller: 'loginController',
+                controller: 'uploadController',
                 controllerAs: 'model'
             })
             .when("/results/:aid",{
