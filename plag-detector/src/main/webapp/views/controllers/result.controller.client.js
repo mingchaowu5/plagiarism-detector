@@ -28,7 +28,7 @@
                     console.log("Error in fetching result for the assignemnt ID -> "+ vm.assignmentID);
                 })
         }
-        // init()
+         init()
 
         function draw() {
             
@@ -149,6 +149,6 @@
                 }
             });
         }
-        draw();
+        //draw();
     }
 })();

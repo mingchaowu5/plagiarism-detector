@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import edu.northeastern.cs5500.models.Assignment.Assignment;
 import edu.northeastern.cs5500.models.extras.Graph;
+import edu.northeastern.cs5500.models.file.FileResult;
 
 @RestController
 @RequestMapping("/rest/result/")
@@ -31,8 +32,9 @@ public class ResultController {
 	}	
 	
 	@GetMapping(value = "files")
-	public ResponseEntity<Graph> fileResult(@RequestParam(value = "sid1") int sid1, @RequestParam(value = "sid2") int sid2,
+	public ResponseEntity<List<FileResult>> fileResult(@RequestParam(value = "sid1") int sid1, @RequestParam(value = "sid2") int sid2,
 			@RequestParam(value = "aid1") int aid) throws IOException{
-		return null;
+		List<FileResult> list = resultService.getFileResultsForStudents(sid1, sid2, aid);
+		return new ResponseEntity<>(list, HttpStatus.OK);
 	}	
 }
