@@ -16,7 +16,7 @@
                 controller: 'loginController',
                 controllerAs: 'model'
             })
-            .when("/main/:sid/:aid", {
+            .when("/main/:sid/:aid/:vid", {
                 templateUrl:'views/templates/dataUpload.view.client.html',
                 controller: 'uploadController',
                 controllerAs: 'model'
@@ -36,7 +36,32 @@
                 controller: 'professorDashboardController',
                 controllerAs: 'model'
             })
+            .when("/dashboard/:pid/semester/:sid",{
+                templateUrl:"views/templates/professorDashboard.view.client.html",
+                controller: 'professorDashboardController',
+                controllerAs: 'model'
+            })
+            .when("/dashboard/:pid/semester/:sid/course/:cid",{
+                templateUrl:"views/templates/professorDashboard.view.client.html",
+                controller: 'professorDashboardController',
+                controllerAs: 'model'
+            })
+            .when("/dashboard/:pid/semester/:sid/course/:cid/snapshot/:aid",{
+                templateUrl:"views/templates/professorDashboard.view.client.html",
+                controller: 'professorDashboardController',
+                controllerAs: 'model'
+            })
             .when("/student/:sid",{
+                templateUrl:"views/templates/studentDashboard.view.client.html",
+                controller: 'studentDashboardController',
+                controllerAs: 'model'
+            })
+            .when("/student/:sid/course/:cid",{
+                templateUrl:"views/templates/studentDashboard.view.client.html",
+                controller: 'studentDashboardController',
+                controllerAs: 'model'
+            })
+            .when("/student/:sid/course/:cid/assignment/:aid",{
                 templateUrl:"views/templates/studentDashboard.view.client.html",
                 controller: 'studentDashboardController',
                 controllerAs: 'model'

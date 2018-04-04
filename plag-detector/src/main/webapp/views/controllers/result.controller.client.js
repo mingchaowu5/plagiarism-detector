@@ -113,7 +113,7 @@
                     if(element.id == params.edges[0]){
                         vm.selectedEdgeInfo = element;
 
-                        nodes.forEach(elementLow => {
+                        nodes.forEach(function(elementLow) {
                             if(element.to == elementLow.id){
                                 console.log(elementLow.label);
                                 vm.selectedNodeInfo = elementLow.label;
@@ -122,7 +122,7 @@
                             }
                         });
 
-                        nodes.forEach(elementLow => {
+                        nodes.forEach(function(elementLow) {
                             if(element.from == elementLow.id){
                                 console.log(elementLow.label);
                                 vm.selectedNodeInfo2 = elementLow.label;
@@ -136,7 +136,7 @@
                 })
             }
             else{
-                nodes.forEach(element => {
+                nodes.forEach(function(element) {
                     if(params.nodes[0] == element.id){
                         console.log(element.label);
                         document.getElementById("myButton").click();
@@ -157,7 +157,7 @@
         }
 
         function fetchNodeWithID(nodes, id) {
-            nodes.forEach(element => {
+            nodes.forEach(function(element){
                 if(id == element.id){
                     return element
                 }

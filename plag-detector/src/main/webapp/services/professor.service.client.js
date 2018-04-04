@@ -9,7 +9,8 @@
         var api = {
             "getAllSemesters":getAllSemesters,
             "fetchCourses":fetchCourses,
-            "fetchAssignments": fetchAssignments
+            "fetchAssignments": fetchAssignments,
+            "getSnapshots":getSnapshots
         };
         return api;
 
@@ -25,6 +26,9 @@
             return $http.get("/rest/assignment/course?id=" + courseId);
         }
 
+        function getSnapshots(aid) {
+            return $http.get("/rest/snapshots/assignment?id="+aid);
+        }
 
     }
 })();
