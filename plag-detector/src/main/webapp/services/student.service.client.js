@@ -28,8 +28,8 @@
             return $http.get("/rest/assignment/course?id=" + courseId);
         }
 
-        function fetchAssignmentVersions(assignmentID) {
-            return $http.get("/rest/assignment/versions?id="+assignmentID);
+        function fetchAssignmentVersions(assignmentID, sid) {
+            return $http.get("/rest/submission/all?assignment_id="+assignmentID+"&student_id="+sid);
         }
 
         function fetchAllCoursesAvailable(studentID) {

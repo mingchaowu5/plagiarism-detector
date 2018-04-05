@@ -28,37 +28,37 @@
                     console.log("Error in fetching result for the assignemnt ID -> "+ vm.assignmentID);
                 })
         }
-         init()
-
+         // init()
+        draw();
         function draw() {
             
-            // nodes = [
-            //     {id: 1,  value: 2,  label: 'Algie' },
-            //     {id: 2,  value: 31, label: 'Alston'},
-            //     {id: 3,  value: 12, label: 'Barney'},
-            //     {id: 4,  value: 16, label: 'Coley' },
-            //     {id: 5,  value: 17, label: 'Grant' },
-            //     {id: 6,  value: 15, label: 'Langdon'},
-            //     {id: 7,  value: 6,  label: 'Lee'},
-            //     {id: 8,  value: 5,  label: 'Merlin'},
-            //     {id: 9,  value: 35, label: 'Mick'},
-            //     {id: 10, value: 18, label: 'Tod'},
-            // ];
+            nodes = [
+                {id: 1,  value: 2,  label: 'Algie' },
+                {id: 2,  value: 31, label: 'Alston'},
+                {id: 3,  value: 12, label: 'Barney'},
+                {id: 4,  value: 16, label: 'Coley' },
+                {id: 5,  value: 17, label: 'Grant' },
+                {id: 6,  value: 15, label: 'Langdon'},
+                {id: 7,  value: 6,  label: 'Lee'},
+                {id: 8,  value: 5,  label: 'Merlin'},
+                {id: 9,  value: 35, label: 'Mick'},
+                {id: 10, value: 18, label: 'Tod'}
+            ];
 
             
-            // edges = [
-            //     {from: 2, to: 8, value: 3},
-            //     {from: 2, to: 9, value: 5},
-            //     {from: 2, to: 10,value: 1},
-            //     {from: 4, to: 6, value: 8},
-            //     {from: 5, to: 7, value: 2},
-            //     {from: 4, to: 5, value: 1},
-            //     {from: 9, to: 10,value: 2},
-            //     {from: 2, to: 3, value: 6},
-            //     {from: 3, to: 9, value: 4},
-            //     {from: 5, to: 3, value: 1},
-            //     {from: 2, to: 7, value: 4}
-            // ];
+            edges = [
+                {from: 2, to: 8, value: 3},
+                {from: 2, to: 9, value: 5},
+                {from: 2, to: 10,value: 1},
+                {from: 4, to: 6, value: 8},
+                {from: 5, to: 7, value: 2},
+                {from: 4, to: 5, value: 1},
+                {from: 9, to: 10,value: 2},
+                {from: 2, to: 3, value: 6},
+                {from: 3, to: 9, value: 4},
+                {from: 5, to: 3, value: 1},
+                {from: 2, to: 7, value: 4}
+            ];
 
             nodes.forEach(function (element) {
                 if(element.value > THRESHOLDVALUE){
@@ -98,7 +98,21 @@
             
             if(params.edges.length == 1 && params.nodes.length == 0){
 
-                var promise = ResultsService.fetchEdgeStudents(params.edges[0].to, params.edges[0].from, vm.assignmentID);
+                var fromNode  = "";
+                var toNode = "";
+                var selEdge;
+                edges.forEach(function(ele) {
+                    if(params.edges[0] == ele.id){
+                        selEdge = ele;
+                        vm.selectedEdgeInfo = ele;
+
+                        console.log(ele.label);
+                        fromNode = ele.from;
+                        toNode = ele.to;
+                    }
+                });
+
+                var promise = ResultsService.fetchEdgeStudents(fromNode, toNode, vm.assignmentID);
 
                 promise
                     .then(function (params) {
@@ -109,31 +123,45 @@
                     .catch(function (err) {
                         console.log("error in fetching the edge stdunets info")
                     })
-                edges.forEach(function(element) {
-                    if(element.id == params.edges[0]){
-                        vm.selectedEdgeInfo = element;
 
-                        nodes.forEach(function(elementLow) {
-                            if(element.to == elementLow.id){
-                                console.log(elementLow.label);
-                                vm.selectedNodeInfo = elementLow.label;
-                                 $scope.$apply();                        
-                                
-                            }
-                        });
-
-                        nodes.forEach(function(elementLow) {
-                            if(element.from == elementLow.id){
-                                console.log(elementLow.label);
-                                vm.selectedNodeInfo2 = elementLow.label;
-                        $scope.$apply();                        
-                                
-                            }
-                        });
-                        vm.edgePercentage = element.value;
-                        document.getElementById("myButton").click();
+                nodes.forEach(function (t) {
+                    if(t.id == fromNode){
+                        vm.selectedNodeInfo = t.label;
+                        $scope.$apply();
+                    }
+                    if(t.id == toNode){
+                        vm.selectedNodeInfo2 = t.label;
+                        $scope.$apply();
                     }
                 })
+
+                vm.edgePercentage = selEdge.value;
+                document.getElementById("myButton").click();
+                // edges.forEach(function(element) {
+                //     if(element.id == params.edges[0]){
+                //         vm.selectedEdgeInfo = element;
+                //
+                //         nodes.forEach(function(elementLow) {
+                //             if(element.to == elementLow.id){
+                //                 console.log(elementLow.label);
+                //                 vm.selectedNodeInfo = elementLow.label;
+                //                  $scope.$apply();
+                //
+                //             }
+                //         });
+                //
+                //         nodes.forEach(function(elementLow) {
+                //             if(element.from == elementLow.id){
+                //                 console.log(elementLow.label);
+                //                 vm.selectedNodeInfo2 = elementLow.label;
+                //         $scope.$apply();
+                //
+                //             }
+                //         });
+                //         vm.edgePercentage = element.value;
+                //         document.getElementById("myButton").click();
+                //     }
+                // })
             }
             else{
                 nodes.forEach(function(element) {

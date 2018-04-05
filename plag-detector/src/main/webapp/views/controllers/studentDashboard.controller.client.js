@@ -74,7 +74,7 @@
 
         function fetchAssignmentsVersions(assignmentID) {
             vm.currentAssignmentID = assignmentID;
-            var promise = StudentService.fetchAssignmentVersions(assignmentID);
+            var promise = StudentService.fetchAssignmentVersions(assignmentID, vm.studentId);
             
             promise
                 .then(function (response) {

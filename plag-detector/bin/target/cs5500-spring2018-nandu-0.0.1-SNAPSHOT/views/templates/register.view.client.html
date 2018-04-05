@@ -1,0 +1,106 @@
+<div class="container-fluid marginTop backStyle" style="padding-top: 70px;padding-bottom: 70px" >
+    <div ng-show="model.error" class="alert alert-danger" role="alert" >
+        {{model.error}}
+    </div>
+    <div class="alert alert-success" ng-show="model.message">
+        {{model.message}}
+    </div>
+
+    <div class="col-md-8">
+        <form action="#/register"
+              name="form"
+              novalidate
+              method="POST">
+            <div class="form-group">
+                <label class="register-label" for="username">Username</label>
+                <input name="username" required class="form-control" ng-model="model.user.username" type="text" placeholder="Display Name"/>
+
+            </div>
+            <div ng-show="form.$submitted || form.username.$touched"
+                 class="">
+                <div ng-show="form.username.$error.required" class="alert" style="color: whitesmoke">
+                    Please choose a username
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="register-label" for="email">Email address</label>
+                <input name="email" required class="form-control" ng-model="model.user.email" id="email" type="email" placeholder="name@company.com"/>
+
+            </div>
+            <div ng-show="form.$submitted || form.email.$touched"
+                 class="">
+                <div ng-show="form.email.$error.email || form.email.$error.required" class="alert" style="color: whitesmoke">
+                    Please enter a valid email address
+                </div>
+            </div>
+            <!--<div class="form-group">-->
+                <!--<label class="register-label" for="first-name">First Name</label>-->
+                <!--<input name="firstname" required class="form-control" ng-model="model.user.firstName"-->
+                       <!--           id="firstname"-->
+                       <!--           -->
+                       <!--           type="text"-->
+                       <!--           placeholder="First Name"/>-->
+            <!--</div>-->
+            <!--<div ng-show="form.$submitted || form.firstname.$touched"-->
+                 <!--class="">-->
+                <!--<div ng-show="form.firstname.$error.required" class="alert" style="color: whitesmoke">-->
+                    <!--Please enter your first name-->
+                <!--</div>-->
+            <!--</div>-->
+            <!--<div class="form-group">-->
+                <!--<label class="register-label" for="last-name">Last Name</label>-->
+                <!--<input name="lastname" required class="form-control" ng-model="model.user.lastName"-->
+                       <!--           id="lastname"-->
+                       <!--           -->
+                       <!--           type="text"-->
+                       <!--           placeholder="Last Name"/>-->
+            <!--</div>-->
+            <div ng-show="form.$submitted || form.lastname.$touched"
+                 class="">
+                <div ng-show="form.lastname.$error.required" class="alert" style="color: whitesmoke">
+                    Please enter your last name
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="register-label" >Password</label>
+                    <input name="password" required id="password" class="form-control" type="password" ng-model="model.user.password" />
+            </div>
+            <div ng-show="form.$submitted || form.password.$touched"
+                 class="">
+                <div ng-show="form.password.$error.required" class="alert" style="color: whitesmoke">
+                    Please choose a password
+                </div>
+            </div>
+
+
+            <!--<label class="register-label user-type-class">-->
+                <!--<input class="form-group radio-inline" type="radio" name="TYPE" value="MOVIE"  ng-model="model.user.role">-->
+                <!--MOVIES</label>-->
+            <!--<label class="register-label user-type-class">-->
+                <!--<input class="form-group radio-inline" type="radio" name="TYPE" value="SHOW" ng-model="model.user.role" >-->
+                <!--SHOWS + MOVIES</label>-->
+            <!--<label ng-if="model.showAdmin" class="register-label user-type-class">-->
+                <!--<input ng-if="model.showAdmin" class="form-group radio-inline" type="radio" name="TYPE" value="ADMIN" ng-model="model.user.role" >-->
+                <!--ADMIN</label>-->
+
+
+
+
+
+
+
+            <div class="form-group" style="padding-top: 2%">
+                <button ng-click="form.$valid && model.register(model.user)" type="button" class="btn btn-primary col-md-12 col-sm-12 col-xs-12">Register</button>
+            </div>
+            <!--<div class="form-group col-md-4 col-md-push-4 col-sm-4 col-sm-push-4 col-xs-12" style="padding-top: 3%">-->
+                <!--<a href="/auth/facebook" class="btn btn-block btn-social btn-facebook">-->
+                    <!--<span class="fa fa-facebook"></span> Sign in with Facebook-->
+                <!--</a>-->
+            <!--</div>-->
+        </form>
+    </div>
+    <div class="col-md-4 hidden-xs hidden-sm">
+        <img src="http://s.movie.as/images/p/359207_m1469233525.jpg"
+             class="img-rounded poster" width="100%" alt="Cinque Terre" style="opacity: 1; cursor: default;">
+    </div>
+</div>

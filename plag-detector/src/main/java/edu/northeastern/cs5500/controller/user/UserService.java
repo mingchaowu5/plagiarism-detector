@@ -20,13 +20,13 @@ public class UserService {
 	 * @return	boolean: returns true iff and only if the user is successfully
 	 * 					 added to the database
 	 */
-	public boolean addUser(User user) {
+	public User addUser(User user) {
 		try {
+			return userDao.addNewUser(user);
 			
 		}catch(Exception e) {
-			return false;
+			return null;
 		}
-		return true;
 	}
 	
 	/**

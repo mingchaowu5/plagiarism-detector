@@ -107,7 +107,7 @@ public class AssignmentController {
 	 */
 	@PostMapping(value = "/upload")
 	public ResponseEntity<Boolean> uploadAssignment(@RequestPart(value = "file") MultipartFile multiPartFile, 
-			@RequestParam(value = "stud_id") int studentId, @RequestParam(value = "assign_id") int assignmentId){
+			@RequestParam(value = "student_id") int studentId, @RequestParam(value = "assignment_id") int assignmentId){
 		boolean flag = this.assignmentService.uploadFile(multiPartFile, studentId, assignmentId);
 		if(flag) {
 			this.assignmentService.insertIntoQueue(studentId, assignmentId);

@@ -35,7 +35,7 @@ public class UserController {
 	 * @return	boolean: true iff and only if the user is successfully registered.
 	 */
 	@GetMapping(value = "/register")
-	public ResponseEntity<Boolean> register(@RequestParam(value = "email") String email, @RequestParam(value = "username") String username, 
+	public ResponseEntity<User> register(@RequestParam(value = "email") String email, @RequestParam(value = "username") String username, 
 			@RequestParam(value = "password")String password, @RequestParam(value = "firstname")String firstname, 
 			@RequestParam(value = "lastname")String lastname, @RequestParam(value = "type") int type) {
 		User user = new User();
@@ -45,8 +45,8 @@ public class UserController {
 		user.setPassword(password);
 		user.setUsername(username);
 		user.setType(type);
-		boolean flag = this.userService.addUser(user);	
-		return new ResponseEntity<>(flag, HttpStatus.OK);
+		User u = this.userService.addUser(user);	
+		return new ResponseEntity<>(u, HttpStatus.OK);
 	}
 	
 	/**

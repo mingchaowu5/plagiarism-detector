@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import edu.northeastern.cs5500.Constants;
 import edu.northeastern.cs5500.dao.AssignmentDao;
+import edu.northeastern.cs5500.dao.SubmissionDao;
 import edu.northeastern.cs5500.models.assignment.Assignment;
 import net.lingala.zip4j.core.ZipFile;
 import net.lingala.zip4j.exception.ZipException;
@@ -27,6 +28,10 @@ public class AssignmentService {
 
 	@Autowired
 	private AssignmentDao assignmentDao;
+	
+	@Autowired
+	private SubmissionDao submissionDao;
+	
 	
 	/**
 	 * Connect to the database layer and get all the assignments
@@ -87,12 +92,12 @@ public class AssignmentService {
 	 * 					extracted(incase of .zip) from on the instance
 	 */
 	public boolean uploadFile(MultipartFile file, int studentId, int assignmentId) {
+		int submissionId = this.submissionDao.addSubmission(assignmentId, studentId, Constants.getCurrentDate());
 		StringBuilder build = new StringBuilder(Constants.ASSIGNMENTURL);
 		try {
 			/**Return false if the input file is empty or creating the folder structure fails**/
 			if(file.isEmpty() || !this.createFileIfNotPresent(build.toString())
-					|| !this.createFileIfNotPresent(build.append(assignmentId).append("/").toString())
-					|| !this.createFileIfNotPresent(build.append(studentId).append("/").toString())) 
+					|| !this.createFileIfNotPresent(build.append(submissionId).append("/").toString())) 
 				return false;
 			/**Copy the file to the instance**/
 			copyFile(file, build.toString());
@@ -111,7 +116,8 @@ public class AssignmentService {
 	private boolean createFileIfNotPresent(String filePath) throws IOException{
 		File file = new File(filePath);
 		if(!file.exists()) {
-			return file.createNewFile();
+			return file.mkdir();
+			//return file.createNewFile();
 		}
 		return true;
 	}
@@ -130,10 +136,8 @@ public class AssignmentService {
         Files.copy(is, Paths.get(path + filename),
                 StandardCopyOption.REPLACE_EXISTING);
         /**Extract and delete only if the input file is a zip**/
-        if(file.getName().endsWith(".zip")) {
         		extractZip(filename, path);
         		deleteZip(filename, path);
-        }
 	}
 
 	/**

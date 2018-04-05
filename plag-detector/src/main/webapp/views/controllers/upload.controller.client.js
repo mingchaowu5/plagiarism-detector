@@ -37,7 +37,7 @@
 
         $('#formUpload')
             .ajaxForm({
-                url : '/rest/file/uploadFile', // or whatever
+                url : '/rest/assignment/upload', // or whatever
                 dataType : 'json',
                 success : function (response) {
                     alert("The server says: " + response);

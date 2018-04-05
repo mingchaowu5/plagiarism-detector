@@ -32,9 +32,9 @@ import edu.northeastern.cs5500.models.extras.Node;
 import edu.northeastern.cs5500.models.file.FilePath;
 import edu.northeastern.cs5500.models.file.FileResult;
 import edu.northeastern.cs5500.models.file.FileStructure;
-import jplag.ExitException;
+/*import jplag.ExitException;
 import jplag.Program;
-import jplag.options.CommandLineOptions;
+import jplag.options.CommandLineOptions;*/
 import edu.northeastern.cs5500.models.person.Student;
 
 @Service

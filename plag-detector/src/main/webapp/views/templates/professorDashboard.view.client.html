@@ -67,7 +67,7 @@
                     </li>
 
                     <li class="user-menu">
-                        <button ng-click="model.loadAllcourses()" data-toggle="modal" data-target="#myModal" type="button" class="btn btn-outline btn-primary btn-lg btn-block user-button">
+                        <button ng-click="model.viewAllSubmissions();model.MODALVIEWS='ALLSUBMISSIONS'" data-toggle="modal" data-target="#myModal" type="button" class="btn btn-outline btn-primary btn-lg btn-block user-button">
                             <span class="glyphicon glyphicon-user user-action-gly"></span>
                             All Submissions</button>
                     </li>
@@ -141,9 +141,28 @@
                                             </div>
 
                                             <div class="col-md-6">
-                                                <div class="data-numbers">{{course.name}}</div>
+                                                <div class="row">
+                                                    <div class="data-numbers">{{course.name}}</div>
+
+                                                </div>
+                                                <div class="row">
+                                                    <a  ng-click="model.editCourse(course);model.MODALVIEWS='EDITCOURSE'" class="col-md-1 ">
+                                                        <span class=" glyphicon glyphicon-cog cog-gly"></span>
+                                                    </a>
+
+                                                    <!--<a  ng-click="model.removeComment(comment._id)" class="col-md-1 ">-->
+                                                        <!--<span class="glyphicon glyphicon-remove remove-gly"></span>-->
+                                                    <!--</a>-->
+                                                </div>
+
+
                                             </div>
                                         </div>
+                                    </div>
+
+                                    <div class="panel-body" style="background-color:black">
+
+
                                     </div>
 
                                     <div class="panel-footer"
@@ -162,6 +181,45 @@
                                 </div>
                             </div>
                         </div>
+
+                        <div class="col-md-5">
+                            <div class="panel panel-primary">
+                                <div class="panel-heading" style="background-color:black">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <center>
+                                                <i class="fa fa-plus fa-5x"></i>
+                                            </center>
+                                        </div>
+
+                                        <div class="col-md-6">
+
+                                            <div class="data-numbers">
+                                                <span> Add Course </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="panel-footer"
+                                     style="background-color: black;color: white;">
+                                    <center>
+                                        <h4>Click to Create
+                                            <span class="pull-right">
+                                    <!--<a ng-click="model.fetchAssignmentsVersions(assignment.id);model.loadProfileEditdiv='VERSIONS'"-->
+                                                <!--style="cursor: pointer">-->
+                                                <!--<span class="glyphicon glyphicon glyphicon-chevron-right "></span>-->
+                                                <!--</a>-->
+                                    <a ng-click="model.addCourse();model.MODALVIEWS='ADDCOURSE'" style="cursor: pointer">
+                                    <span class="glyphicon glyphicon glyphicon-chevron-right "></span>
+                                    </a>
+                                </span></h4>
+
+                                    </center>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
                     <div ng-switch-when="ASSIGNMENTS">
                         <!--<ng-include src="'views/user/templates/profile-settings.view.client.html'"></ng-include>-->
@@ -178,9 +236,24 @@
 
                                             <div class="col-md-6">
 
-                                                <div class="data-numbers">
-                                                    <!--<span> Submitted ID -  </span>-->
-                                                    {{assignment.name}}</div>
+                                                <div class="row">
+                                                    <div class="data-numbers">
+                                                        <!--<span> Submitted ID -  </span>-->
+                                                        {{assignment.name}}
+                                                    </div>
+                                                </div>
+
+                                                <div class="row">
+                                                    <a  ng-click="model.editAssignment(assignment);model.MODALVIEWS='EDITASSIGNMENT'" class="col-md-1 ">
+                                                        <span class=" glyphicon glyphicon-cog cog-gly"></span>
+                                                    </a>
+
+                                                    <!--<a  ng-click="model.removeComment(comment._id)" class="col-md-1 ">-->
+                                                    <!--<span class="glyphicon glyphicon-remove remove-gly"></span>-->
+                                                    <!--</a>-->
+                                                </div>
+
+
                                             </div>
                                         </div>
                                     </div>
@@ -198,6 +271,44 @@
 
                                         </center>
                                     </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-5">
+                            <div class="panel panel-primary">
+                                <div class="panel-heading" style="background-color:black">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <center>
+                                                <i class="fa fa-plus fa-5x"></i>
+                                            </center>
+                                        </div>
+
+                                        <div class="col-md-6">
+
+                                            <div class="data-numbers">
+                                                <span> Add Assignment </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="panel-footer"
+                                     style="background-color: black;color: white;">
+                                    <center>
+                                        <h4>Click to Create
+                                            <span class="pull-right">
+                                    <!--<a ng-click="model.fetchAssignmentsVersions(assignment.id);model.loadProfileEditdiv='VERSIONS'"-->
+                                                <!--style="cursor: pointer">-->
+                                                <!--<span class="glyphicon glyphicon glyphicon-chevron-right "></span>-->
+                                                <!--</a>-->
+                                    <a ng-click="model.addAssignment();model.MODALVIEWS='ADDASSIGNMENT'" style="cursor: pointer">
+                                    <span class="glyphicon glyphicon glyphicon-chevron-right "></span>
+                                    </a>
+                                </span></h4>
+
+                                    </center>
                                 </div>
                             </div>
                         </div>
@@ -332,6 +443,14 @@
                     <li class="list-group-item">
                         Plagarism detected! - 32% Click here
                     </li>
+                    <li class="list-group-item" ng-repeat="notification in model.notifications">
+                        <div class="row">
+                            {{notification.text}}
+                        </div>
+                        <div class="row">
+                            {{notification.date}}
+                        </div>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -339,35 +458,41 @@
 
     <button id="myButton" type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal" style="visibility: hidden;"></button>
 
-    <div id="myModal" class="modal fade" role="dialog">
+    <div id="myModal" class="modal fade modal-fullscreen" role="dialog">
         <div class="modal-dialog">
 
             <!-- Modal content-->
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">List of courses to select</h4>
-                </div>
-                <div class="modal-body">
-                    <ul class="list-group list-unstyled" ng-repeat="course in model.allCourses">
-                        <li class="list-group-item">
-                            <div>
-                                {{course.name}}
-                                <span class="pull-right">
-                                    <a ng-click="model.addCourseToStudent(course.ID, model.studentId)">
-                                        <i class="fa fa-plus"></i>
-                                    </a>
-                                </span>
-                            </div>
-                        </li>
-                    </ul>
+            <div class="modal-content" style="padding: 10px">
+
+                <div ng-switch="model.MODALVIEWS">
+                    <div ng-switch-default>
+                        <!--Default content view-->
+                    </div>
+                    <div ng-switch-when="ALLSUBMISSIONS">
+
+                    </div>
+                    <div ng-switch-when="ADDCOURSE">
+                        <ng-include src="'views/templates/professorDashboard.PLUGIN.AddCourse.view.client.html'"></ng-include>
+                    </div>
+                    <div ng-switch-when="EDITCOURSE">
+                        <ng-include src="'views/templates/professorDashboard.PLUGIN.EditCourse.view.client.html'"></ng-include>
+
+                    </div>
+                    <div ng-switch-when="ADDASSIGNMENT">
+                        <ng-include src="'views/templates/professorDashboard.PLUGIN.AddAssignment.view.client.html'"></ng-include>
+
+                    </div>
+                    <div ng-switch-when="EDITASSIGNMENT">
+                        <ng-include src="'views/templates/professorDashboard.PLUGIN.EditAssignment.view.client.html'"></ng-include>
+
+                    </div>
                 </div>
 
+                <div class="modal-footer">
+                    <button id="modalCloseBtn" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
 
-            </div>
-            <div class="modal-footer">
-                <button id="modalCloseBtn" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            </div>
         </div>
 
     </div>
