@@ -1,8 +1,8 @@
-package edu.northeastern.cs5500.models.Semester;
+package edu.northeastern.cs5500.models.semester;
 
 import java.util.List;
 
-import edu.northeastern.cs5500.models.Course.Course;
+import edu.northeastern.cs5500.models.course.Course;
 
 public class Semester {
 	

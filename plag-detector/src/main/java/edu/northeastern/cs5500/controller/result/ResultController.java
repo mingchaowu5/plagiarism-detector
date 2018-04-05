@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import edu.northeastern.cs5500.models.Assignment.Assignment;
+import edu.northeastern.cs5500.models.assignment.Assignment;
 import edu.northeastern.cs5500.models.extras.Graph;
 import edu.northeastern.cs5500.models.file.FileResult;
 

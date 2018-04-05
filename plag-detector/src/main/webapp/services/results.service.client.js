@@ -7,7 +7,8 @@
 
 
         var api = {
-            "assignmentResults":assignmentResults
+            "assignmentResults":assignmentResults,
+            "fetchEdgeStudents":fetchEdgeStudents
         };
         return api;
 

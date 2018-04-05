@@ -6,8 +6,6 @@ import java.util.List;
 
 import org.junit.Test;
 
-import edu.northeastern.cs5500.models.Course.Course;
-
 public class CourseDaoTests {
 	
 	@Test

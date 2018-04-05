@@ -1,4 +1,4 @@
-package edu.northeastern.cs5500.models.Course;
+package edu.northeastern.cs5500.models.course;
 
 public class Course {
 	

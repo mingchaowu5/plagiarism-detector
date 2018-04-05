@@ -1,4 +1,4 @@
-package edu.northeastern.cs5500.models.Person;
+package edu.northeastern.cs5500.models.person;
 
 public class Professor extends User{
 	private int id;
