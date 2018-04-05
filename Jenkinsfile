@@ -30,6 +30,21 @@ pipeline {
                   }
               }
           }
+     stage('Quality') {
+            steps {
+              sh 'sleep 30'
+              timeout(time: 10, unit: 'SECONDS') {
+                 retry(5) {
+   script {
+                      def qg = waitForQualityGate()
+                      if (qg.status != 'OK') {
+                    
+                }
+              }
+            }
+          }
+        }
+      }
     }
 }
 
