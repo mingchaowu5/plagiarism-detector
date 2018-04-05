@@ -33,7 +33,7 @@
 
         //new API
         function getSnapshots(aid) {
-            return $http.get("/rest/snapshots/assignment?id="+aid);
+            return $http.get("/rest/snapshot/assignment?id="+aid);
         }
 
         //New API
@@ -43,7 +43,7 @@
 
         //New API
         function addNewCourse(newCourse) {
-            return $http.get("/rest/course/add?sid="+newCourse.sid+"&name="+newCourse.name);
+            return $http.get("/rest/course/insert?semester_id="+newCourse.sid+"&name="+newCourse.name);
         }
 
         //New API
@@ -58,7 +58,7 @@
 
         //New API
         function updateCourse(course) {
-            return $http.get("/rest/course/add?sid="+course.sid+"&name="+course.name+"&id="+course.id);
+            return $http.get("/rest/course/edit?semester_id="+course.sid+"&name="+course.name+"&id="+course.id);
         }
 
     }

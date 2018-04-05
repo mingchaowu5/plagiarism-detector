@@ -47,34 +47,36 @@ public class CourseDao {
 		}
 	}
 	
-	public void addCourse(final Course course, int semesterId) {
+	public int addCourse(final Course course, int semesterId) {
 		try {
 			String sql = "INSERT INTO Courses (name, semester) VALUES (?, ?)";
-			jdbcTemplate.update(sql, new Object[] {course.getName(), semesterId});
+			return jdbcTemplate.update(sql, new Object[] {course.getName(), semesterId});
 		}catch(Exception e) {
 		}
+		return 0;
 	}
 	
-	public void updateCourse(final Course course) {
+	public int updateCourse(final Course course) {
 		try {
-			
 			String sql = "UPDATE Courses SET name = ?, semester = ? WHERE id = ?";
-			jdbcTemplate.update(sql, new Object[] {course.getName(), course.getSemester(), course.getId()});
+			return jdbcTemplate.update(sql, new Object[] {course.getName(), course.getSemester(), course.getId()});
 		}
 		catch(Exception e){
 			
 		}
+		return 0;
 	}
 	
-	public void deleteCourse(final Course course) {
+	public int deleteCourse(final int id) {
 		try {
 			
 			String sql = "DELETE FROM Courses WHERE id = ?";
-			jdbcTemplate.update(sql, new Object[] {course.getId()});
+			return jdbcTemplate.update(sql, new Object[] {id});
 		}
 		catch(Exception e){
 			
 		}
+		return 0;
 	}
 
 	public List<Course> getAllCoursesForSemester(int id) {

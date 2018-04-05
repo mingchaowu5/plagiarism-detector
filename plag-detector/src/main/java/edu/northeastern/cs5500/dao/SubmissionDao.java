@@ -29,8 +29,6 @@ public class SubmissionDao {
 				} else {
 					return 0;
 				}
-				
-				
 			}
 			catch(Exception e) {
 				return 0;
@@ -69,7 +67,6 @@ public class SubmissionDao {
 			String sql = "SELECT MAX(id) AS id FROM Submission WHERE assignment = ? GROUP BY student";
 			RowMapper<Submission> mapper = new BeanPropertyRowMapper<>(Submission.class);
 			submissions =  jdbcTemplate.query(sql, mapper, assignmentId);
-
 		}
 		catch(Exception e){
 			

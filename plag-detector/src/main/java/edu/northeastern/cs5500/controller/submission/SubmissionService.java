@@ -26,8 +26,8 @@ public class SubmissionService {
 		return this.submissionDao.getAllSubmissionsIdByAssignment(studentId, assignmentId);
 	}
 	
-	public Integer insert(int aid, int sid) {
-		return this.submissionDao.addSubmission(aid, sid, Constants.getCurrentDate());
+	public Integer insert(int assignmentId, int studentId) {
+		return this.submissionDao.addSubmission(assignmentId, studentId, Constants.getCurrentDate());
 	}
 	
 }
