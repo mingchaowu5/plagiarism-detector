@@ -1,4 +1,4 @@
-package edu.northeastern.cs5500.models.Results;
+package edu.northeastern.cs5500.models.results;
 
 public class FileResults {
 	private int id;

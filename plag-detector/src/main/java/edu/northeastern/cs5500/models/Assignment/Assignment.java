@@ -1,4 +1,4 @@
-package edu.northeastern.cs5500.models.Assignment;
+package edu.northeastern.cs5500.models.assignment;
 
 public class Assignment {
 	

@@ -1,4 +1,4 @@
-package edu.northeastern.cs5500.models.Person;
+package edu.northeastern.cs5500.models.person;
 
 public class User {
 	
@@ -8,9 +8,15 @@ public class User {
 	private String email;
 	private String userName;
 	private String password;
+	private int type;
 	
 	
-	
+	public int getType() {
+		return type;
+	}
+	public void setType(int type) {
+		this.type = type;
+	}
 	public int getId() {
 		return id;
 	}
@@ -58,8 +64,5 @@ public class User {
 	
 	public User() {
 
-	}
-	
-	
-	
+	}	
 }

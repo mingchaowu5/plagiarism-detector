@@ -21,11 +21,11 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import edu.northeastern.cs5500.Dao.ResultsDao;
-import edu.northeastern.cs5500.Dao.StudentDao;
-import edu.northeastern.cs5500.models.Person.Student;
-import edu.northeastern.cs5500.models.Results.FileResults;
-import edu.northeastern.cs5500.models.Results.StudentResults;
+
+import edu.northeastern.cs5500.models.results.FileResults;
+import edu.northeastern.cs5500.models.results.StudentResults;
+import edu.northeastern.cs5500.dao.ResultsDao;
+import edu.northeastern.cs5500.dao.StudentDao;
 import edu.northeastern.cs5500.models.extras.Edge;
 import edu.northeastern.cs5500.models.extras.Graph;
 import edu.northeastern.cs5500.models.extras.Node;
@@ -35,6 +35,7 @@ import edu.northeastern.cs5500.models.file.FileStructure;
 /*import jplag.ExitException;
 import jplag.Program;
 import jplag.options.CommandLineOptions;*/
+import edu.northeastern.cs5500.models.person.Student;
 
 @Service
 public class ResultService {
@@ -64,13 +65,13 @@ public class ResultService {
 		Set<Integer> tIds = new HashSet<>();
 		List<Node> nodes = new ArrayList<>();
 		List<Edge> edges = new ArrayList<>();
-		List<Student> students = studentDao.findAllStudentsForAssignment(id);
+		List<Student> students = new ArrayList<>();//studentDao.findAllStudentsForAssignment(id);
 		for(Student s : students) {
 			tIds.add(s.getId());
 			Node node = new Node();
 			node.setLabel(s.getEmail());
 			node.setId(s.getId());
-			int studAssignId = studentDao.findStudentAssignmentId(s.getId(), id);
+			int studAssignId = 0;//studentDao.findStudentAssignmentId(s.getId(), id);
 			List<StudentResults> sResults = resultsDao.findAllStudentResultsForStudentAssignment(studAssignId);
 			int i = 0;
 			for(StudentResults sr : sResults) {
@@ -79,7 +80,7 @@ public class ResultService {
 				if(sr.getStudentAssignment1() != studAssignId) {
 					tempId = sr.getStudentAssignment1();
 				}
-				tempId = studentDao.findStudentIdFromStudentAssignment(tempId);
+				tempId = 0;//studentDao.findStudentIdFromStudentAssignment(tempId);
 				if(!tIds.contains(tempId)) {
 					Edge edge = new Edge();
 					edge.setFrom(s.getId());
@@ -99,8 +100,8 @@ public class ResultService {
 	}
 	
 	public List<FileResult> getFileResultsForStudents(int sid1, int sid2, int aid) {
-		List<FileStructure> files = studentDao.findAllFileStructuresStudent(sid1, aid);
-		List<FileStructure> temp = studentDao.findAllFileStructuresStudent(sid2, aid);
+		List<FileStructure> files = new ArrayList<>();//studentDao.findAllFileStructuresStudent(sid1, aid);
+		List<FileStructure> temp = new ArrayList<>();//studentDao.findAllFileStructuresStudent(sid2, aid);
 		Set<Integer> fileS2 = new HashSet<>();
 		for(FileStructure fs : temp) {
 			fileS2.add(fs.getId());
@@ -144,10 +145,10 @@ public class ResultService {
 	}
 	
 	private void fetchFileMatching(int aid) {
-		List<Student> students = studentDao.findAllStudentsForAssignment(aid);
+		List<Student> students = new ArrayList<>();//studentDao.findAllStudentsForAssignment(aid);
 		for(Student s : students) {
 			int sid = s.getId();
-			List<FileStructure> files = studentDao.findAllFileStructuresStudent(sid, aid);		
+			List<FileStructure> files = new ArrayList<>();//studentDao.findAllFileStructuresStudent(sid, aid);		
 			for(FileStructure fs : files) {
 				String key = sid + "-" + fs.getFile();
 				fileIdMap.put(key, fs.getId());
@@ -159,7 +160,7 @@ public class ResultService {
 	
 	public void run(int id) throws IOException{
 		this.assignmentId = id;
-		List<Student> students = studentDao.findAllStudentsForAssignment(id);
+		List<Student> students = new ArrayList<>();//studentDao.findAllStudentsForAssignment(id);
 		int[] ids = new int[students.size()];
 		int i = 0;
 		for(Student s : students) {
@@ -185,7 +186,7 @@ public class ResultService {
 				for(File aF : allFiles) {
 					if(!aF.isDirectory()) {
 						files.add(ids[i] + "-" + aF.getName());
-						studentDao.addFileForStudentAssignment(ids[i], this.assignmentId, aF.getName());
+						//studentDao.addFileForStudentAssignment(ids[i], this.assignmentId, aF.getName());
 						fileUser.put(ids[i] + "-" + aF.getName(), i);
 						this.copyFile(aF, ids[i]);
 					}
@@ -265,7 +266,7 @@ public class ResultService {
 	}
 	
 	private int getStudentAssignmentId(int id) {
-		return studentDao.findStudentAssignmentId(id, assignmentId);
+		return 0;//studentDao.findStudentAssignmentId(id, assignmentId);
 	}
 	
 	private void getResults(double[][] userResult) throws IOException {

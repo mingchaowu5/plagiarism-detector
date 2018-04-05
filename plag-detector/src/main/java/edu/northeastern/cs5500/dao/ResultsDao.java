@@ -1,4 +1,4 @@
-package edu.northeastern.cs5500.Dao;
+package edu.northeastern.cs5500.dao;
 
 import java.util.List;
 
@@ -9,10 +9,10 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import edu.northeastern.cs5500.models.Results.FileResults;
-import edu.northeastern.cs5500.models.Results.StudentResults;
 import edu.northeastern.cs5500.models.file.FilePath;
 import edu.northeastern.cs5500.models.file.FileStructure;
+import edu.northeastern.cs5500.models.results.FileResults;
+import edu.northeastern.cs5500.models.results.StudentResults;
 
 @Transactional
 @Repository

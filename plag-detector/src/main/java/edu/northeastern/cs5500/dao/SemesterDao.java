@@ -1,4 +1,4 @@
-package edu.northeastern.cs5500.Dao;
+package edu.northeastern.cs5500.dao;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,7 +8,7 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import edu.northeastern.cs5500.models.Semester.Semester;
+import edu.northeastern.cs5500.models.semester.Semester;
 
 @Transactional
 @Repository

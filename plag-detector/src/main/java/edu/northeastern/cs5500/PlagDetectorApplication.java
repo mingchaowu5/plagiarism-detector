@@ -1,17 +1,10 @@
 package edu.northeastern.cs5500;
 
-import java.util.List;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.support.SpringBootServletInitializer;
-
-import edu.northeastern.cs5500.Dao.SemesterDao;
-import edu.northeastern.cs5500.models.Semester.Semester;
-
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
 public class PlagDetectorApplication extends SpringBootServletInitializer{
