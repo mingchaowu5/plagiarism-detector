@@ -10,7 +10,7 @@ pipeline {
        stage('Build') {
            steps {
                echo "Building"
-               sh 'mvn install:install-file -Dfile=.plag-detector/lib/jplag-lib.jar -DgroupId=jplag -DartifactId=jplag -Dversion=2.11.9 -Dpackaging=jar'
+               sh 'mvn install:install-file -Dfile=./plag-detector/lib/jplag-lib.jar -DgroupId=jplag -DartifactId=jplag -Dversion=2.11.9 -Dpackaging=jar'
                sh 'mvn -f plag-detector/pom.xml compile'
                sh 'mvn -f plag-detector/pom.xml package'
            }
@@ -24,7 +24,7 @@ pipeline {
       stage('SonarQube') {
               steps {
                   withSonarQubeEnv('SonarQube') {
-                          sh 'mvn install:install-file -Dfile=.plag-detector/lib/jplag-lib.jar -DgroupId=jplag -DartifactId=jplag -Dversion=2.11.9 -Dpackaging=jar'
+                          sh 'mvn install:install-file -Dfile=./plag-detector/lib/jplag-lib.jar -DgroupId=jplag -DartifactId=jplag -Dversion=2.11.9 -Dpackaging=jar'
                           sh 'mvn -f plag-detector/pom.xml clean install'
                           sh 'mvn -f plag-detector/pom.xml sonar:sonar'
                   }
