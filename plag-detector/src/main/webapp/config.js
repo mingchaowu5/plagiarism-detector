@@ -66,6 +66,11 @@
                 controller: 'studentDashboardController',
                 controllerAs: 'model'
             })
+            .when("/compare/:id",{
+                templateUrl:"views/templates/compareFiles.view.client.html",
+                controller: 'compareFilesController',
+                controllerAs: 'model'
+            })
             .otherwise({
                 templateUrl:"views/templates/result.view.client.html",
                 controller: 'resultController',

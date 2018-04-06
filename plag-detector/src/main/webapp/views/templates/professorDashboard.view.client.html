@@ -55,7 +55,7 @@
                 <div class="col-md-12" style="padding-top: 5%">
                     <center>
                         <span style="font-size:8em;" class="glyphicon glyphicon-user user-gly"></span>
-                        <h3 class=""> {{model.name}} </h3></center>
+                        <!-- <h3 class=""> {{model.professorName}} </h3></center> -->
                 </div>
 
                 <ul class="user-menu" style="list-style-type: none;">
@@ -143,27 +143,17 @@
                                             <div class="col-md-6">
                                                 <div class="row">
                                                     <div class="data-numbers">{{course.name}}</div>
-
-                                                </div>
-                                                <div class="row">
-                                                    <a  ng-click="model.editCourse(course);model.MODALVIEWS='EDITCOURSE'" class="col-md-1 ">
+                                                    <a  ng-click="model.editCourse(course);model.MODALVIEWS='EDITCOURSE'" class="col-md-1 pull-right">
                                                         <span class=" glyphicon glyphicon-cog cog-gly"></span>
                                                     </a>
-
-                                                    <!--<a  ng-click="model.removeComment(comment._id)" class="col-md-1 ">-->
-                                                        <!--<span class="glyphicon glyphicon-remove remove-gly"></span>-->
-                                                    <!--</a>-->
                                                 </div>
+                                                
 
 
                                             </div>
                                         </div>
                                     </div>
 
-                                    <div class="panel-body" style="background-color:black">
-
-
-                                    </div>
 
                                     <div class="panel-footer"
                                          style="background-color: black;color: white;">
@@ -331,8 +321,8 @@
                                             <div class="col-md-6">
 
                                                 <div class="data-numbers">
-                                                    <!--<span> Submitted ID -  </span>-->
-                                                    {{snapshot.name}}</div>
+                                                    <span> Submitted ID - {{snapshot.id}} </span>
+                                                    </div>
                                             </div>
                                         </div>
                                     </div>
@@ -382,7 +372,7 @@
                                                 <!--style="cursor: pointer">-->
                                                 <!--<span class="glyphicon glyphicon glyphicon-chevron-right "></span>-->
                                                 <!--</a>-->
-                                    <a href="#!/results/{{model.aid}}" style="cursor: pointer">
+                                    <a ng-click="model.runNewSnapshot()" style="cursor: pointer">
                                     <span class="glyphicon glyphicon glyphicon-chevron-right "></span>
                                     </a>
                                 </span></h4>
@@ -444,10 +434,10 @@
                         Plagarism detected! - 32% Click here
                     </li>
                     <li class="list-group-item" ng-repeat="notification in model.notifications">
-                        <div class="row">
+                        <div class="row text-center">
                             {{notification.text}}
                         </div>
-                        <div class="row">
+                        <div class="row text-center">
                             {{notification.date}}
                         </div>
                     </li>

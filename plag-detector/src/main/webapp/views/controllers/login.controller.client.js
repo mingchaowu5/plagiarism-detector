@@ -19,6 +19,7 @@
                 .then(function (response) {
                     var user = response.data;
                     if(user){
+                        console.log(user);
                          $rootScope.currentUser = user;
                         // $location.url("/");
                         console.log("User found... logging in");
