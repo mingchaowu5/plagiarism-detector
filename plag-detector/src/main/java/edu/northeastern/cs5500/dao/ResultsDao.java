@@ -34,6 +34,16 @@ public class ResultsDao {
 		}
 	}
 	
+	public Result getFileData(int id) {
+		try {
+			String sql = "SELECT * FROM Result WHERE id = ?";
+			RowMapper<Result> rowMapper = new BeanPropertyRowMapper<>(Result.class);
+			return this.jdbcTemplate.queryForObject(sql, rowMapper, id);
+		}catch(Exception e) {
+			return null;
+		}
+	}
+	
 	public Result findAverageResultSubmission(int sub1, int sub2){
 		try {
 		String sql = "Select submission1, submission2, sum(percentage)/count(*) as percentage from Result where (Result.submission1 = ?  AND Result.submission2 = ?) OR (Result.submission2 = ? AND Result.submission1 = ?)";

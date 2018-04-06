@@ -58,8 +58,24 @@ public class SnapshotController {
 		return new ResponseEntity<>(this.snapshotService.getResultsForSnapshot(id), HttpStatus.OK);
 	}	
 	
+	/**
+	 * Queue the newly given query
+	 * @param assignmentId
+	 * @param professorId
+	 * @return
+	 */
 	@GetMapping(value = "/run")
 	public ResponseEntity<Boolean> runFreshSnapshotForAssignment(@RequestParam(value = "assignment_id") int assignmentId, @RequestParam(value = "professor_id")int professorId){
 		return new ResponseEntity<>(this.snapshotService.runSnapshotForAssignment(assignmentId, professorId), HttpStatus.OK);
+	}
+	
+	/**
+	 * Get the file details
+	 * @param id
+	 * @return
+	 */
+	@GetMapping(value = "/file")
+	public ResponseEntity<Result> file(@RequestParam(value = "id") int id){
+		return new ResponseEntity<>(this.snapshotService.getFiles(id), HttpStatus.OK);
 	}
 }
