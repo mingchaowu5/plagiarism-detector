@@ -111,7 +111,7 @@ public class UserService {
 	 * @return	List:	of users of the specified type
 	 */
 	public List<User> getUsersOfType(int type){
-		return null;
+		return this.userDao.findUserByType(type);
 	}
 	
 	/**

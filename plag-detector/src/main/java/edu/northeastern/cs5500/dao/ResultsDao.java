@@ -70,8 +70,8 @@ public class ResultsDao {
 	public int deleteResults(int sum1, int sum2) {
 		
 		try {
-			String sql = "DELETE FROM Result WHERE submission1 = ? and submission2 = ?";
-			return jdbcTemplate.update(sql, new Object[] {sum1, sum2});
+			String sql = "DELETE FROM Result WHERE (submission1 = ? and submission2 = ?) OR (submission1 = ? and submission2 = ?)";
+			return jdbcTemplate.update(sql, new Object[] {sum1, sum2, sum2, sum1});
 		} catch(Exception e) {
 			return 0;
 		}
