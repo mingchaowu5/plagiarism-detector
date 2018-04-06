@@ -13,7 +13,7 @@ import org.springframework.web.context.WebApplicationContext;
 
 import edu.northeastern.cs5500.PlagDetectorApplicationTests;
 
-public class UserTest extends PlagDetectorApplicationTests{
+public class NotificationTest extends PlagDetectorApplicationTests{
 
 	@Autowired
 	private WebApplicationContext webApplicationContext;
@@ -26,42 +26,13 @@ public class UserTest extends PlagDetectorApplicationTests{
 	}
 	
 	/**
-	 * Test the end-point for all users
+	 * Test the end-point for all notifications
 	 * @throws Exception
 	 */
 	@Test
-	public void testAllUser() throws Exception {
-		mockMvc.perform(get("/rest/user/all")).andExpect(status().isOk())
+	public void testAllNotifications() throws Exception {
+		mockMvc.perform(get("/rest/notification/all")).andExpect(status().isOk())
 		.andExpect(content().contentType("application/json;charset=UTF-8"));
 	}
-	
-	/**
-	 * Test the end-point for username
-	 * @throws Exception
-	 */
-	@Test
-	public void testUsername() throws Exception {
-		mockMvc.perform(get("/rest/user/available").param("username", "varun")).andExpect(status().isOk());
-	}
-	
-	/**
-	 * Test the end-point for all users who are professor
-	 * @throws Exception
-	 */
-	@Test
-	public void testAllProfessor() throws Exception {
-		mockMvc.perform(get("/rest/user/professor")).andExpect(status().isOk());
-	}
-	
-	/**
-	 * Test the end-point for all users who are students
-	 * @throws Exception
-	 */
-	@Test
-	public void testAllStudent() throws Exception {
-		mockMvc.perform(get("/rest/user/student")).andExpect(status().isOk());
-	}
-	
-	
 	
 }

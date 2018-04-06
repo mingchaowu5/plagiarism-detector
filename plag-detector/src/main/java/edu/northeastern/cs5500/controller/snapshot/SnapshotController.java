@@ -28,8 +28,8 @@ public class SnapshotController {
 	private SnapshotService snapshotService;
 	
 	/**
-	 * Get all the semester when an user logs in.
-	 * @return	List: of all the semester in the database which have not been deleted
+	 * Get all the snapshots for an assignment
+	 * @return	List: of all the snapshots
 	 */
 	@GetMapping(value = "/assignment")
 	public ResponseEntity<List<Snapshot>> snapshotsByAssignment(@RequestParam(value = "id") int id) {

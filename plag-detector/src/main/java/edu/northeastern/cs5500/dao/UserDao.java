@@ -1,5 +1,6 @@
 package edu.northeastern.cs5500.dao;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,6 +46,19 @@ public class UserDao {
 		}
 		catch(Exception e) {
 			return null;
+		}
+	}
+	
+	public List<User> findUserByType(int type) {
+		try {
+			String sql = "SELECT User.id, User.firstName, User.lastName, User.email FROM User WHERE User.type = ?";
+			RowMapper<User> mapper = new BeanPropertyRowMapper<>(User.class);
+			List<User> users =  jdbcTemplate.query(sql, mapper, type);
+			return users;
+			
+		}
+		catch(Exception e) {
+			return new ArrayList<>();
 		}
 	}
 	
