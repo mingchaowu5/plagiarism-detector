@@ -22,7 +22,7 @@ public class SnapshotDao {
 	
 	public List<Snapshot> findAllSnapshotsForAssignment(int assignmentId){
 		try {
-			String sql = "Select DISTINCT(Snapshot.id), Snapshot.submission, Snapshot.dateTime, Snapshot.type from Snapshot join Submission on Snapshot.submission = Submission.id where Submission.assignment = ? AND Snapshot.status = 1";
+			String sql = "Select DISTINCT Snapshot.id, Snapshot.dateTime, Snapshot.type from Snapshot join Submission on Snapshot.submission = Submission.id where Submission.assignment = ? AND Snapshot.status = 1";
 			RowMapper<Snapshot> rowMapper = new BeanPropertyRowMapper<>(Snapshot.class);
 			List<Snapshot> results = this.jdbcTemplate.query(sql, rowMapper, assignmentId);
 			return results;
@@ -34,7 +34,7 @@ public class SnapshotDao {
 	
 	public List<Snapshot> findAllSnapshotsToBePerformed(){
 		try {
-			String sql = "Select DISTINCT(Snapshot.id), Snapshot.submission, Snapshot.dateTime from Snapshot join Submission on Snapshot.submission = Submission.id where Snapshot.status = 0";
+			String sql = "Select DISTINCT(Snapshot.id) from Snapshot join Submission on Snapshot.submission = Submission.id where Snapshot.status = 0";
 			RowMapper<Snapshot> rowMapper = new BeanPropertyRowMapper<>(Snapshot.class);
 			List<Snapshot> results = this.jdbcTemplate.query(sql, rowMapper);
 			return results;
@@ -44,10 +44,10 @@ public class SnapshotDao {
 		}
 	}
 	
-	public int updateStatus(int snapShotId){
+	public int updateStatus(int snapShotId, int type){
 		try {
-			String sql = "UPDATE Snapshot SET status = 1 WHERE id = ?";
-			return jdbcTemplate.update(sql, new Object[] {snapShotId});
+			String sql = "UPDATE Snapshot SET status = ? WHERE id = ?";
+			return jdbcTemplate.update(sql, new Object[] {type, snapShotId});
 		}
 		catch(Exception e) {
 			return 0;

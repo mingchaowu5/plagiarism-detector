@@ -2,8 +2,14 @@ package edu.northeastern.cs5500.models.extras;
 
 public class Node {
 	private int id;
-	private int value;
+	private double value;
 	private String label;
+	
+	public Node(int id, double value, String label) {
+		this.id = id;
+		this.value = value;
+		this.label = label;
+	}
 	
 	public int getId() {
 		return id;
@@ -11,10 +17,10 @@ public class Node {
 	public void setId(int id) {
 		this.id = id;
 	}
-	public int getValue() {
+	public double getValue() {
 		return value;
 	}
-	public void setValue(int value) {
+	public void setValue(double value) {
 		this.value = value;
 	}
 	public String getLabel() {

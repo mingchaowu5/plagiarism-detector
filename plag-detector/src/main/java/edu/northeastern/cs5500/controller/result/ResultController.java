@@ -24,17 +24,17 @@ public class ResultController {
 	 * Get all the courses when an user logs in.
 	 * @return
 	 */
-	@GetMapping(value = "all")
-	public ResponseEntity<Graph> allResult(@RequestParam(value = "id") int id) throws IOException{
-		resultService.run(id);
-		Graph graph = resultService.getResultForStudent(id);
-		return new ResponseEntity<>(graph, HttpStatus.OK);
-	}	
-	
-	@GetMapping(value = "files")
-	public ResponseEntity<List<FileResult>> fileResult(@RequestParam(value = "sid1") int sid1, @RequestParam(value = "sid2") int sid2,
-			@RequestParam(value = "aid1") int aid) throws IOException{
-		List<FileResult> list = resultService.getFileResultsForStudents(sid1, sid2, aid);
-		return new ResponseEntity<>(list, HttpStatus.OK);
-	}	
+//	@GetMapping(value = "all")
+//	public ResponseEntity<Graph> allResult(@RequestParam(value = "id") int id) throws IOException{
+//		resultService.run(id);
+//		Graph graph = resultService.getResultForStudent(id);
+//		return new ResponseEntity<>(graph, HttpStatus.OK);
+//	}	
+//	
+//	@GetMapping(value = "files")
+//	public ResponseEntity<List<FileResult>> fileResult(@RequestParam(value = "sid1") int sid1, @RequestParam(value = "sid2") int sid2,
+//			@RequestParam(value = "aid1") int aid) throws IOException{
+//		List<FileResult> list = resultService.getFileResultsForStudents(sid1, sid2, aid);
+//		return new ResponseEntity<>(list, HttpStatus.OK);
+//	}	
 }

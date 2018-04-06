@@ -38,7 +38,7 @@
 
         //New API
         function addNewAssignemnt(newAssignemnt) {
-            return $http.get("/rest/assignment/add?cid="+newAssignemnt.cid+"&name="+newAssignemnt.name);
+            return $http.get("/rest/assignment/insert?course_id="+newAssignemnt.cid+"&name="+newAssignemnt.name);
         }
 
         //New API
@@ -53,7 +53,7 @@
 
         //New API
         function updateAssignemnt(assignemnt) {
-            return $http.get("/rest/assignment/update?cid="+assignemnt.cid+"&name="+assignemnt.name+"&id="+assignemnt.id);
+            return $http.get("/rest/assignment/update?course_id="+assignemnt.cid+"&name="+assignemnt.name+"&assignment_id="+assignemnt.id);
         }
 
         //New API

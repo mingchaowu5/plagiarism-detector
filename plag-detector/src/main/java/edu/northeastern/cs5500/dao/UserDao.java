@@ -22,6 +22,19 @@ public class UserDao {
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 	
+	public String getNameOfStudent(int submissionId) {
+		try {
+			String sql = "Select User.firstName, User.lastName from User join Student on User.id = Student.id join Submission on Student.id = Submission.student where Submission.id = ?";
+			RowMapper<User> mapper = new BeanPropertyRowMapper<>(User.class);
+			User user =  jdbcTemplate.queryForObject(sql, mapper, submissionId);
+			return user.getFirstName() + " " + user.getLastName();
+			
+		}
+		catch(Exception e) {
+			return "";
+		}
+	}
+	
 	/**
 	 * 
 	 * @param user

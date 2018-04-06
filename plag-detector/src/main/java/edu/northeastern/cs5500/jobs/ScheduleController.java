@@ -1,5 +1,7 @@
 package edu.northeastern.cs5500.jobs;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -7,6 +9,7 @@ import org.springframework.stereotype.Component;
 
 import edu.northeastern.cs5500.controller.result.ResultsService;
 import edu.northeastern.cs5500.controller.snapshot.SnapshotService;
+import edu.northeastern.cs5500.mail.SendMail;
 import edu.northeastern.cs5500.models.snapshot.Snapshot;
 import edu.northeastern.cs5500.models.submission.Submission;
 
@@ -20,19 +23,36 @@ public class ScheduleController {
 	@Autowired
 	private ResultsService resultsService;
 
-	@Scheduled(cron = "0 0 0/1 1/1 * ?")
+	private Logger log;
+	
+	/**
+	 * 
+	 */
+	//@Scheduled(cron = "0 0 0/1 1/1 * ?")
+	@Scheduled(cron = "0 0/5 * 1/1 * ?")
 	public void run() {
+		log = Logger.getAnonymousLogger();
+		log.log(Level.INFO, "Running");
 		List<Snapshot> list = this.snapshotService.getAllSnapshotsToBePerformed();
 		boolean flag = true;
 		for(Snapshot snap : list) {
+			this.snapshotService.updateStatus(snap.getId(), -1);
 			if(snap.getType() == 0) {
-				flag = findIncrementalResult(snap.getId());
+				flag = calculateIncrementalResult(snap.getId());
+			}else {
+				flag = calculateTotalResult(snap.getId());
+				//sendMail.sendMail();
 			}
 			if(flag)
-				this.snapshotService.updateStatus(snap.getId());
+				this.snapshotService.updateStatus(snap.getId(), 1);
 		}
 	}
 	
+	/**
+	 * 
+	 * @param list
+	 * @return
+	 */
 	private int findMaxSubmission(List<Submission> list) {
 		int max = -1;
 		for(Submission s: list) {
@@ -40,21 +60,47 @@ public class ScheduleController {
 				max = s.getId();
 			}
 		}
-		return -1;
+		return max;
 	}
 	
-	private boolean findIncrementalResult(int id) {
+	/**
+	 * 
+	 * @param id
+	 * @return
+	 */
+	private boolean calculateIncrementalResult(int id) {
 		List<Submission> submissions = this.snapshotService.getAllSubmissionsForSnapshot(id);
 		if(submissions.size() == 1)
 			return false;
 		int max = this.findMaxSubmission(submissions);
 		if(max == -1)
 			return false;
+
 		for(Submission s : submissions) {
 			if(s.getId() != max) {
-				resultsService.setSubmissionIds(max, s.getId());
-				resultsService.findResults();
+				this.resultsService.deleteEntries(max, s.getId());
+				resultsService.findResults(id, max, s.getId());
 			}
+		}
+		return true;
+	}
+	
+	/**
+	 * 
+	 * @param id
+	 * @return
+	 */
+	private boolean calculateTotalResult(int id) {
+		List<Submission> submissions = this.snapshotService.getAllSubmissionsForSnapshot(id);
+		try {
+			for(int i = 0;i<submissions.size();++i) {
+				for(int j = i + 1;j<submissions.size();++j) {
+					this.resultsService.deleteEntries(submissions.get(i).getId(), submissions.get(j).getId());
+					resultsService.findResults(id, submissions.get(i).getId(), submissions.get(j).getId());
+				}
+			}
+		}catch(Exception e) {
+			return false;
 		}
 		return true;
 	}
