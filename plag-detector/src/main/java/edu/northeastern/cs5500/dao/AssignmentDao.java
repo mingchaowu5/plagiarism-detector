@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import edu.northeastern.cs5500.models.assignment.Assignment;
+import edu.northeastern.cs5500.models.assignment.Language;
 
 @Transactional
 @Repository
@@ -43,21 +44,21 @@ public class AssignmentDao {
 		}
 	}
 	
-	public int addAssignment(String assignmentName, int courseId) {
+	public int addAssignment(String assignmentName, int courseId, int langId) {
 		try {
-				String sql = "INSERT INTO Assignment (name, course) VALUES (?, ?)";
-				return jdbcTemplate.update(sql, new Object[] {assignmentName, courseId});
+				String sql = "INSERT INTO Assignment (name, course, language) VALUES (?, ?, ?)";
+				return jdbcTemplate.update(sql, new Object[] {assignmentName, courseId, langId});
 			}
 			catch(Exception e) {
 				return 0;
 			}
 	}
 	
-	public int updateAssignment(int assignmentId, String assignmentName, int courseId) {
+	public int updateAssignment(int assignmentId, String assignmentName, int courseId, int langId) {
 		try {
 			
-			String sql = "UPDATE Assignment SET name = ?, course = ? WHERE id = ?";
-			return jdbcTemplate.update(sql, new Object[] {assignmentName, courseId, assignmentId});
+			String sql = "UPDATE Assignment SET name = ?, course = ?, language = ? WHERE id = ?";
+			return jdbcTemplate.update(sql, new Object[] {assignmentName, courseId, langId, assignmentId});
 		}
 		catch(Exception e){
 			return 0;
@@ -82,6 +83,19 @@ public class AssignmentDao {
 			}
 			catch(Exception e) {
 			}
+		}
+	}
+	
+	public String getLanguage(int id) {
+		try {
+			String sql = "SELECT l.name, l.code, l.id FROM Submission AS s JOIN Assignment AS a ON s.assignment = a.id JOIN Languages AS l ON a.language = l.id WHERE s.id = ?";
+			RowMapper<Language> rowMapper = new BeanPropertyRowMapper<>(Language.class);
+			Language l = this.jdbcTemplate.queryForObject(sql, rowMapper, id);
+			if(l == null || l.getCode() == null)
+				return "python3";
+			return l.getCode();
+		}catch(Exception e) {
+			return "python3";
 		}
 	}
 }

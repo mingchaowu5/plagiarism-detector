@@ -10,7 +10,7 @@
         vm.fetchAssignments = fetchAssignments;
         vm.loadAllcourses = loadAllcourses;
         vm.addCourseToStudent = addCourseToStudent;
-        vm.studentName = "XYZ";
+        // vm.studentName = $rootScope.currentUser.username;
         vm.studentId = $routeParams.sid;
         vm.courseID = $routeParams.cid;
         vm.assignmentID = $routeParams.aid;

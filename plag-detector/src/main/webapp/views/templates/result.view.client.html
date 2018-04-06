@@ -68,61 +68,88 @@
     <div style="padding-top: 70px">
         <div style="height: 900px" id="mynetwork"></div>
     </div>
-    <div class="col-lg-6 col-sm-12 col-md-6">
+    <!-- <div class="col-lg-6 col-sm-12 col-md-6">
         <ng-gauge size="200" type="full" thick="5" min="0" max="120"
                   value="68.2" cap="round" label="Match"  foreground-color="#ffcc66"
                   background-color="rgba(255,255,255, 0.4)" append="%">
 
         </ng-gauge>
-    </div>
+    </div> -->
 
+</div>
+<div class="row" style="padding-bottom: 50px">
+    <h2>Student detail View</h2>
+    <table class="table table-responsive">
+            <thead>
+                <tr>
+                    <th>Student1</th>
+                    <th>Student2</th>
+                    <th>percentage similarity</th>
+                    <th>View Results</th>
+                </tr>
+            </thead>
+           
+            <tr ng-repeat="row in model.tableValues">
+            <td>{{row.fromLabel}}</td>
+            <td>{{row.toLabel}}</td>
+            <td>{{row.value}}</td>
+            <td><a ng-click="model.showDisplay(row)" target="_blank" style="cursor: pointer;">View Files</a></td>
+            <!-- <tr>{{row.file2}}</tr> -->
+            </tr>
+        </table>
+</div>
 
-    <button id="myButton" type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal" style="visibility: hidden;"></button>
+<button id="myButton" type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal" style="visibility: hidden;"></button>
 
-    <!-- Modal -->
-    <div id="myModal" class="modal fade" role="dialog">
-        <div class="modal-dialog">
+<!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
 
-            <!-- Modal content-->
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Detail Plagarism Information</h4>
-                </div>
-                <div class="modal-body">
-                    <div class="row">
-                        <h3>{{model.selectedNodeInfo}}</h3>
-                        <h2>Plagarised Percentage</h2>
-                        <h3>{{model.nodePercentage}}%</h3>
-                        <h3>{{model.edgePercentage}}%</h3>
-                        <h3>{{model.selectedNodeInfo2}}</h3>
-                    </div>
-                    <div class="row">
-                        <table>
-                            <tr>
-                                <th>name 1</th>
-                                <th>name 2</th>
-                                <th>percentage similarity</th>
-                                <th>file 1</th>
-                                <th>file 2</th>
-                            </tr>
-                            <tr ng-repeat="row in model.results">
-                            <tr>{{row.name1}}</tr>
-                            <tr>{{row.name2}}</tr>
-                            <tr>{{row.value}}</tr>
-                            <tr>{{row.file1}}</tr>
-                            <tr>{{row.file2}}</tr>
-                            </tr>
-                        </table>
-                    </div>
-
-
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                </div>
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="container-fluid">
+                    <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h1 class="modal-title text-center">Detail Plagarism Information</h1>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <h2>Plagarised Percentage</h2>
+                                
+                                <h3>Student : {{model.selectedNodeInfo}}</h3>
+                                <h3 ng-if="model.nodePercentage">Plagarised Percentage : {{model.nodePercentage}}%</h3>
+                                <h3 ng-if="model.edgePercentage">Plagarised Percentage : {{model.edgePercentage}}% with</h3>
+                                <h3>Student : {{model.selectedNodeInfo2}}</h3>
+                            </div>
+                            <div class="row">
+                                <table class="table table-responsive">
+                                    <thead>
+                                        <tr>
+                                            <th>File 1</th>
+                                            <th>File 2</th>
+                                            <th>percentage similarity</th>
+                                            <th>View Results</th>
+                                        </tr>
+                                    </thead>
+                                   
+                                    <tr ng-repeat="row in model.results">
+                                    <td>{{row.filename1}}</td>
+                                    <td>{{row.filename2}}</td>
+                                    <td>{{row.percentage}}</td>
+                                    <td><a href="#!/compare/{{row.id}}" target="_blank" style="cursor: pointer;">View Files</a></td>
+                                    <!-- <tr>{{row.file2}}</tr> -->
+                                    </tr>
+                                </table>
+                            </div>
+        
+        
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
             </div>
-
+            
         </div>
+
     </div>
 </div>

@@ -1,0 +1,40 @@
+<div class="container-fluid marginTop backStyle" style="padding-top: 70px;padding-bottom: 70px" >
+    <div ng-show="model.error" class="alert alert-danger" role="alert" >
+        {{model.error}}
+    </div>
+    <div class="alert alert-success" ng-show="model.message">
+        {{model.message}}
+    </div>
+
+    <div class="col-md-8">
+        <form action="#/addCourse"
+              name="form"
+              novalidate
+              method="POST">
+     
+          
+     
+            <div class="form-group">
+                <label class="register-label" for="first-name">CourseName</label>
+                <input name="coursename" required class="form-control" ng-model="model.course.coursename"
+                       id="coursename"
+                       type="text"
+                       placeholder="coursename"/>
+            </div>
+            <div>
+				<select class="custom-select" id="inputSemester">
+					<option selected>Choose semester..</option>
+					<div ng-repeat="sem in model.semesters">
+					<option value={{sem.name}}>{{sem.name}}</option>
+					</div>
+					<option value="All">All</option>
+				</select>
+    		</div>
+            <div class="form-group" style="padding-top: 2%">
+                <button ng-click="form.$valid && model.addCourse(model.course)" type="button" class="btn btn-primary col-md-12 col-sm-12 col-xs-12">Add course</button>
+            </div>
+           
+        </form>
+    </div>
+   
+</div>

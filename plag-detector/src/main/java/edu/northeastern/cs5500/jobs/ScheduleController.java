@@ -34,17 +34,17 @@ public class ScheduleController {
 	
 	private Logger log;
 	
+	
 	/**
 	 * Run method
 	 */
-	@Scheduled(cron = "0 0/5 * 1/1 * ?")
+	@Scheduled(cron = "0 0/2 * 1/1 * ?")
 	public void run() {
 		log = Logger.getAnonymousLogger();
-
 		log.log(Level.INFO, "Running");
-		log.log(Level.INFO, Constants.ASSIGNMENTURL);
 		List<Snapshot> list = this.snapshotService.getAllSnapshotsToBePerformed();
-		boolean flag = true;
+		log.log(Level.INFO, "Size: "+list.size());
+		boolean flag = false;
 		for(Snapshot snap : list) {
 			this.snapshotService.updateStatus(snap.getId(), -1);
 			log.log(Level.INFO, "Type: " + snap.getType());
@@ -59,6 +59,7 @@ public class ScheduleController {
 				this.snapshotService.updateStatus(snap.getId(), 1);
 		}
 	}
+	
 	
 	/**
 	 * 

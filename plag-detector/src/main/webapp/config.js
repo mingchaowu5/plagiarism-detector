@@ -66,6 +66,45 @@
                 controller: 'studentDashboardController',
                 controllerAs: 'model'
             })
+            .when("/compare/:id",{
+                templateUrl:"views/templates/compareFiles.view.client.html",
+                controller: 'compareFilesController',
+                controllerAs: 'model'
+            })
+            //admin
+             .when("/admin",{
+                templateUrl:"views/templates/adminDashboard.view.client.html",
+                controller: 'adminDashboardController',
+                controllerAs: 'model'
+            })
+           
+            //addcourse
+             .when("/admin/courseUpdate/:cid",{
+                templateUrl:"views/templates/courseUpdate.view.client.html",
+                controller: 'courseUpdateController',
+                controllerAs: 'model'
+            })
+            //profile
+             .when("/admin/profileUpdate/:uid",{
+                templateUrl:"views/templates/profileUpdate.view.client.html",
+                controller: 'profileUpdateController',
+                controllerAs: 'model'
+            })
+             .when("/admin/addCourse",{
+                templateUrl:"views/templates/addCourse.view.client.html",
+                controller: 'adminController',
+                controllerAs: 'model'
+            })
+            .when("/admin/addSemester",{
+                templateUrl:"views/templates/addSemester.view.client.html",
+                controller: 'adminController',
+                controllerAs: 'model'
+            })
+              .when("/admin/semesterUpdate/:sid",{
+                templateUrl:"views/templates/semesterUpdate.view.client.html",
+                controller: 'semesterUpdateController',
+                controllerAs: 'model'
+            })
             .otherwise({
                 templateUrl:"views/templates/result.view.client.html",
                 controller: 'resultController',

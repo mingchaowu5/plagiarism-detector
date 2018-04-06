@@ -4,7 +4,7 @@
         .module("PlagApp")
         .controller("professorDashboardController", professorDashboardController);
 
-    function professorDashboardController(ProfessorService, $location, $routeParams,$rootScope) {
+    function professorDashboardController(ProfessorService, $location, $routeParams,$rootScope,$window) {
         var vm = this;
         vm.fetchCourses = fetchCourses;
         vm.fetchAssignments = fetchAssignments;
@@ -17,7 +17,11 @@
         vm.pushCourse = pushCourse;
         vm.pushUpdateAssignment = pushUpdateAssignment;
         vm.pushUpdateCourse = pushUpdateCourse;
-        vm.professorName = "xyz";
+        vm.showDashboard = showDashboard;
+        vm.runNewSnapshot = runNewSnapshot;
+        vm.pushDeleteAssignment = pushDeleteAssignment;
+        vm.pushDeleteCourse = pushDeleteCourse;
+        // vm.professorName = $rootScope.currentUser.username;
         vm.pid = $routeParams.pid;
         vm.sid = $routeParams.sid;
         vm.cid = $routeParams.cid;
@@ -165,7 +169,9 @@
             promise
                 .then(function (res) {
                     if(res.data){
-                        $location.url("#!/dashboard/"+ vm.pid +"/semester/"+vm.sid+"/course/"+vm.cid);
+                        // $location.url("#!/dashboard/"+ vm.pid +"/semester/"+vm.sid+"/course/"+vm.cid);
+                        $window.location.reload();
+                        
                     }
                 })
                 .catch(function (err) {
@@ -181,7 +187,9 @@
             promise
                 .then(function (res) {
                     if(res.data){
-                        $location.url("#!/dashboard/"+ vm.pid +"/semester/"+vm.sid);
+                        // $location.url("#!/dashboard/"+ vm.pid +"/semester/"+vm.sid);
+                        $window.location.reload();
+                        
                     }
                 })
                 .catch(function (err) {
@@ -195,7 +203,9 @@
             promise
                 .then(function (res) {
                     if(res.data){
-                        $location.url("#!/dashboard/"+ vm.pid +"/semester/"+vm.sid+"/course/"+vm.cid);
+                        // $location.url("#!/dashboard/"+ vm.pid +"/semester/"+vm.sid+"/course/"+vm.cid);
+                        $window.location.reload();
+                        
                     }
                 })
                 .catch(function (err) {
@@ -210,12 +220,62 @@
             promise
                 .then(function (res) {
                     if(res.data){
-                        $location.url("#!/dashboard/"+ vm.pid +"/semester/"+vm.sid);
+                        // $location.url("/dashboard/"+ vm.pid +"/semester/"+vm.sid);
+                        // console.log("in course update")
+                        // $window.location.href = "#!/dashboard/"+ vm.pid +"/semester/"+vm.sid;
+                        $window.location.reload();
                     }
                 })
                 .catch(function (err) {
                     alert("error adding the course.\n Contact Admin")
 
+                })
+        }
+
+        function showDashboard(){
+            $window.location.href = "#!/dashboard/"+ vm.pid;
+            $window.location.reload();
+        }
+
+        function runNewSnapshot() {
+            var promise = ProfessorService.runSnapshot(vm.aid, vm.pid);
+
+            promise
+                .then(function (params) {
+                    if(params.data){
+                        alert("Successfully Started\nPlease wait for notification in Dashboard");
+                    }
+                })
+                .catch(function (err) {
+                    alert("Error in starting the snaphot. Please contact Admin")
+                })
+        }
+
+        function pushDeleteAssignment(assignment) {
+            var promise = ProfessorService.deleteAssignment(assignment.id);
+
+            promise
+                .then(function (params) {
+                    if(params.data){
+                        $window.location.reload();                        
+                    }
+                })
+                .catch(function (err) {
+                    alert("Error in deleting assignment")
+                })
+        }
+
+        function pushDeleteCourse(course) {
+            var promise = ProfessorService.deleteCourse(course.id);
+
+            promise
+                .then(function (params) {
+                    if(params.data){
+                        $window.location.reload();                        
+                    }
+                })
+                .catch(function (err) {
+                    alert("Error in deleting course")
                 })
         }
     }

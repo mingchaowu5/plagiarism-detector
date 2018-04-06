@@ -8,18 +8,22 @@
 
         var api = {
             "assignmentResults":assignmentResults,
-            "fetchEdgeStudents":fetchEdgeStudents
+            "fetchEdgeStudents":fetchEdgeStudents,
+            "fetchFilesToCompare":fetchFilesToCompare
         };
         return api;
 
         function assignmentResults(assignmentID) {
-            return $http.get("/rest/result/all?id="+assignmentID);
+            return $http.get("/rest/snapshot/result?id="+assignmentID);
         }
 
         function fetchEdgeStudents(student1, student2, aid) {
-            return $http.get("rest/result/files?sid1="+student1 + "&sid2="+student2+"&aid="+aid);
+            return $http.get("/rest/snapshot/submission?id1="+student1 + "&id2="+student2);
         }
 
+        function fetchFilesToCompare(id) {
+            return $http.get("/rest/snapshot/file?id="+id);
+        }
 
     }
 })();

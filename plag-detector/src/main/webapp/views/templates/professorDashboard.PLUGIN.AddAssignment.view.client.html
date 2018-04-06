@@ -14,10 +14,21 @@
                 <label class="register-label" for="assignmentName">Assignment Name</label>
                 <input name="assignmentName" required class="form-control" ng-model="model.newAssignment.name" type="text" placeholder=" Name"/>
             </div>
+            
+            <div class="form-group">
+                <label class="register-label" for="languageName">Language</label>
+                <select name="languageName" required class="form-control" ng-model="model.newAssignment.lang" >
+	                	<option value="1" selected>Python</option>
+	                	<option value="2">Java</option>
+	                	<option value="3">C/C++</option>
+	                	<option value="4">C#</option>
+                </select>
+            </div>
+            
             <div ng-show="form.$submitted || form.assignmentName.$touched"
                  class="">
                 <div ng-show="form.assignmentName.$error.required" class="alert" style="color: whitesmoke">
-                    Please choose name for assignemnt
+                    Please choose name for assignment
                 </div>
             </div>
 
