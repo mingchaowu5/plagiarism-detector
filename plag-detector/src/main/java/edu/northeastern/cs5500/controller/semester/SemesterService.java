@@ -32,7 +32,7 @@ public class SemesterService {
 	 * @return	boolean:	true if and only iff the semester is successfully deleted
 	 */
 	public boolean deleteSemester(int id) {
-		return true;
+		return this.semesterDao.deleteSemester(id) == 1?true:false;
 	}
 	
 	/**
@@ -41,6 +41,15 @@ public class SemesterService {
 	 * @return	boolean:	true if and only iff the semester is successfully inserted
 	 */
 	public boolean insertSemester(String name) {
-		return true;
+		return this.semesterDao.addSemester(name) == 1?true:false;
+	}
+	
+	/**
+	 * Update a semester in the system
+	 * @param	name:	of the semester to be added
+	 * @return	boolean:	true if and only iff the semester is successfully inserted
+	 */
+	public boolean editSemester(int id, String name) {
+		return this.semesterDao.updateSemester(id, name) == 1?true:false;
 	}
 }

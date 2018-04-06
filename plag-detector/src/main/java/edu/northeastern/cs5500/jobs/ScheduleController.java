@@ -40,7 +40,9 @@ public class ScheduleController {
 	@Scheduled(cron = "0 0/5 * 1/1 * ?")
 	public void run() {
 		log = Logger.getAnonymousLogger();
+
 		log.log(Level.INFO, "Running");
+		log.log(Level.INFO, Constants.ASSIGNMENTURL);
 		List<Snapshot> list = this.snapshotService.getAllSnapshotsToBePerformed();
 		boolean flag = true;
 		for(Snapshot snap : list) {

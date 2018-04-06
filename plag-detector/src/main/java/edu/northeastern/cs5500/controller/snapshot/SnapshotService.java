@@ -113,4 +113,13 @@ public class SnapshotService {
 		}
 		return new Graph(nodes, edges);
 	}
+	
+	/**
+	 * 
+	 * @param id
+	 * @return
+	 */
+	public Result getFiles(int id) {
+		return this.resultsDao.getFileData(id);
+	}
 }

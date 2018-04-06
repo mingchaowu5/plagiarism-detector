@@ -1,5 +1,6 @@
 package edu.northeastern.cs5500.dao;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,6 +49,19 @@ public class UserDao {
 		}
 	}
 	
+	public List<User> findUserByType(int type) {
+		try {
+			String sql = "SELECT User.id, User.firstName, User.lastName, User.email FROM User WHERE User.type = ?";
+			RowMapper<User> mapper = new BeanPropertyRowMapper<>(User.class);
+			List<User> users =  jdbcTemplate.query(sql, mapper, type);
+			return users;
+			
+		}
+		catch(Exception e) {
+			return new ArrayList<>();
+		}
+	}
+	
 	public String getNameOfStudent(int submissionId) {
 		try {
 			String sql = "Select User.firstName, User.lastName from User join Student on User.id = Student.id join Submission on Student.id = Submission.student where Submission.id = ?";
@@ -58,6 +72,66 @@ public class UserDao {
 		}
 		catch(Exception e) {
 			return "";
+		}
+	}
+	
+	/**
+	 * Delete Student from the table
+	 * @param id
+	 * @return
+	 */
+	public int deleteStudent(int id) {
+		try {
+			String sql = "DELETE FROM Student WHERE id = ?";
+			return jdbcTemplate.update(sql, new Object[] {id});
+		}
+		catch(Exception e) {
+			return 0;
+		}
+	}
+	
+	/**
+	 * Delete Student from the table
+	 * @param id
+	 * @return
+	 */
+	public int deleteProfessor(int id) {
+		try {
+			String sql = "DELETE FROM Professor WHERE id = ?";
+			return jdbcTemplate.update(sql, new Object[] {id});
+		}
+		catch(Exception e) {
+			return 0;
+		}
+	}
+	
+	/**
+	 * Insert Student into the table
+	 * @param id
+	 * @return
+	 */
+	public int insertStudent(int id) {
+		try {
+			String sql = "INSERT INTO Student(id) VALUES(?)";
+			return jdbcTemplate.update(sql, new Object[] {id});
+		}
+		catch(Exception e) {
+			return 0;
+		}
+	}
+	
+	/**
+	 * Delete Student from the table
+	 * @param id
+	 * @return
+	 */
+	public int insertProfessor(int id) {
+		try {
+			String sql = "INSERT INTO Professor(id) VALUES(?)";
+			return jdbcTemplate.update(sql, new Object[] {id});
+		}
+		catch(Exception e) {
+			return 0;
 		}
 	}
 	
