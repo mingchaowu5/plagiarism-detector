@@ -3,7 +3,14 @@ package edu.northeastern.cs5500.models.extras;
 public class Edge {
 	private int from;
 	private int to;
-	private int value;
+	private double value;
+	
+	public Edge(int from, int to, double value) {
+		this.from = from;
+		this.to = to;
+		this.value = value;
+	}
+	
 	public int getFrom() {
 		return from;
 	}
@@ -16,10 +23,10 @@ public class Edge {
 	public void setTo(int to) {
 		this.to = to;
 	}
-	public int getValue() {
+	public double getValue() {
 		return value;
 	}
-	public void setValue(int value) {
+	public void setValue(double value) {
 		this.value = value;
 	}
 	

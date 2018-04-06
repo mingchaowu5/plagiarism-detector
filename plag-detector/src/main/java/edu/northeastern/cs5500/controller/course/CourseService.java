@@ -63,7 +63,7 @@ public class CourseService {
 	 * @return	boolean:	true if and only iff the course is successfully deleted
 	 */
 	public boolean deleteCourse(int id) {
-		return true;
+		return this.courseDao.deleteCourse(id) == 1?true:false;
 	}
 	
 	/**
@@ -73,7 +73,33 @@ public class CourseService {
 	 * @return	boolean:	true if and only iff the assignment is successfully inserted
 	 */
 	public boolean insertCourse(int semesterId, String name) {
-		return true;
+		Course course = new Course();
+		course.setName(name);
+		return this.courseDao.addCourse(course, semesterId) == 1?true:false;
+	}
+	
+	/**
+	 * Edit a course in the system
+	 * @param	semesterId:	is the id of the semester to which this course is begin added
+	 * 			name:	of the course to be added
+	 * @return	boolean:	true if and only iff the assignment is successfully inserted
+	 */
+	public boolean editCourse(int id, int semesterId, String name) {
+		Course course = new Course();
+		course.setName(name);
+		course.setId(id);
+		course.setSemester(semesterId);
+		return this.courseDao.updateCourse(course) == 1?true:false;
+	}
+	
+	/**
+	 * 
+	 * @param courseId
+	 * @param studentId
+	 * @return
+	 */
+	public boolean addCourseToStudent(int courseId, int studentId) {
+		return this.courseDao.registerStudentForCourse(studentId, courseId) == 1?true:false;
 	}
 	
 }

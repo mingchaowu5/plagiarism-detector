@@ -22,6 +22,45 @@ public class UserDao {
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 	
+	public User findUserBySnapshotId(int snapshotId) {
+		try {
+			String sql = "SELECT User.id, User.firstName, User.lastName, User.email FROM User join Professor on User.id = Professor.id join ProfessorSnapshotMapping on ProfessorSnapshotMapping.Professor = Professor.id WHERE ProfessorSnapshotMapping.snapshot = ?";
+			RowMapper<User> mapper = new BeanPropertyRowMapper<>(User.class);
+			User user =  jdbcTemplate.queryForObject(sql, mapper, snapshotId);
+			return user;
+			
+		}
+		catch(Exception e) {
+			return null;
+		}
+	}
+	
+	public User findUserById(int userId) {
+		try {
+			String sql = "SELECT User.id, User.firstName, User.lastName, User.email FROM User WHERE User.id = ?";
+			RowMapper<User> mapper = new BeanPropertyRowMapper<>(User.class);
+			User user =  jdbcTemplate.queryForObject(sql, mapper, userId);
+			return user;
+			
+		}
+		catch(Exception e) {
+			return null;
+		}
+	}
+	
+	public String getNameOfStudent(int submissionId) {
+		try {
+			String sql = "Select User.firstName, User.lastName from User join Student on User.id = Student.id join Submission on Student.id = Submission.student where Submission.id = ?";
+			RowMapper<User> mapper = new BeanPropertyRowMapper<>(User.class);
+			User user =  jdbcTemplate.queryForObject(sql, mapper, submissionId);
+			return user.getFirstName() + " " + user.getLastName();
+			
+		}
+		catch(Exception e) {
+			return "";
+		}
+	}
+	
 	/**
 	 * 
 	 * @param user
@@ -104,7 +143,7 @@ public class UserDao {
 			try {
 				String sql = "SELECT * FROM User join Professor on  Professor.id = User.id WHERE User.username = ? AND User.password = ?";
 				RowMapper<Professor> mapper = new BeanPropertyRowMapper<>(Professor.class);
-				Professor user =  jdbcTemplate.queryForObject(sql, mapper, username, password);
+				User user =  jdbcTemplate.queryForObject(sql, mapper, username, password);
 				return user;
 				
 			}
@@ -117,7 +156,7 @@ public class UserDao {
 			try {
 			String sql = "SELECT * FROM User join Student on  Student.id = User.id WHERE User.username = ? AND User.password = ?";
 			RowMapper<Student> mapper = new BeanPropertyRowMapper<>(Student.class);
-			Student user =  jdbcTemplate.queryForObject(sql, mapper, username, password);
+			User user =  jdbcTemplate.queryForObject(sql, mapper, username, password);
 			return user;
 			}
 			catch(Exception e) {

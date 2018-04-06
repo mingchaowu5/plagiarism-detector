@@ -6,14 +6,17 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import edu.northeastern.cs5500.Constants;
 import edu.northeastern.cs5500.dao.AssignmentDao;
+import edu.northeastern.cs5500.dao.SnapshotDao;
 import edu.northeastern.cs5500.dao.SubmissionDao;
 import edu.northeastern.cs5500.models.assignment.Assignment;
+import edu.northeastern.cs5500.models.submission.Submission;
 import net.lingala.zip4j.core.ZipFile;
 import net.lingala.zip4j.exception.ZipException;
 
@@ -31,6 +34,9 @@ public class AssignmentService {
 	
 	@Autowired
 	private SubmissionDao submissionDao;
+	
+	@Autowired
+	private SnapshotDao snapshotDao;
 	
 	
 	/**
@@ -84,6 +90,20 @@ public class AssignmentService {
 	}
 	
 	/**
+	 * 
+	 */
+	public int getNewSubmissionId(int studentId, int assignmentId) {
+		int submissionId = this.submissionDao.addSubmission(assignmentId, studentId, Constants.getCurrentDate());
+		List<Submission> list = this.submissionDao.getLatestSubmissionIdByAssignment(assignmentId);
+		List<Integer> submissions = new ArrayList<>();
+		for(Submission s : list) {
+			submissions.add(s.getId());
+		}
+		this.snapshotDao.addAllSnapshots(submissions, Constants.getCurrentDate(), 0);
+		return submissionId;
+	}
+	
+	/**
 	 * Copy the input file to the path on the instance
 	 * @param file:	is input file given by the user
 	 * @param studentId:	id the id of the student uploading the file
@@ -92,7 +112,7 @@ public class AssignmentService {
 	 * 					extracted(incase of .zip) from on the instance
 	 */
 	public boolean uploadFile(MultipartFile file, int studentId, int assignmentId) {
-		int submissionId = this.submissionDao.addSubmission(assignmentId, studentId, Constants.getCurrentDate());
+		int submissionId = getNewSubmissionId(studentId, assignmentId);
 		StringBuilder build = new StringBuilder(Constants.ASSIGNMENTURL);
 		try {
 			/**Return false if the input file is empty or creating the folder structure fails**/
