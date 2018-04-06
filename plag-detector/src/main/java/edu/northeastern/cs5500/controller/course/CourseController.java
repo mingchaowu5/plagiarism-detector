@@ -102,4 +102,16 @@ public class CourseController {
 		boolean flag = this.courseService.editCourse(id, semesterId, name);
 		return new ResponseEntity<>(flag, HttpStatus.OK);
 	}
+	
+	/**
+	 * Add a course to student
+	 * @param	course_id:	of the semester where course is to be added
+	 * 			name	:		of the course to be added
+	 * @return	Boolean:		true iff and only if the course was successfully inserted.
+	 */
+	@GetMapping(value = "/add")
+	public ResponseEntity<Boolean> addCourse(@RequestParam(value = "course_id") int courseId, @RequestParam(value = "student_id") int studentId){
+		boolean flag = this.courseService.addCourseToStudent(courseId, studentId);
+		return new ResponseEntity<>(flag, HttpStatus.OK);
+	}
 }

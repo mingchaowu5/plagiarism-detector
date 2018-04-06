@@ -39,12 +39,13 @@ public class CourseDao {
 		}
 	}
 	
-	public void registerStudentForCourse(int studentId, int courseId){
+	public int registerStudentForCourse(int studentId, int courseId){
 		try {
 			String sql = "INSERT INTO StudentCourseMapping (student, course) VALUES (?, ?)";
-			jdbcTemplate.update(sql, new Object[] {studentId, courseId});
+			return jdbcTemplate.update(sql, new Object[] {studentId, courseId});
 		}catch(Exception e) {
 		}
+		return 0;
 	}
 	
 	public int addCourse(final Course course, int semesterId) {

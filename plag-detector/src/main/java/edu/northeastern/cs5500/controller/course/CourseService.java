@@ -92,4 +92,14 @@ public class CourseService {
 		return this.courseDao.updateCourse(course) == 1?true:false;
 	}
 	
+	/**
+	 * 
+	 * @param courseId
+	 * @param studentId
+	 * @return
+	 */
+	public boolean addCourseToStudent(int courseId, int studentId) {
+		return this.courseDao.registerStudentForCourse(studentId, courseId) == 1?true:false;
+	}
+	
 }

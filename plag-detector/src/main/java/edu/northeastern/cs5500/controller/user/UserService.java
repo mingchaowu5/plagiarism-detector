@@ -98,4 +98,13 @@ public class UserService {
 	public List<User> getStudentOfAssignment(int id){
 		return null;
 	}
+	
+	/**
+	 * Get user id
+	 * @param snapId
+	 * @return
+	 */
+	public User getUserId(int snapId) {
+		return this.userDao.findUserBySnapshotId(snapId);
+	}
 }

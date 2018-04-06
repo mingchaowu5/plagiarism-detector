@@ -59,7 +59,7 @@ public class SnapshotController {
 	}	
 	
 	@GetMapping(value = "/run")
-	public ResponseEntity<Boolean> runFreshSnapshotForAssignment(@RequestParam(value = "id") int id){
-		return new ResponseEntity<>(this.snapshotService.runSnapshotForAssignment(id), HttpStatus.OK);
+	public ResponseEntity<Boolean> runFreshSnapshotForAssignment(@RequestParam(value = "assignment_id") int assignmentId, @RequestParam(value = "professor_id")int professorId){
+		return new ResponseEntity<>(this.snapshotService.runSnapshotForAssignment(assignmentId, professorId), HttpStatus.OK);
 	}
 }

@@ -20,6 +20,16 @@ public class SnapshotDao {
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 	
+	public int addAssignmentSnapshot(int snapId, int prof) {
+		try {
+				String sql = "INSERT INTO ProfessorSnapshotMapping (professor, snapshot) VALUES (?, ?)";
+				return jdbcTemplate.update(sql, new Object[] {prof, snapId});
+			}
+			catch(Exception e) {
+				return 0;
+			}
+	}
+	
 	public List<Snapshot> findAllSnapshotsForAssignment(int assignmentId){
 		try {
 			String sql = "Select DISTINCT Snapshot.id, Snapshot.dateTime, Snapshot.type from Snapshot join Submission on Snapshot.submission = Submission.id where Submission.assignment = ? AND Snapshot.status = 1";
@@ -34,7 +44,7 @@ public class SnapshotDao {
 	
 	public List<Snapshot> findAllSnapshotsToBePerformed(){
 		try {
-			String sql = "Select DISTINCT(Snapshot.id) from Snapshot join Submission on Snapshot.submission = Submission.id where Snapshot.status = 0";
+			String sql = "Select DISTINCT(Snapshot.id), Snapshot.type from Snapshot join Submission on Snapshot.submission = Submission.id where Snapshot.status = 0";
 			RowMapper<Snapshot> rowMapper = new BeanPropertyRowMapper<>(Snapshot.class);
 			List<Snapshot> results = this.jdbcTemplate.query(sql, rowMapper);
 			return results;
@@ -80,7 +90,7 @@ public class SnapshotDao {
 				return 0;
 			}
 		}
-		return 1;
+		return id;
 	}
 		
 	private int getLatestSnapId() {

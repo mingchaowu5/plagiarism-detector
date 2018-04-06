@@ -73,6 +73,8 @@ public class ResultsService {
 			log = Logger.getAnonymousLogger();
 			if(!this.createFileIfNotPresent(Constants.TEMPURL))
 				return;
+			if(!this.createFileIfNotPresent(Constants.RESULTURL))
+				return;
 			FileUtils.cleanDirectory(new File(Constants.TEMPURL));
 			FileUtils.cleanDirectory(new File(Constants.RESULTURL));
 			findFiles(sub1, set1);

@@ -2,14 +2,16 @@ package edu.northeastern.cs5500.jobs;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import edu.northeastern.cs5500.Constants;
 import edu.northeastern.cs5500.controller.result.ResultsService;
 import edu.northeastern.cs5500.controller.snapshot.SnapshotService;
-import edu.northeastern.cs5500.mail.SendMail;
+import edu.northeastern.cs5500.controller.user.UserService;
+import edu.northeastern.cs5500.mail.MailClient;
+import edu.northeastern.cs5500.models.person.User;
 import edu.northeastern.cs5500.models.snapshot.Snapshot;
 import edu.northeastern.cs5500.models.submission.Submission;
 
@@ -23,12 +25,18 @@ public class ScheduleController {
 	@Autowired
 	private ResultsService resultsService;
 
+	@Autowired
+	private MailClient mail;
+
+	@Autowired
+	private UserService userService;
+
+	
 	private Logger log;
 	
 	/**
-	 * 
+	 * Run method
 	 */
-	//@Scheduled(cron = "0 0 0/1 1/1 * ?")
 	@Scheduled(cron = "0 0/5 * 1/1 * ?")
 	public void run() {
 		log = Logger.getAnonymousLogger();
@@ -37,15 +45,29 @@ public class ScheduleController {
 		boolean flag = true;
 		for(Snapshot snap : list) {
 			this.snapshotService.updateStatus(snap.getId(), -1);
+			log.log(Level.INFO, "Type: " + snap.getType());
 			if(snap.getType() == 0) {
 				flag = calculateIncrementalResult(snap.getId());
 			}else {
 				flag = calculateTotalResult(snap.getId());
-				//sendMail.sendMail();
+				log.log(Level.INFO, "Sending Mail");
+				sendMail(snap.getId());
 			}
 			if(flag)
 				this.snapshotService.updateStatus(snap.getId(), 1);
 		}
+	}
+	
+	/**
+	 * 
+	 * @param snapId
+	 */
+	private void sendMail(int snapId) {
+		User user = this.userService.getUserId(snapId);
+		if(user == null)
+			return;
+		mail.sendSimpleMessage(user.getEmail(), "Plag Detector Report", "Hello\nThe plag report was generated on " + 
+			Constants.getCurrentDate() + ".\nYou can log in now and check the report.\nThank You!\nAdmin");
 	}
 	
 	/**
@@ -100,6 +122,7 @@ public class ScheduleController {
 				}
 			}
 		}catch(Exception e) {
+			log.log(Level.INFO, e.getMessage());
 			return false;
 		}
 		return true;

@@ -82,13 +82,15 @@ public class SnapshotService {
 	 * @param id
 	 * @return
 	 */
-	public boolean runSnapshotForAssignment(int id) {
+	public boolean runSnapshotForAssignment(int id, int professorId) {
 		List<Submission> submissions = this.submissionDao.getLatestSubmissionIdByAssignment(id);
 		List<Integer> submissionIds = new ArrayList<>();
 		for(Submission s : submissions) {
 			submissionIds.add(s.getId());
 		}
-		return this.snapshotDao.addAllSnapshots(submissionIds, Constants.getCurrentDate(), 1) == 1?true:false;
+		int snapshotId = this.snapshotDao.addAllSnapshots(submissionIds, Constants.getCurrentDate(), 1);
+		this.snapshotDao.addAssignmentSnapshot(snapshotId, professorId);
+		return (snapshotId > 1)?true:false;
 	}
 	
 	/**
