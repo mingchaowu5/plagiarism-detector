@@ -62,6 +62,66 @@ public class UserDao {
 	}
 	
 	/**
+	 * Delete Student from the table
+	 * @param id
+	 * @return
+	 */
+	public int deleteStudent(int id) {
+		try {
+			String sql = "DELETE FROM Student WHERE id = ?";
+			return jdbcTemplate.update(sql, new Object[] {id});
+		}
+		catch(Exception e) {
+			return 0;
+		}
+	}
+	
+	/**
+	 * Delete Student from the table
+	 * @param id
+	 * @return
+	 */
+	public int deleteProfessor(int id) {
+		try {
+			String sql = "DELETE FROM Professor WHERE id = ?";
+			return jdbcTemplate.update(sql, new Object[] {id});
+		}
+		catch(Exception e) {
+			return 0;
+		}
+	}
+	
+	/**
+	 * Insert Student into the table
+	 * @param id
+	 * @return
+	 */
+	public int insertStudent(int id) {
+		try {
+			String sql = "INSERT INTO Student(id) VALUES(?)";
+			return jdbcTemplate.update(sql, new Object[] {id});
+		}
+		catch(Exception e) {
+			return 0;
+		}
+	}
+	
+	/**
+	 * Delete Student from the table
+	 * @param id
+	 * @return
+	 */
+	public int insertProfessor(int id) {
+		try {
+			String sql = "INSERT INTO Professor(id) VALUES(?)";
+			return jdbcTemplate.update(sql, new Object[] {id});
+		}
+		catch(Exception e) {
+			return 0;
+		}
+	}
+	
+	/**
 	 * 
 	 * @param user
 	 */

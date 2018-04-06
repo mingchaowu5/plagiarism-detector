@@ -8,6 +8,7 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import edu.northeastern.cs5500.models.course.Course;
 import edu.northeastern.cs5500.models.semester.Semester;
 
 @Transactional
@@ -39,7 +40,38 @@ public class SemesterDao {
 		catch(Exception e) {
 			return null;
 		}
-		
+	}
+	
+	public int addSemester(String name) {
+		try {
+			String sql = "INSERT INTO Semester (name) VALUES (?)";
+			return jdbcTemplate.update(sql, new Object[] {name});
+		}catch(Exception e) {
+		}
+		return 0;
+	}
+	
+	public int deleteSemester(final int id) {
+		try {
+			
+			String sql = "DELETE FROM Semester WHERE id = ?";
+			return jdbcTemplate.update(sql, new Object[] {id});
+		}
+		catch(Exception e){
+			
+		}
+		return 0;
+	}
+	
+	public int updateSemester(int id, String name) {
+		try {
+			String sql = "UPDATE Semester SET name = ? WHERE id = ?";
+			return jdbcTemplate.update(sql, new Object[] {name, id});
+		}
+		catch(Exception e){
+			
+		}
+		return 0;
 	}
 
 }

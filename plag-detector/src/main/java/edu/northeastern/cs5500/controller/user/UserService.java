@@ -15,6 +15,27 @@ public class UserService {
 	private UserDao userDao;
 	
 	/**
+	 * Edit an user
+	 * @param user: contains the details of the user to be edited
+	 * @return	boolean: returns true iff and only if the user is successfully
+	 * 					 edited in the database
+	 */
+	public User editUser(User user) {
+		try {
+			User oldUser = this.userDao.findUserById(user.getId());
+			if(oldUser.getId() > 0) {
+				if(oldUser.getId() != user.getId()) {
+					//this.changeRole(user.getId(), oldUser.getType());
+				}
+			}
+			userDao.updateUser(user);
+			return user;
+		}catch(Exception e) {
+			return null;
+		}
+	}
+	
+	/**
 	 * Add a new user
 	 * @param user: contains the details of the user to be added
 	 * @return	boolean: returns true iff and only if the user is successfully
@@ -27,6 +48,14 @@ public class UserService {
 		}catch(Exception e) {
 			return null;
 		}
+	}
+	
+	/**
+	 * Get all the users of the dashboard
+	 * @return List: of all the users
+	 */
+	public List<User> getAllUsers(){
+		return this.userDao.findAllUsers();
 	}
 	
 	/**
@@ -46,6 +75,19 @@ public class UserService {
 	 */
 	public boolean delete(int id, int type) {
 		return userDao.deleteUser(id, type) == 1 ? true : false;
+	}
+	
+	/**
+	 * Change role of the user
+	 */
+	public boolean changeRole(int id, int type) {
+		if(type == 0) {
+			this.userDao.deleteStudent(id);
+			return this.userDao.insertProfessor(id) == 1?true:false;
+		}else {
+			this.userDao.deleteProfessor(id);
+			return this.userDao.insertStudent(id) == 1?true:false;
+		}
 	}
 	
 	/**

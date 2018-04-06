@@ -68,4 +68,15 @@ public class SemesterController {
 		return new ResponseEntity<>(flag, HttpStatus.OK);
 	}
 	
+	/**
+	 * Update a semester
+	 * @param	name	:		of the semester to be updated
+	 * @return	Boolean:		true iff and only if the semester was successfully inserted.
+	 */
+	@GetMapping(value = "/update")
+	public ResponseEntity<Boolean> updateSemester(@RequestParam(value = "name") String name, @RequestParam(value = "id") int id){
+		boolean flag = this.semesterService.editSemester(id, name);
+		return new ResponseEntity<>(flag, HttpStatus.OK);
+	}
+	
 }

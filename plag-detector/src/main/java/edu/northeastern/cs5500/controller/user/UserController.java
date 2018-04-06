@@ -25,6 +25,19 @@ public class UserController {
 	private UserService userService;
 	
 	/**
+	 * Get all the users in the dashboard
+	 * @return List: of all the users
+	 */
+	@GetMapping(value = "all")
+	public ResponseEntity<List<User>> getAllUsers(){
+		List<User> users = this.userService.getAllUsers();
+		if(users == null)
+			return ResponseEntity.notFound().build();
+		return new ResponseEntity<>(users, HttpStatus.OK);
+	}
+	
+	
+	/**
 	 * Register new user
 	 * @param email:	of the user
 	 * @param username:	of the user
@@ -46,6 +59,32 @@ public class UserController {
 		user.setUsername(username);
 		user.setType(type);
 		User u = this.userService.addUser(user);	
+		return new ResponseEntity<>(u, HttpStatus.OK);
+	}
+	
+	/**
+	 * Register new user
+	 * @param email:	of the user
+	 * @param username:	of the user
+	 * @param password:	of the user
+	 * @param firstname:	of the user
+	 * @param lastname:	of the user
+	 * @param type:	of the user, 0 => Student, 1 => Faculty
+	 * @return	boolean: true iff and only if the user is successfully registered.
+	 */
+	@GetMapping(value = "/update")
+	public ResponseEntity<User> update(@RequestParam(value = "email") String email, @RequestParam(value = "username") String username, 
+			@RequestParam(value = "password")String password, @RequestParam(value = "firstname")String firstname, 
+			@RequestParam(value = "lastname")String lastname, @RequestParam(value = "type") int type, @RequestParam(value = "id")int id) {
+		User user = new User();
+		user.setEmail(email);
+		user.setFirstName(firstname);
+		user.setLastName(lastname);
+		user.setPassword(password);
+		user.setUsername(username);
+		user.setType(type);
+		user.setId(id);
+		User u = this.userService.editUser(user);	
 		return new ResponseEntity<>(u, HttpStatus.OK);
 	}
 	
@@ -88,6 +127,17 @@ public class UserController {
 	@GetMapping(value = "/available")
 	public ResponseEntity<Boolean> available(@RequestParam(value = "username") String username){
 		boolean flag = this.userService.isUsernamePresent(username);
+		return new ResponseEntity<>(flag, HttpStatus.OK);
+	}
+	
+	/**
+	 * Checks if a username is available or not
+	 * @param username
+	 * @return	boolean: true iff and only if the username is already present in the database
+	 */
+	@GetMapping(value = "/change")
+	public ResponseEntity<Boolean> change(@RequestParam(value = "id") int id, @RequestParam(value = "type") int type){
+		boolean flag = this.userService.changeRole(id, type);
 		return new ResponseEntity<>(flag, HttpStatus.OK);
 	}
 	
