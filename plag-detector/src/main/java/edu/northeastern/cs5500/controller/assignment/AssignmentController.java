@@ -68,9 +68,9 @@ public class AssignmentController {
 	 * @return	Boolean:		true iff and only if the assignment was successfully inserted.
 	 */
 	@GetMapping(value = "/insert")
-	public ResponseEntity<Boolean> insertAssignment(@RequestParam(value = "course_id") int courseId, @RequestParam(value = "name") String name){
-			//@RequestParam(value = "language_id") int langId){
-		boolean flag = this.assignmentService.insertAssignment(name, courseId);
+	public ResponseEntity<Boolean> insertAssignment(@RequestParam(value = "course_id") int courseId, @RequestParam(value = "name") String name
+			,@RequestParam(value = "language_id") int langId){
+		boolean flag = this.assignmentService.insertAssignment(name, courseId, langId);
 		return new ResponseEntity<>(flag, HttpStatus.OK);
 	}
 	
@@ -83,9 +83,9 @@ public class AssignmentController {
 	 * @return	Boolean:		true iff and only if the assignment was successfully updated.
 	 */
 	@GetMapping(value = "/update")
-	public ResponseEntity<Boolean> updateAssignment(@RequestParam(value = "assignment_id") int assignmentId, @RequestParam(value = "course_id") int courseId, @RequestParam(value = "name") String name){
-			//@RequestParam(value = "language_id") int langId){
-		boolean flag = this.assignmentService.updateAssignment(assignmentId, name, courseId);
+	public ResponseEntity<Boolean> updateAssignment(@RequestParam(value = "assignment_id") int assignmentId, @RequestParam(value = "course_id") int courseId, @RequestParam(value = "name") String name
+			,@RequestParam(value = "language_id") int langId){
+		boolean flag = this.assignmentService.updateAssignment(assignmentId, name, courseId, langId);
 		return new ResponseEntity<>(flag, HttpStatus.OK);
 	}
 	

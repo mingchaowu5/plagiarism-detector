@@ -5,6 +5,14 @@ public class Assignment {
 	private int id;
 	private String name;
 	private int course;
+	private int langId;
+
+	public int getLangId() {
+		return langId;
+	}
+	public void setLangId(int langId) {
+		this.langId = langId;
+	}
 	public int getId() {
 		return id;
 	}

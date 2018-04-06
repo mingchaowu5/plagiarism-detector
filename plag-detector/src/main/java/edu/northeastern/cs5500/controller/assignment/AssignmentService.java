@@ -73,8 +73,8 @@ public class AssignmentService {
 	 * 			languageId:	is the id of the language for this assignment
 	 * @return	boolean:	true if and only iff the assignment is successfully inserted
 	 */
-	public boolean insertAssignment(String name, int courseId) {
-		return assignmentDao.addAssignment(name, courseId) == 1 ? true:false;
+	public boolean insertAssignment(String name, int courseId, int langId) {
+		return assignmentDao.addAssignment(name, courseId, langId) == 1 ? true:false;
 	}
 	
 	/**
@@ -85,8 +85,8 @@ public class AssignmentService {
 	 * 			languageId:	is the id of the language for this assignment
 	 * @return	boolean:	true if and only iff the assignment is successfully updated
 	 */
-	public boolean updateAssignment(int assignmentId, String name, int courseId) {
-		return assignmentDao.updateAssignment(assignmentId, name, courseId) == 1 ? true:false;
+	public boolean updateAssignment(int assignmentId, String name, int courseId, int langId) {
+		return assignmentDao.updateAssignment(assignmentId, name, courseId, langId) == 1 ? true:false;
 	}
 	
 	/**

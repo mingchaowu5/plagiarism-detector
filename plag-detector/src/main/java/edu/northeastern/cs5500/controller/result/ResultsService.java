@@ -26,6 +26,7 @@ import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import edu.northeastern.cs5500.Constants;
+import edu.northeastern.cs5500.dao.AssignmentDao;
 import edu.northeastern.cs5500.dao.ResultsDao;
 import jplag.ExitException;
 import jplag.Program;
@@ -40,9 +41,13 @@ public class ResultsService {
 	private Logger log;
 	private Map<String, String> map;
 	private List<FileResult> results;
+	private String language = "python3";
 	
 	@Autowired
 	private ResultsDao resultsDao;
+	
+	@Autowired
+	private AssignmentDao assignmentDao;
 	
 	/**
 	 * initialize the instance variables
@@ -57,6 +62,7 @@ public class ResultsService {
 		set2 = new HashSet<>();
 		map = new HashMap<>();
 		results = new ArrayList<>();
+		this.language = this.assignmentDao.getLanguage(sub1);
 	}
 	
 	/**
@@ -106,23 +112,19 @@ public class ResultsService {
 		Document doc = Jsoup.parse(file, "UTF-8");
 		Element table = doc.select("table").get(2); //select the first table.
 		Elements rows = table.select("tr");
+		int k = 0;
 		for (int i = 0; i < rows.size(); i++) { //first row is the col names so skip it.
 		    Element row = rows.get(i);
 		    Elements cols = row.select("td");
 		    String mFile = cols.get(0).text();
-		    String mMatch = "match" + i + "-0.html";
-		    if(fileExists(mMatch)) {
-    				map.put(mFile, mMatch);
-		    }
 		    for(int j = 2;j<cols.size();++j) {
 		    		String tFile = cols.get(j).select("a").text();
 		    		String per = cols.get(j).select("font").text();
-		    		double d = Double.parseDouble(per.substring(1, per.length() - 2));
-		    		String tMatch = "match" + i + "-" + (j-1) + ".html";
-		    		if(fileExists(tMatch)) {
-		    			map.put(tFile, tMatch);
-		    		}
-		    		saveResult(mFile, tFile, d);
+		    		double d = Double.parseDouble(per.substring(1, per.length() - 2));	
+		    		String mMatch = "match" + k + "-0.html";
+		    		String tMatch = "match" + k + "-1.html";
+		    		saveFiles(mFile, mMatch, tFile, tMatch, d);
+		    		++k;
 		    }
 		}
 	}
@@ -171,8 +173,8 @@ public class ResultsService {
 	 * Run JPlag library and find the results
 	 */
 	private void runJplag() {
-		log.log(Level.INFO, "JPlag");
-		String[] tm = {Constants.TEMPURL, "-l", "python3", "-r", Constants.RESULTURL, "-s"};
+		//log.log(Level.INFO, "JPlag");
+		String[] tm = {Constants.TEMPURL, "-l", language, "-r", Constants.RESULTURL, "-s"};
 		CommandLineOptions op;
 		try {
 			op = new CommandLineOptions(tm);
@@ -193,7 +195,7 @@ public class ResultsService {
 		File file = new File(Constants.ASSIGNMENTURL + sub);
 		if(!file.exists())
 			return;
-		log.log(Level.INFO, "Sub: " + sub);
+		//log.log(Level.INFO, "Sub: " + sub);
 		List<File> subdirs = this.getSubdirs(file);
 		subdirs.add(file);
 		for(File sFile : subdirs) {
