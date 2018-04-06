@@ -36,7 +36,6 @@ public class ResultsService {
 	
 	private int sub1;
 	private int sub2;
-	private int snap;
 	private Set<String> set1, set2;
 	private Logger log;
 	private Map<String, String> map;
@@ -52,7 +51,6 @@ public class ResultsService {
 	 * @param sub2
 	 */
 	private void init(int snap, int sub1, int sub2) {
-		this.snap = snap;
 		this.sub1 = sub1;
 		this.sub2 = sub2;
 		set1 = new HashSet<>();
@@ -181,7 +179,7 @@ public class ResultsService {
 			Program p = new Program(op);
 			p.run();
 		} catch (ExitException e) {
-			
+			log.log(Level.INFO, e.getMessage());
 		}
 	}
 	
