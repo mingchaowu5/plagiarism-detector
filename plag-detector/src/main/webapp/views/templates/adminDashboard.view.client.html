@@ -1,0 +1,150 @@
+<div class="container-fluid">
+	<div>
+		<div class="input-group ">
+			<div class="input-group-prepend">
+				<!-- <button class="btn btn-outline-secondary" type="button">Year</button>
+
+				<select class="custom-select" id="inputyear">
+					<option selected>Choose year..</option>
+					<option value="2016">2016</option>
+					<option value="2017">2017</option>
+					<option value="2018">2018</option>
+					<option value="2019">2019</option>
+					<option value="2020">2020</option>
+					<option value="All">All</option>
+				</select>
+ -->
+				<button class="btn btn-outline-secondary" type="button">Semester</button>
+
+				<select class="custom-select" id="inputSemester">
+					<option selected>Choose semester..</option>
+					<div ng-repeat="semester in model.semesters">
+					<option value=semester.name>{{semester.name}}</option>
+					</div>
+					<!-- <option value="All">All</option> -->
+					
+				</select>
+				<!-- 	<button align = "right"type="button" class="btn btn-success"
+					ng-click="model.findUserByTime(inputyear,inputSemester)">
+					search Student</button> -->
+				<button type="button" class="btn btn-success"
+					ng-click="model.findCourseByTime(inputyear,inputSemester)">Search
+					Course</button>
+
+			</div>
+
+
+		</div>
+	</div>
+
+
+	<div>
+		<div class="col-lg-4 col-mx-4 col-sm-6" style='float: left;'>
+			<ul class="list-group col-xs-6">
+				<li class="list-group-item" ng-repeat="user in model.users">
+					<div class="text-center">
+						<span>{{user.role}} 
+						<a ng-click="model.changeRole(user.id, user.type)" style="cursor: pointer">
+					<span class="glyphicon glyphicon glyphicon-edit"> </span></a>
+					{{user.firstname}} {{user.lastname}} </span> <span> <span
+							class="pull-right"> <!-- ng-click="model.updateUsers()" -->
+								<a style="cursor: pointer"
+								href="#!/admin/profileUpdate/{{user.id}}"> <span
+									class="glyphicon glyphicon glyphicon-pencil"></span>
+							</a>
+						</span> <span class="pull-right"> <a
+								ng-click="model.removeUsers(user.id)" style="cursor: pointer"> <span
+									class="glyphicon glyphicon glyphicon-remove"></span>
+							</a>
+						</span>
+						</span>
+					</div>
+				</li>
+			</ul>
+
+
+
+			<ul class="list-group col-xs-6">
+				<li class="list-group-item" ng-repeat="course in model.courses">
+					<div class="text-center">
+						{{course.name}} <span> <span
+							class="pull-right"> <!-- ng-click="model.updateCourses()" -->
+								<a style="cursor: pointer" href="#!/admin/courseUpdate/{{course.name}}">
+									<span class="glyphicon glyphicon glyphicon-pencil"></span>
+							</a>
+						</span> <span class="pull-right"> <a
+								ng-click="model.deleteCourses(semester.id)" style="cursor: pointer"> <span
+									class="glyphicon glyphicon glyphicon-remove"></span>
+							</a>
+						</span>
+						</span>
+					</div>
+				</li>
+			</ul>
+			<ul class="list-group col-xs-6">
+				<li class="list-group-item" ng-repeat="semester in model.semesters">
+					<div class="text-center">
+						{{semester.id}} <span> <span
+							class="pull-right"> <!-- ng-click="model.updateCourses()" -->
+								<a style="cursor: pointer" href="#!/admin/semesterUpdate/{{semester.id}}">
+									<span class="glyphicon glyphicon glyphicon-pencil"></span>
+							</a>
+						</span> <span class="pull-right"> <a
+								ng-click="model.deleteSemester(semester.id)" style="cursor: pointer"> <span
+									class="glyphicon glyphicon glyphicon-remove"></span>
+							</a>
+						</span>
+						</span>
+					</div>
+				</li>
+			</ul>
+
+		</div>
+		<div style='float: right; width: 20%;' align="right">
+			<!-- <form action="#/register"
+              name="form"
+              novalidate
+              method="POST">
+			<input style='float: left width=40%' name=" username" required
+				class="form-control" ng-model="model.user.username" type="text"
+				placeholder="Name" /></input>     <input name="password" required
+				id="password" class="form-control" type="password"
+				ng-model="model.user.password" placeholder="Password" /> </input>
+			 <button type="button" class="btn btn-primary">
+				<a   style="cursor: pointer" href="#!/admin/profileUpdate? id= user.id"></a> Add User
+			</button>
+			
+		</form> -->
+		<div>
+				<a style="cursor: pointer" href="#!/admin/addSemester ">
+					<button type="button" class="btn btn-info">Add Semester</button>
+				</a>
+			</div>
+			<div>
+				<a style="cursor: pointer" href="#!/admin/addCourse ">
+					<button type="button" class="btn btn-info">Add Course</button>
+				</a>
+			</div>
+			
+			<div>
+				<a style="cursor: pointer" href="#!/register">
+					<button type="button" class="btn btn-primary">Add User</button>
+				</a>
+			</div>
+			<!-- <form action="#/createCourse"
+              name="form"
+              novalidate
+              method="POST">
+			<input style='float: left width=40% 'name=" coursename" required
+				class="form-control" ng-model="model.course.coursename" type="text"
+				placeholder="Course Name" /></input>     <input name="CourseID" required
+				id="CourseID" class="form-control" type="text"
+				ng-model="model.course.cid" placeholder="CourseID" /> </input>
+			
+			
+			</form> -->
+		
+		</div>
+	</div>
+
+</div>

@@ -1,55 +1,492 @@
+<!--<div class="container-fluid">-->
+    <!--<div class="col-lg-4 col-md-4 col-sm-6">-->
+        <!--<ul class="list-group">-->
+            <!--<li class="list-group-item" ng-repeat="sems in model.semesters">-->
+                <!--<div class="text-center">-->
+                    <!--{{sems.name}}-->
+                    <!--<span class="pull-right">-->
+                        <!--<a ng-click="model.fetchCourses(sems.id)" style="cursor: pointer">-->
+                            <!--<span class="glyphicon glyphicon glyphicon-chevron-right "></span>-->
+                        <!--</a>-->
+                    <!--</span>-->
+                <!--</div>-->
+            <!--</li>-->
+        <!--</ul>-->
+    <!--</div>-->
+    <!--<div class="col-lg-4 col-md-4 col-sm-6">-->
+        <!--<ul class="list-group">-->
+            <!--<li class="list-group-item" ng-repeat="course in model.courses">-->
+                <!--<div class="text-center">-->
+                    <!--{{course.name}}-->
+                    <!--<span class="pull-right">-->
+                        <!--<a ng-click="model.fetchAssignments(course.id)" style="cursor: pointer">-->
+                            <!--<span class="glyphicon glyphicon glyphicon-chevron-right "></span>-->
+                        <!--</a>-->
+                    <!--</span>-->
+                <!--</div>-->
+            <!--</li>-->
+            <!---->
+        <!--</ul>-->
+    <!--</div>-->
+    <!--<div class="col-lg-4 col-md-4 col-sm-6">-->
+        <!--<ul class="list-group">-->
+            <!--<li class="list-group-item" ng-repeat="assignment in model.assignments">-->
+                <!--<div class="text-center">-->
+                    <!--{{assignment.name}}-->
+                    <!--<span class="pull-right">-->
+                        <!--<a href="#!/results/{{assignment.id}}" style="cursor: pointer">-->
+                            <!--<span class="glyphicon glyphicon glyphicon-chevron-right "></span>-->
+                        <!--</a>-->
+                    <!--</span>-->
+                <!--</div>-->
+            <!--</li>-->
+        <!--</ul>-->
+    <!--</div>-->
+<!--</div>-->
+
+
+<!--Start here-->
+<!---->
 <div class="container-fluid">
-    <div class="col-lg-4 col-md-4 col-sm-6">
-        <ul class="list-group">
-            <li class="list-group-item" ng-repeat="sems in model.semesters">
-                <div class="text-center">
-                    {{sems.name}}
-                    <span class="pull-right">
-                        <a ng-click="model.fetchCourses(sems.id)" style="cursor: pointer">
-                            <span class="glyphicon glyphicon glyphicon-chevron-right "></span>
-                        </a>
-                    </span>
+    <div class="row">
+        <div class="col-sm-3 col-lg-2">
+            <nav class="navbar navbar-fixed-side">
+                <!-- normal collapsible navbar markup -->
+                <div class="col-md-12" style="padding-top: 5%">
+                    <center>
+                        <span style="font-size:8em;" class="glyphicon glyphicon-user user-gly"></span>
+                        <!-- <h3 class=""> {{model.professorName}} </h3></center> -->
                 </div>
-            </li>
-        </ul>
+
+                <ul class="user-menu" style="list-style-type: none;">
+                    <li class="user-menu">
+                        <button type="button" class="btn btn-outline btn-primary btn-lg btn-block user-button"
+                                ng-click="model.showDashboard()">
+                            <span class="glyphicon glyphicon-dashboard user-action-gly"></span>
+                            Dashboard</button>
+                    </li>
+
+                    <li class="user-menu">
+                        <button ng-click="model.viewAllSubmissions();model.MODALVIEWS='ALLSUBMISSIONS'" data-toggle="modal" data-target="#myModal" type="button" class="btn btn-outline btn-primary btn-lg btn-block user-button">
+                            <span class="glyphicon glyphicon-user user-action-gly"></span>
+                            All Submissions</button>
+                    </li>
+
+                    <!--<li class="user-menu">-->
+                    <!--<button ng-click="model.showComments()" type="button" class="btn btn-outline btn-primary btn-lg btn-block user-button">-->
+                    <!--<span class="glyphicon glyphicon-comment user-action-gly"></span>-->
+                    <!--Comments </button>-->
+                    <!--</li>-->
+
+
+                </ul>
+            </nav>
+        </div>
+        <div class="col-sm-9 col-lg-10">
+            <!-- your page content -->
+
+
+
+            <div class="col-md-9 user-view-block pre-scrollable" >
+                <!--The Panels to show-->
+
+                <div ng-switch="model.loadProfileEditdiv">
+                    <div ng-switch-default>
+                        <!--<ng-include src="'views/user/templates/admin-dashboard-comp.view.client.html'"></ng-include>-->
+                        <div ng-repeat="sem in model.semesters">
+                            <div class="col-md-5">
+                                <div class="panel panel-primary">
+                                    <div class="panel-heading" style="background-color:black">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <center>
+                                                    <i class="fa fa-book fa-5x"></i>
+                                                </center>
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <div class="data-numbers">{{sem.name}}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="panel-footer"
+                                         style="background-color: black;color: white;">
+                                        <center>
+                                            <h4>Fetch Courses
+                                                <span class="pull-right">
+                                    <a href="#!/dashboard/{{model.pid}}/semester/{{sem.id}}"
+                                       style="cursor: pointer">
+                                        <span class="glyphicon glyphicon glyphicon-chevron-right "></span>
+                                    </a>
+                                </span></h4>
+
+                                        </center>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div ng-switch-when="COURSES">
+                        <!--<ng-include src="'views/user/templates/allUserShow-Admin.view.client.html'"></ng-include>-->
+                        <div ng-repeat="course in model.courses">
+                            <div class="col-md-5">
+                                <div class="panel panel-primary">
+                                    <div class="panel-heading" style="background-color:black">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <center>
+                                                    <i class="fa fa-book fa-5x"></i>
+                                                </center>
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <div class="row">
+                                                    <div class="data-numbers">{{course.name}}</div>
+                                                    <a  ng-click="model.editCourse(course);model.MODALVIEWS='EDITCOURSE'" class="col-md-1 pull-right">
+                                                        <span class=" glyphicon glyphicon-cog cog-gly"></span>
+                                                    </a>
+                                                </div>
+                                                
+
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="panel-footer"
+                                         style="background-color: black;color: white;">
+                                        <center>
+                                            <h4>View Assignments
+                                                <span class="pull-right">
+                                    <a href="#!/dashboard/{{model.pid}}/semester/{{model.sid}}/course/{{course.id}}"
+                                       style="cursor: pointer">
+                                        <span class="glyphicon glyphicon glyphicon-chevron-right "></span>
+                                    </a>
+                                </span></h4>
+
+                                        </center>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-5">
+                            <div class="panel panel-primary">
+                                <div class="panel-heading" style="background-color:black">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <center>
+                                                <i class="fa fa-plus fa-5x"></i>
+                                            </center>
+                                        </div>
+
+                                        <div class="col-md-6">
+
+                                            <div class="data-numbers">
+                                                <span> Add Course </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="panel-footer"
+                                     style="background-color: black;color: white;">
+                                    <center>
+                                        <h4>Click to Create
+                                            <span class="pull-right">
+                                    <!--<a ng-click="model.fetchAssignmentsVersions(assignment.id);model.loadProfileEditdiv='VERSIONS'"-->
+                                                <!--style="cursor: pointer">-->
+                                                <!--<span class="glyphicon glyphicon glyphicon-chevron-right "></span>-->
+                                                <!--</a>-->
+                                    <a ng-click="model.addCourse();model.MODALVIEWS='ADDCOURSE'" style="cursor: pointer">
+                                    <span class="glyphicon glyphicon glyphicon-chevron-right "></span>
+                                    </a>
+                                </span></h4>
+
+                                    </center>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div ng-switch-when="ASSIGNMENTS">
+                        <!--<ng-include src="'views/user/templates/profile-settings.view.client.html'"></ng-include>-->
+                        <div ng-repeat="assignment in model.assignments">
+                            <div class="col-md-5">
+                                <div class="panel panel-primary">
+                                    <div class="panel-heading" style="background-color:black">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <center>
+                                                    <i class="fa fa-book fa-5x"></i>
+                                                </center>
+                                            </div>
+
+                                            <div class="col-md-6">
+
+                                                <div class="row">
+                                                    <div class="data-numbers">
+                                                        <!--<span> Submitted ID -  </span>-->
+                                                        {{assignment.name}}
+                                                    </div>
+                                                </div>
+
+                                                <div class="row">
+                                                    <a  ng-click="model.editAssignment(assignment);model.MODALVIEWS='EDITASSIGNMENT'" class="col-md-1 ">
+                                                        <span class=" glyphicon glyphicon-cog cog-gly"></span>
+                                                    </a>
+
+                                                    <!--<a  ng-click="model.removeComment(comment._id)" class="col-md-1 ">-->
+                                                    <!--<span class="glyphicon glyphicon-remove remove-gly"></span>-->
+                                                    <!--</a>-->
+                                                </div>
+
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="panel-footer"
+                                         style="background-color: black;color: white;">
+                                        <center>
+                                            <h4>View Snapshots
+                                                <span class="pull-right">
+                                    <a href="#!/dashboard/{{model.pid}}/semester/{{model.sid}}/course/{{model.cid}}/snapshot/{{assignment.id}}"
+                                       style="cursor: pointer">
+                                        <span class="glyphicon glyphicon glyphicon-chevron-right "></span>
+                                    </a>
+                                </span></h4>
+
+                                        </center>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-5">
+                            <div class="panel panel-primary">
+                                <div class="panel-heading" style="background-color:black">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <center>
+                                                <i class="fa fa-plus fa-5x"></i>
+                                            </center>
+                                        </div>
+
+                                        <div class="col-md-6">
+
+                                            <div class="data-numbers">
+                                                <span> Add Assignment </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="panel-footer"
+                                     style="background-color: black;color: white;">
+                                    <center>
+                                        <h4>Click to Create
+                                            <span class="pull-right">
+                                    <!--<a ng-click="model.fetchAssignmentsVersions(assignment.id);model.loadProfileEditdiv='VERSIONS'"-->
+                                                <!--style="cursor: pointer">-->
+                                                <!--<span class="glyphicon glyphicon glyphicon-chevron-right "></span>-->
+                                                <!--</a>-->
+                                    <a ng-click="model.addAssignment();model.MODALVIEWS='ADDASSIGNMENT'" style="cursor: pointer">
+                                    <span class="glyphicon glyphicon glyphicon-chevron-right "></span>
+                                    </a>
+                                </span></h4>
+
+                                    </center>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                    <div ng-switch-when="SNAPSHOTS">
+                        <!--<ng-include src="'views/user/templates/user-comments.view.client.html'"></ng-include>-->
+                        <div ng-repeat="snapshot in model.snapshots">
+                            <div class="col-md-5">
+                                <div class="panel panel-primary">
+                                    <div class="panel-heading" style="background-color:black">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <center>
+                                                    <i class="fa fa-book fa-5x"></i>
+                                                </center>
+                                            </div>
+
+                                            <div class="col-md-6">
+
+                                                <div class="data-numbers">
+                                                    <span> Submitted ID - {{snapshot.id}} </span>
+                                                    </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="panel-footer"
+                                         style="background-color: black;color: white;">
+                                        <center>
+                                            <h4>View Snapshots
+                                                <span class="pull-right">
+                                    <a href="#!/results/{{snapshot.id}}"
+                                       style="cursor: pointer">
+                                        <span class="glyphicon glyphicon glyphicon-chevron-right "></span>
+                                    </a>
+                                </span></h4>
+
+                                        </center>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-5">
+                            <div class="panel panel-primary">
+                                <div class="panel-heading" style="background-color:black">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <center>
+                                                <i class="fa fa-plus fa-5x"></i>
+                                            </center>
+                                        </div>
+
+                                        <div class="col-md-6">
+
+                                            <div class="data-numbers">
+                                                <span> New Run </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="panel-footer"
+                                     style="background-color: black;color: white;">
+                                    <center>
+                                        <h4>Click for a Fresh Run
+                                            <span class="pull-right">
+                                    <!--<a ng-click="model.fetchAssignmentsVersions(assignment.id);model.loadProfileEditdiv='VERSIONS'"-->
+                                                <!--style="cursor: pointer">-->
+                                                <!--<span class="glyphicon glyphicon glyphicon-chevron-right "></span>-->
+                                                <!--</a>-->
+                                    <a ng-click="model.runNewSnapshot()" style="cursor: pointer">
+                                    <span class="glyphicon glyphicon glyphicon-chevron-right "></span>
+                                    </a>
+                                </span></h4>
+
+                                    </center>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+                <!--<div class="col-lg-4 col-md-4 col-sm-6">-->
+                <!--<ul class="list-group">-->
+                <!--<li class="list-group-item" ng-repeat="course in model.courses">-->
+                <!--<div class="text-center">-->
+                <!--{{course.name}}-->
+                <!--<span class="pull-right">-->
+                <!--<a ng-click="model.fetchAssignments(course.id)" style="cursor: pointer">-->
+                <!--<span class="glyphicon glyphicon glyphicon-chevron-right "></span>-->
+                <!--</a>-->
+                <!--</span>-->
+                <!--</div>-->
+                <!--</li>-->
+                <!--</ul>-->
+                <!--</div>-->
+                <!--<div class="col-lg-4 col-md-4 col-sm-6">-->
+                <!--<ul class="list-group">-->
+                <!--<li class="list-group-item" ng-repeat="assignment in model.assignments">-->
+                <!--<div class="text-center">-->
+                <!--{{assignment.name}}-->
+                <!--<span class="pull-right">-->
+                <!--<a href="#!/main/{{model.studentId}}/{{assignment.id}}" style="cursor: pointer">-->
+                <!--<span class="glyphicon glyphicon glyphicon-chevron-right "></span>-->
+                <!--</a>-->
+                <!--</span>-->
+                <!--</div>-->
+                <!--</li>-->
+                <!--</ul>-->
+                <!--</div>-->
+
+
+
+
+
+
+            </div>
+            <div class="col-md-3">
+                <ul class="list-group list-unstyled">
+                    <li class="list-group-item list-group-item-heading list-group-item-info text-center">
+                       <span class="text-center">Notifications</span>
+                    </li>
+                    <li class="list-group-item">
+                        Plagarism detected! - 30% Click here
+                    </li>
+                    <li class="list-group-item">
+                        Plagarism detected! - 32% Click here
+                    </li>
+                    <li class="list-group-item" ng-repeat="notification in model.notifications">
+                        <div class="row text-center">
+                            {{notification.text}}
+                        </div>
+                        <div class="row text-center">
+                            {{notification.date}}
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
     </div>
-    <div class="col-lg-4 col-md-4 col-sm-6">
-        <ul class="list-group">
-            <li class="list-group-item" ng-repeat="course in model.courses">
-                <div class="text-center">
-                    {{course.name}}
-                    <span class="pull-right">
-                        <a ng-click="model.fetchAssignments(course.id)" style="cursor: pointer">
-                            <span class="glyphicon glyphicon glyphicon-chevron-right "></span>
-                        </a>
-                    </span>
+
+    <button id="myButton" type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal" style="visibility: hidden;"></button>
+
+    <div id="myModal" class="modal fade modal-fullscreen" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content" style="padding: 10px">
+
+                <div ng-switch="model.MODALVIEWS">
+                    <div ng-switch-default>
+                        <!--Default content view-->
+                    </div>
+                    <div ng-switch-when="ALLSUBMISSIONS">
+
+                    </div>
+                    <div ng-switch-when="ADDCOURSE">
+                        <ng-include src="'views/templates/professorDashboard.PLUGIN.AddCourse.view.client.html'"></ng-include>
+                    </div>
+                    <div ng-switch-when="EDITCOURSE">
+                        <ng-include src="'views/templates/professorDashboard.PLUGIN.EditCourse.view.client.html'"></ng-include>
+
+                    </div>
+                    <div ng-switch-when="ADDASSIGNMENT">
+                        <ng-include src="'views/templates/professorDashboard.PLUGIN.AddAssignment.view.client.html'"></ng-include>
+
+                    </div>
+                    <div ng-switch-when="EDITASSIGNMENT">
+                        <ng-include src="'views/templates/professorDashboard.PLUGIN.EditAssignment.view.client.html'"></ng-include>
+
+                    </div>
                 </div>
-            </li>
-            <!-- <li class="list-group-item">
-                <div>
-                    <input ng-disabled="model.editBarDisable" ng-model="model.editingComment"  type="text" class="form-control comment-bar"
-               placeholder="Edit comment here">
-                <span class="input-group-btn">
-                <a ng-click="model.okClick(model.editingComment)" class="btn btn-default search-button" type="button">
-                    <span class="glyphicon glyphicon-ok search-gly"></span>
-                </a>
-                    </span>
+
+                <div class="modal-footer">
+                    <button id="modalCloseBtn" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                 </div>
-            </li> -->
-        </ul>
-    </div>
-    <div class="col-lg-4 col-md-4 col-sm-6">
-        <ul class="list-group">
-            <li class="list-group-item" ng-repeat="assignment in model.assignments">
-                <div class="text-center">
-                    {{assignment.name}}
-                    <span class="pull-right">
-                        <a href="#!/results/{{assignment.id}}" style="cursor: pointer">
-                            <span class="glyphicon glyphicon glyphicon-chevron-right "></span>
-                        </a>
-                    </span>
-                </div>
-            </li>
-        </ul>
+            </div>
+
+        </div>
+
     </div>
 </div>
+
+</div>
+
