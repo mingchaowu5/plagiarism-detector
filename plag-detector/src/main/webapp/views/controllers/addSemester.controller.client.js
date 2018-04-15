@@ -4,7 +4,7 @@
         .module("PlagApp")
         .controller("addSemesterController", addSemesterController);
 
-    function addCourseController(AdminService, $location, $routeParams,$rootScope) {
+    function addSemesterController(AdminService, $location, $routeParams,$rootScope) {
         var vm = this;
         vm.createSemester = createSemester;
         vm.routeLogin = routeLogin;
@@ -19,6 +19,7 @@
             promise
                 .then(function (response) {
                     if(response){
+                    	console.log("add semester");
                         vm.semester = response.data;
 
                     }

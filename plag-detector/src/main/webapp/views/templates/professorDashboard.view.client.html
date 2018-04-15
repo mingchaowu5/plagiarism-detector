@@ -459,6 +459,28 @@
                         <!--Default content view-->
                     </div>
                     <div ng-switch-when="ALLSUBMISSIONS">
+                    		<table class="table table-responsive">
+                    			<thead>
+				                <tr>
+				                    <th>Student</th>
+				                    <th>Course</th>
+				                    <th>Assignment</th>
+				                    <th>Submission</th>
+				                    <th>Time</th>
+				                </tr>
+            					</thead>
+            					
+           
+				            <tr ng-repeat="row in model.allSubmissions">
+				            <td>{{row.student}}</td>
+				            <td>{{row.course}}</td>
+				            <td>{{row.assignment}}</td>
+				            <td>{{row.submission}}</td>
+				            <td>{{row.date}}</td>
+				            
+				            <!-- <tr>{{row.file2}}</tr> -->
+				            </tr>
+                    		</table>
 
                     </div>
                     <div ng-switch-when="ADDCOURSE">

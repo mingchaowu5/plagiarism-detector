@@ -18,7 +18,8 @@
             "updateCourse":updateCourse,
             "runSnapshot":runSnapshot,
             "deleteCourse":deleteCourse,
-            "deleteAssignment":deleteAssignment
+            "deleteAssignment":deleteAssignment,
+            "allSubmission":allSubmission
         };
         return api;
 
@@ -75,6 +76,10 @@
 
         function deleteAssignment(aid) {
             return $http.get("/rest/assignment/delete?id="+aid);
+        }
+        
+        function allSubmission(){
+        	return $http.get("/rest/submission/submissions");
         }
 
     }

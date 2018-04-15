@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import edu.northeastern.cs5500.models.submission.Sub1;
 import edu.northeastern.cs5500.models.submission.Submission;
 
 /**
@@ -23,6 +24,12 @@ public class SubmissionController {
 
 	@Autowired
 	private SubmissionService submissionService;
+	
+	@GetMapping(value = "/submissions")
+	public ResponseEntity<List<Sub1>> latestAllSubmissions() {
+		List<Sub1> submissions = this.submissionService.getAllSubmission();
+		return new ResponseEntity<>(submissions, HttpStatus.OK);
+	}
 	
 	/**
 	 * Get latest submissions for an assignment

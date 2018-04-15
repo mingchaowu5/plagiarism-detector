@@ -134,6 +134,15 @@
         }
 
         function viewAllSubmissions() {
+        		var promise = ProfessorService.allSubmission();
+        		
+        		promise
+        			.then(function(res){
+        				vm.allSubmissions = res.data;
+        			})
+        			.catch(function(err){
+        				console.log("error fetching all submissions")
+        			})
            // TODO
         }
         

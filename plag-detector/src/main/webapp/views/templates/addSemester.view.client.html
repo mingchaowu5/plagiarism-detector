@@ -1,10 +1,10 @@
 <div class="container-fluid marginTop backStyle" style="padding-top: 70px;padding-bottom: 70px" >
-    <div ng-show="model.error" class="alert alert-danger" role="alert" >
+   <!--  <div ng-show="model.error" class="alert alert-danger" role="alert" >
         {{model.error}}
     </div>
     <div class="alert alert-success" ng-show="model.message">
         {{model.message}}
-    </div>
+    </div> -->
 
     <div class="col-md-8">
         <form 
@@ -12,18 +12,16 @@
               novalidate
               method="POST">
      
-          
-     
             <div class="form-group">
                 <label class="register-label" for="first-name">SemesterName</label>
-                <input name="semesterName" required class="form-control" ng-model="model.semester.name"
+                <input name="semesterName" required class="form-control" ng-model="model.newsemester.name"
                        id="name"
                        type="text"
                        placeholder="name"/>
             </div>
             
             <div class="form-group" style="padding-top: 2%">
-                <button ng-click="form.$valid && model.addSemester(model.semester)" type="button" class="btn btn-primary col-md-12 col-sm-12 col-xs-12">Add semester</button>
+                <button ng-click="form.$valid && model.createSemester(model.newsemester)" type="button" class="btn btn-primary col-md-12 col-sm-12 col-xs-12">Add semester</button>
             </div>
            
         </form>

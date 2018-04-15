@@ -44,6 +44,7 @@ public class CourseDao {
 			String sql = "INSERT INTO StudentCourseMapping (student, course) VALUES (?, ?)";
 			return jdbcTemplate.update(sql, new Object[] {studentId, courseId});
 		}catch(Exception e) {
+			e.printStackTrace();
 		}
 		return 0;
 	}

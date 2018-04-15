@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import edu.northeastern.cs5500.Constants;
 import edu.northeastern.cs5500.dao.SubmissionDao;
+import edu.northeastern.cs5500.models.submission.Sub1;
 import edu.northeastern.cs5500.models.submission.Submission;
 
 @Service
@@ -13,6 +14,10 @@ public class SubmissionService {
 
 	@Autowired
 	private SubmissionDao submissionDao;
+	
+	public List<Sub1> getAllSubmission(){
+		return this.submissionDao.getAllSubmission();
+	}
 	
 	/**
 	 * Connect to the database layer and get the semesters

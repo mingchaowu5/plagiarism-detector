@@ -50,6 +50,7 @@ public class ScheduleController {
 			log.log(Level.INFO, "Type: " + snap.getType());
 			if(snap.getType() == 0) {
 				flag = calculateIncrementalResult(snap.getId());
+				sendMail(2);
 			}else {
 				flag = calculateTotalResult(snap.getId());
 				log.log(Level.INFO, "Sending Mail");

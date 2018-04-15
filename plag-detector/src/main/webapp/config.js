@@ -92,12 +92,12 @@
             })
              .when("/admin/addCourse",{
                 templateUrl:"views/templates/addCourse.view.client.html",
-                controller: 'adminController',
+                controller: 'adminDashboardController',
                 controllerAs: 'model'
             })
             .when("/admin/addSemester",{
                 templateUrl:"views/templates/addSemester.view.client.html",
-                controller: 'adminController',
+                controller: 'adminDashboardController',
                 controllerAs: 'model'
             })
               .when("/admin/semesterUpdate/:sid",{
@@ -111,7 +111,4 @@
                 controllerAs: 'model'
             })
     }
-
-
-
 })();

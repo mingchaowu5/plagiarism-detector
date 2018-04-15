@@ -118,7 +118,7 @@
         }
 
         function addCourseToStudent(courseID, studentId) {
-            var promise = StudentService.addCourseToStudent(courseID, studentId);
+            var promise = StudentService.addCourseToStudent(courseID, vm.studentId);
 
             promise
                 .then(function (response) {

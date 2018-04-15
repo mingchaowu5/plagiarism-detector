@@ -7,7 +7,7 @@
     function courseUpdateController(AdminService, $location, $routeParams,$rootScope) {
         var vm = this;
         vm.updateCourse = updateCourse;
-        vm.coursename = $routeParams.cid;
+        vm.cid = $routeParams.cid;
         
 //        function init() {
 //        	 vm.id =id;
