@@ -10,7 +10,7 @@
 
 	<name>cs5200-spring2018-nandu</name>
 	<description>Demo project for Spring Boot</description>
-
+	
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
@@ -27,7 +27,8 @@
         src/main/webapp/css/*, src/main/webapp/js/*, src/main/java/edu/northeastern/cs5500/models/*
 	    </sonar.exclusions>
 	    <sonar.coverage.exclusions>
-	      src/main/java/edu/northeastern/cs5500/models/*, src/main/java/edu/northeastern/cs5500/jobs/*
+	      src/main/webapp/views/*, src/main/java/edu/northeastern/cs5500/models/*, src/main/java/edu/northeastern/cs5500/jobs/*,
+	      src/main/java/edu/northeastern/cs5500/controller/result/*
 	    </sonar.coverage.exclusions>
 	    <sonar.host.url>http://www.example.com/</sonar.host.url>
 	    <sonar.jdbc.url>jdbc:postgresql://www.example.com/sonar</sonar.jdbc.url>

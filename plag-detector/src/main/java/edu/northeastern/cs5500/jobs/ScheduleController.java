@@ -105,7 +105,7 @@ public class ScheduleController {
 		for(Submission s : submissions) {
 			if(s.getId() != max) {
 				this.resultsService.deleteEntries(max, s.getId());
-				resultsService.findResults(id, max, s.getId());
+				resultsService.findResults(max, s.getId());
 			}
 		}
 		return true;
@@ -122,7 +122,7 @@ public class ScheduleController {
 			for(int i = 0;i<submissions.size();++i) {
 				for(int j = i + 1;j<submissions.size();++j) {
 					this.resultsService.deleteEntries(submissions.get(i).getId(), submissions.get(j).getId());
-					resultsService.findResults(id, submissions.get(i).getId(), submissions.get(j).getId());
+					resultsService.findResults(submissions.get(i).getId(), submissions.get(j).getId());
 				}
 			}
 		}catch(Exception e) {
