@@ -83,9 +83,11 @@ public class AssignmentTest extends PlagDetectorApplicationTests{
 		List<Assignment> list = assignmentDao.findAllAssignments();
 		if(list.size() > 0) {
 			int aid = list.get(0).getId();
-			this.assignmentDao.updateAssignment(aid, list.get(0).getName() + " 1", list.get(0).getCourse(), list.get(0).getLangId());
+			String name = list.get(0).getName();
+			this.assignmentDao.updateAssignment(aid, "Test", list.get(0).getCourse(), list.get(0).getLangId());
 			Assignment a = this.assignmentDao.findAssignmentById(aid);
-			assertEquals(list.get(0).getName() + " 1", a.getName());
+			assertEquals("Test", a.getName());
+			this.assignmentDao.updateAssignment(aid, name, list.get(0).getCourse(), list.get(0).getLangId());
 		}
 	}
 	
