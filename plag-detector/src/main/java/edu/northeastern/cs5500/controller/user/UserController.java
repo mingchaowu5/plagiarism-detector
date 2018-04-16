@@ -105,6 +105,20 @@ public class UserController {
 		return new ResponseEntity<>(user, HttpStatus.OK);
 	}
 	
+	/**
+	 * Send Mail to the student
+	 * @param username:	of the user
+	 * @param password:	of the user
+	 * @param type:	of the user
+	 * @return	User: return null if the user is not present or else returns the user object
+	 */
+	@GetMapping(value = "/mail")
+	public ResponseEntity<Boolean> sendMail(@RequestParam(value = "student_id") int studentId, 
+			@RequestParam(value = "professor_id")int profId, @RequestParam(value = "assignment_id") int assignmentId){
+		this.userService.sendMail(studentId, profId, assignmentId);
+		return new ResponseEntity<>(true, HttpStatus.OK);
+	}
+	
 	
 	/**
 	 * Delete the user

@@ -2,6 +2,8 @@ package edu.northeastern.cs5500.dao;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -19,24 +21,38 @@ public class NotificationDao {
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 	
+	private Logger log = Logger.getAnonymousLogger();
+	
+	/**
+	 * 
+	 * @return
+	 */
 	public List<Notification> findAllNotifications(){
 		try {
 			String sql = "Select * from Notification ORDER BY date DESC";
 			RowMapper<Notification> rowMapper = new BeanPropertyRowMapper<>(Notification.class);
-			List<Notification> results = this.jdbcTemplate.query(sql, rowMapper);
-			return results;
+			return this.jdbcTemplate.query(sql, rowMapper);
 		}
 		catch(Exception e) {
+			log.log(Level.INFO, e.getMessage());
 			return new ArrayList<>();
 		}
 	}
 
+	/**
+	 * 
+	 * @param text
+	 * @param snapshotId
+	 * @param date
+	 * @return
+	 */
 	public int addNotification(String text, int snapshotId, String date) {
 		try {
 				String sql = "INSERT INTO Notification (text, snapshot, date) VALUES (?, ?, ?)";
 				return jdbcTemplate.update(sql, new Object[] {text, snapshotId, date});
 			}
 			catch(Exception e) {
+				log.log(Level.INFO, e.getMessage());
 				return 0;
 			}
 	}

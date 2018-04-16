@@ -1,19 +1,9 @@
-<div class="container-fluid">
-	<div>
+
+<div class = "content-fluid">
+	<!-- <div>
 		<div class="input-group ">
 			<div class="input-group-prepend">
-				<!-- <button class="btn btn-outline-secondary" type="button">Year</button>
-
-				<select class="custom-select" id="inputyear">
-					<option selected>Choose year..</option>
-					<option value="2016">2016</option>
-					<option value="2017">2017</option>
-					<option value="2018">2018</option>
-					<option value="2019">2019</option>
-					<option value="2020">2020</option>
-					<option value="All">All</option>
-				</select>
- -->
+				
 				<button class="btn btn-outline-secondary" type="button">Semester</button>
 
 				<select class="custom-select" id="inputSemester">
@@ -21,12 +11,9 @@
 					<div >
 					<option  ng-repeat="semester in model.semesters" value=semester.name>{{semester.name}}</option>
 					</div>
-					<!-- <option value="All">All</option> -->
+					
 					
 				</select>
-				<!-- 	<button align = "right"type="button" class="btn btn-success"
-					ng-click="model.findUserByTime(inputyear,inputSemester)">
-					search Student</button> -->
 				<button type="button" class="btn btn-success"
 					ng-click="model.findCourseBySem(semester.id)">Search
 					Course</button>
@@ -35,10 +22,87 @@
 
 
 		</div>
+	</div> -->
+
+
+	<ul class="nav nav-tabs">
+	  <li class="nav-item">
+	    <a ng-click="users = true; semesters = false; courses = false" class="nav-link active" >Users</a>
+	  </li>
+	  <li class="nav-item">
+	    <a ng-click="users = false; semesters = true; courses = false" class="nav-link" >Semesters</a>
+	  </li>
+	  <li class="nav-item">
+	    <a ng-click="users = false; semesters = false; courses = true" class="nav-link" >Courses</a>
+	  </li>
+	</ul>
+	
+	<div class="panel-body" ng-if="users">
+		<div><button type="button" class="btn btn-success">Add New User</button></div>
+		<br />
+		<table class="table table-bordered bordered table-striped table-condensed" ui-jq=”datatable” ui-options=”options” >
+			<thead>
+				<th>Firstname</th>
+				<th>Lastname</th>
+				<th>Type</th>
+				<th>Action</th>
+			</thead>
+			<tbody>
+				<tr ng-repeat="row in model.users" style="background-color:#EDEBEB; padding:10px;">
+					<td>{{row.firstName}}</td>
+					<td>{{row.lastName}}</td>
+					<td>{{row.type == 0 ? 'Student':'Professor'}}</td>
+					<td>
+						<a ng-click="model.changeRole(row.id, row.type)" style="cursor: pointer"><span class="glyphicon glyphicon glyphicon-edit"> </span></a> &nbsp;
+						<a style="cursor: pointer"href="#!/admin/profileUpdate/{{row.id}}"><span class="glyphicon glyphicon glyphicon-pencil"></span></a>&nbsp;
+						<a ng-click="model.removeUsers(row.id)" style="cursor: pointer"><span class="glyphicon glyphicon glyphicon-remove"></span></a>&nbsp;
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	
+	<div class="panel-body" ng-if="semesters">
+		<div><button type="button" class="btn btn-success">Add New Semesters</button></div>
+		<br />
+		<table class="table table-bordered bordered table-striped table-condensed" ui-jq=”datatable” ui-options=”options” >
+			<thead>
+				<th>Name</th>
+				<th>Action</th>
+			</thead>
+			<tbody>
+				<tr ng-repeat="row in model.semesters" style="background-color:#EDEBEB; padding:10px;">
+					<td>{{row.name}}</td>
+					<td>
+						<a style="cursor: pointer"href="#!/admin/semesterUpdate/{{row.id}}"><span class="glyphicon glyphicon glyphicon-pencil"></span></a>&nbsp;
+						<a ng-click="model.deleteSemester(row.id)" style="cursor: pointer"><span class="glyphicon glyphicon glyphicon-remove"></span></a>&nbsp;
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	
+	<div class="panel-body" ng-if="courses">
+		<div><button type="button" class="btn btn-success">Add New Course</button></div>
+		<br />
+		<table class="table table-bordered bordered table-striped table-condensed" ui-jq=”datatable” ui-options=”options” >
+			<thead>
+				<th>Name</th>
+				<th>Action</th>
+			</thead>
+			<tbody>
+				<tr ng-repeat="row in model.courses" style="background-color:#EDEBEB; padding:10px;">
+					<td>{{row.name}}</td>
+					<td>
+						<a style="cursor: pointer"href="#!/admin/courseUpdate/{{row.id}}"><span class="glyphicon glyphicon glyphicon-pencil"></span></a>&nbsp;
+						<a ng-click="model.deleteCourses(row.id)" style="cursor: pointer"><span class="glyphicon glyphicon glyphicon-remove"></span></a>&nbsp;
+					</td>
+				</tr>
+			</tbody>
+		</table>
 	</div>
 
-
-	<div>
+	<!-- <div>
 		<div  style='float: left;'>
 		
 			<ul class="list-group col-xs-4">
@@ -49,14 +113,13 @@
 						<a ng-click="model.changeRole(user.id, user.type)" style="cursor: pointer">
 					<span class="glyphicon glyphicon glyphicon-edit"> </span></a>
 					{{user.firstName}} {{user.lastName}} </span>  <span
-							class="pull-right"> <!-- ng-click="model.updateUsers()" -->
+							class="pull-right"> 
 								<a style="cursor: pointer"href="#!/admin/profileUpdate/{{user.id}}">
-								 <span
-									class="glyphicon glyphicon glyphicon-pencil"></span>
+								 <span class="glyphicon glyphicon glyphicon-pencil"></span>
 							</a>
 						</span> <span class="pull-right"> <a
-								ng-click="model.removeUsers(user.id)" style="cursor: pointer"> <span
-									class="glyphicon glyphicon glyphicon-remove"></span>
+								ng-click="model.removeUsers(user.id)" style="cursor: pointer"> 
+								<span class="glyphicon glyphicon glyphicon-remove"></span>
 							</a>
 						</span>
 						
@@ -72,7 +135,7 @@
 				<li class="list-group-item" ng-repeat="semester in model.semesters">
 					<div class="text-center">
 						{{semester.name}} <span> <span
-							class="pull-right"> <!-- ng-click="model.updateCourses()" -->
+							class="pull-right"> 
 								<a style="cursor: pointer" href="#!/admin/semesterUpdate/{{semester.id}}">
 									<span class="glyphicon glyphicon glyphicon-pencil"></span>
 							</a>
@@ -91,7 +154,7 @@
 				<li class="list-group-item" ng-repeat="course in model.courses">
 					<div class="text-center">
 						{{course.name}} <span> <span
-							class="pull-right"> <!-- ng-click="model.updateCourses()" -->
+							class="pull-right"> 
 								<a style="cursor: pointer" href="#!/admin/courseUpdate/{{course.id}}">
 									<span class="glyphicon glyphicon glyphicon-pencil"></span>
 							</a>
@@ -107,20 +170,7 @@
 
 		</div>
 		<div style='float: right; width: 20%;' align="right">
-			<!-- <form action="#/register"
-              name="form"
-              novalidate
-              method="POST">
-			<input style='float: left width=40%' name=" username" required
-				class="form-control" ng-model="model.user.username" type="text"
-				placeholder="Name" /></input>     <input name="password" required
-				id="password" class="form-control" type="password"
-				ng-model="model.user.password" placeholder="Password" /> </input>
-			 <button type="button" class="btn btn-primary">
-				<a   style="cursor: pointer" href="#!/admin/profileUpdate? id= user.id"></a> Add User
-			</button>
 			
-		</form> -->
 		<div>
 				<a style="cursor: pointer" href="#!/admin/addSemester ">
 					<button type="button" class="btn btn-info">Add Semester</button>
@@ -137,20 +187,10 @@
 					<button type="button" class="btn btn-primary">Add User</button>
 				</a>
 			</div>
-			<!-- <form action="#/createCourse"
-              name="form"
-              novalidate
-              method="POST">
-			<input style='float: left width=40% 'name=" coursename" required
-				class="form-control" ng-model="model.course.coursename" type="text"
-				placeholder="Course Name" /></input>     <input name="CourseID" required
-				id="CourseID" class="form-control" type="text"
-				ng-model="model.course.cid" placeholder="CourseID" /> </input>
 			
-			
-			</form> -->
 		
 		</div>
-	</div>
+	</div>-->
 
 </div>
+

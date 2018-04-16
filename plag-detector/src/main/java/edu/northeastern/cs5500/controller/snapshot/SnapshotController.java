@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import edu.northeastern.cs5500.models.extras.Graph;
 import edu.northeastern.cs5500.models.results.Result;
-import edu.northeastern.cs5500.models.semester.Semester;
 import edu.northeastern.cs5500.models.snapshot.Snapshot;
 
 /**
@@ -77,5 +76,15 @@ public class SnapshotController {
 	@GetMapping(value = "/file")
 	public ResponseEntity<Result> file(@RequestParam(value = "id") int id){
 		return new ResponseEntity<>(this.snapshotService.getFiles(id), HttpStatus.OK);
+	}
+	
+	/**
+	 * Get all the manual snapshots which have been called for multiple submissions.
+	 * @return
+	 */
+	@GetMapping(value = "/all")
+	public ResponseEntity<List<Snapshot>> allSnapshots() {
+		List<Snapshot> snapshots = this.snapshotService.getAllManualSnapshots();
+		return new ResponseEntity<>(snapshots, HttpStatus.OK);
 	}
 }

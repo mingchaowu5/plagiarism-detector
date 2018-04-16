@@ -24,7 +24,8 @@
 		<java.version>1.8</java.version>
 		
 		<sonar.exclusions>
-        src/main/webapp/css/*, src/main/webapp/js/*, src/main/java/edu/northeastern/cs5500/models/*
+        src/main/webapp/css/*, src/main/webapp/js/*, src/main/webapp/views/*, src/main/java/edu/northeastern/cs5500/models/*, 
+        src/main/java/edu/northeastern/cs5500/controller/result/*, src/main/java/edu/northeastern/cs5500/jobs/*,
 	    </sonar.exclusions>
 	    <sonar.coverage.exclusions>
 	      src/main/webapp/views/*, src/main/java/edu/northeastern/cs5500/models/*, src/main/java/edu/northeastern/cs5500/jobs/*,

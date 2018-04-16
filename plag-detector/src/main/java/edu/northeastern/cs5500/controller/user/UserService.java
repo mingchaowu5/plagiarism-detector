@@ -5,7 +5,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import edu.northeastern.cs5500.dao.AssignmentDao;
 import edu.northeastern.cs5500.dao.UserDao;
+import edu.northeastern.cs5500.mail.MailClient;
+import edu.northeastern.cs5500.models.assignment.Assignment;
 import edu.northeastern.cs5500.models.person.User;
 
 @Service
@@ -13,6 +16,12 @@ public class UserService {
 
 	@Autowired
 	private UserDao userDao;
+	
+	@Autowired
+	private AssignmentDao assignmentDao;
+	
+	@Autowired
+	private MailClient mail;
 	
 	/**
 	 * Edit an user
@@ -148,5 +157,21 @@ public class UserService {
 	 */
 	public User getUserId(int snapId) {
 		return this.userDao.findUserBySnapshotId(snapId);
+	}
+	
+	/**
+	 * Send mail to the student
+	 * @param sId
+	 * @param pId
+	 * @param aId
+	 */
+	public void sendMail(int sId, int pId, int aId) {
+		User p = this.userDao.findUserById(pId);
+		User s = this.userDao.findUserById(sId);
+		Assignment a = this.assignmentDao.findAssignmentById(aId);
+		String name = (a == null)?"":a.getName();
+		String text = "Hello "  +s.getFirstName() + ",\n" + "Plagiarism has been detected in your assignment, " + name
+				 + "\n. Please go and meet the professor, " + p.getFirstName() + " " + p.getLastName();
+		mail.sendSimpleMessage(s.getEmail(), "Plagiarism detected in your submission", text);
 	}
 }

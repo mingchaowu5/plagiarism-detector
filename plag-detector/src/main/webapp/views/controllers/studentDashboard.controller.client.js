@@ -4,12 +4,13 @@
         .module("PlagApp")
         .controller("studentDashboardController", studentDashboardController);
 
-    function studentDashboardController(StudentService, $location, $routeParams,$rootScope, $scope) {
+    function studentDashboardController(StudentService, $location, $routeParams,$rootScope, $scope, $window) {
         var vm = this;
         // vm.fetchCourses = fetchCourses;
         vm.fetchAssignments = fetchAssignments;
         vm.loadAllcourses = loadAllcourses;
         vm.addCourseToStudent = addCourseToStudent;
+        vm.showDashboard = showDashboard;
         // vm.studentName = $rootScope.currentUser.username;
         vm.studentId = $routeParams.sid;
         vm.courseID = $routeParams.cid;
@@ -101,6 +102,12 @@
                 .catch(function () {
                     console.log("error in fetching student assignments");
                 })
+        }
+        
+        function showDashboard(){
+        		$window.location.href = "#!/student/"+ vm.studentId;
+            $window.location.reload();
+                
         }
         
         function loadAllcourses() {

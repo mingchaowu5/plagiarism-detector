@@ -9,6 +9,7 @@
         vm.fetchCourses = fetchCourses;
         vm.fetchAssignments = fetchAssignments;
         vm.viewAllSubmissions = viewAllSubmissions;
+        vm.viewSnapshots = viewSnapshots;
         vm.addCourse = addCourse;
         vm.addAssignment = addAssignment;
         vm.editCourse = editCourse;
@@ -21,6 +22,7 @@
         vm.runNewSnapshot = runNewSnapshot;
         vm.pushDeleteAssignment = pushDeleteAssignment;
         vm.pushDeleteCourse = pushDeleteCourse;
+        vm.comapreSubmissions = comapreSubmissions;
         // vm.professorName = $rootScope.currentUser.username;
         vm.pid = $routeParams.pid;
         vm.sid = $routeParams.sid;
@@ -82,7 +84,6 @@
 
         function fetchSnapshots(aid) {
             var promise  = ProfessorService.getSnapshots(aid);
-
             promise
                 .then(function (response) {
                     if(response.data){
@@ -134,6 +135,7 @@
         }
 
         function viewAllSubmissions() {
+        		
         		var promise = ProfessorService.allSubmission();
         		
         		promise
@@ -143,7 +145,37 @@
         			.catch(function(err){
         				console.log("error fetching all submissions")
         			})
-           // TODO
+           
+        }
+        
+        function viewSnapshots(){
+	        	var promise = ProfessorService.allManualSnapshots();
+	    		
+	    		promise
+	    			.then(function(res){
+	    				vm.allManualSnapshots = res.data;
+	    			})
+	    			.catch(function(err){
+	    				console.log("error fetching all submissions")
+	    			})
+        }
+        
+        function comapreSubmissions(sub){
+        		
+        		var promise = ProfessorService.compareSubmissions(sub, sub.pid);
+
+            promise
+                .then(function (res) {
+                    if(res.data){
+                        
+                        $window.location.reload();
+                        
+                    }
+                })
+                .catch(function (err) {
+                    alert("Error Comparing Submissions.\n Contact Admin")
+
+                })
         }
         
         function addCourse() {
@@ -178,7 +210,7 @@
             promise
                 .then(function (res) {
                     if(res.data){
-                        // $location.url("#!/dashboard/"+ vm.pid +"/semester/"+vm.sid+"/course/"+vm.cid);
+                        
                         $window.location.reload();
                         
                     }
@@ -196,7 +228,7 @@
             promise
                 .then(function (res) {
                     if(res.data){
-                        // $location.url("#!/dashboard/"+ vm.pid +"/semester/"+vm.sid);
+                        
                         $window.location.reload();
                         
                     }
@@ -212,7 +244,7 @@
             promise
                 .then(function (res) {
                     if(res.data){
-                        // $location.url("#!/dashboard/"+ vm.pid +"/semester/"+vm.sid+"/course/"+vm.cid);
+                        
                         $window.location.reload();
                         
                     }
@@ -229,9 +261,7 @@
             promise
                 .then(function (res) {
                     if(res.data){
-                        // $location.url("/dashboard/"+ vm.pid +"/semester/"+vm.sid);
-                        // console.log("in course update")
-                        // $window.location.href = "#!/dashboard/"+ vm.pid +"/semester/"+vm.sid;
+                        
                         $window.location.reload();
                     }
                 })

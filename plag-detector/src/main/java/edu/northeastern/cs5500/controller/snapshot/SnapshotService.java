@@ -122,4 +122,8 @@ public class SnapshotService {
 	public Result getFiles(int id) {
 		return this.resultsDao.getFileData(id);
 	}
+	
+	public List<Snapshot> getAllManualSnapshots(){
+		return this.snapshotDao.getAllManualSnapshots();
+	}
 }

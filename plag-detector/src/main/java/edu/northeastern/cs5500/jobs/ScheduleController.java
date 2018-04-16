@@ -43,7 +43,6 @@ public class ScheduleController {
 		log = Logger.getAnonymousLogger();
 		log.log(Level.INFO, "Running");
 		List<Snapshot> list = this.snapshotService.getAllSnapshotsToBePerformed();
-		log.log(Level.INFO, "Size: "+list.size());
 		boolean flag = false;
 		for(Snapshot snap : list) {
 			this.snapshotService.updateStatus(snap.getId(), -1);

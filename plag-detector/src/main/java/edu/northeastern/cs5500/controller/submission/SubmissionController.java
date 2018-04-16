@@ -63,4 +63,14 @@ public class SubmissionController {
 		return new ResponseEntity<>(i, HttpStatus.OK);
 	}
 	
+	/**
+	 * Get all multiple submissions over all the semesters
+	 * @return	Boolean
+	 */
+	@GetMapping(value = "/multiple")
+	public ResponseEntity<Boolean> multiple(@RequestParam(value = "submissions") int[] subs, @RequestParam(value = "professor_id") int profId) {
+		this.submissionService.compareMultipleSubmissions(subs, profId);
+		return new ResponseEntity<>(true, HttpStatus.OK);
+	}
+	
 }
