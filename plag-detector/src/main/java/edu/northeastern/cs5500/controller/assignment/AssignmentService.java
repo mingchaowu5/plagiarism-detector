@@ -133,11 +133,10 @@ public class AssignmentService {
 	 * @return	boolean:	true iff and only if the file/folder is successfully created
 	 * @throws IOException
 	 */
-	private boolean createFileIfNotPresent(String filePath) throws IOException{
+	private boolean createFileIfNotPresent(String filePath){
 		File file = new File(filePath);
 		if(!file.exists()) {
 			return file.mkdir();
-			//return file.createNewFile();
 		}
 		return true;
 	}
@@ -164,12 +163,10 @@ public class AssignmentService {
 	 * delete the zip file once successfully extracted on the instance
 	 * @param filename: name of the zip to be deleted
 	 * @param path: where the zip is present
+	 * @throws IOException 
 	 */
-	private void deleteZip(String filename, String path) {
-		File file = new File(path + filename);
-        if(file.exists()) {
-        		file.delete();
-        }
+	private void deleteZip(String filename, String path) throws IOException {
+        	Files.deleteIfExists(Paths.get(path + filename));
 	}
 	
 	/**

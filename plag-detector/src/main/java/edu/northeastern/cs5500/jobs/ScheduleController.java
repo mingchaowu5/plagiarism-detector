@@ -43,13 +43,13 @@ public class ScheduleController {
 		log = Logger.getAnonymousLogger();
 		log.log(Level.INFO, "Running");
 		List<Snapshot> list = this.snapshotService.getAllSnapshotsToBePerformed();
-		log.log(Level.INFO, "Size: "+list.size());
 		boolean flag = false;
 		for(Snapshot snap : list) {
 			this.snapshotService.updateStatus(snap.getId(), -1);
 			log.log(Level.INFO, "Type: " + snap.getType());
 			if(snap.getType() == 0) {
 				flag = calculateIncrementalResult(snap.getId());
+				sendMail(2);
 			}else {
 				flag = calculateTotalResult(snap.getId());
 				log.log(Level.INFO, "Sending Mail");
@@ -104,7 +104,7 @@ public class ScheduleController {
 		for(Submission s : submissions) {
 			if(s.getId() != max) {
 				this.resultsService.deleteEntries(max, s.getId());
-				resultsService.findResults(id, max, s.getId());
+				resultsService.findResults(max, s.getId());
 			}
 		}
 		return true;
@@ -121,7 +121,7 @@ public class ScheduleController {
 			for(int i = 0;i<submissions.size();++i) {
 				for(int j = i + 1;j<submissions.size();++j) {
 					this.resultsService.deleteEntries(submissions.get(i).getId(), submissions.get(j).getId());
-					resultsService.findResults(id, submissions.get(i).getId(), submissions.get(j).getId());
+					resultsService.findResults(submissions.get(i).getId(), submissions.get(j).getId());
 				}
 			}
 		}catch(Exception e) {

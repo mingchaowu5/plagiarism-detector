@@ -37,7 +37,8 @@ public class ResultsService {
 	
 	private int sub1;
 	private int sub2;
-	private Set<String> set1, set2;
+	private Set<String> set1;
+	private Set<String> set2;
 	private Logger log;
 	private Map<String, String> map;
 	private List<FileResult> results;
@@ -55,7 +56,7 @@ public class ResultsService {
 	 * @param sub1
 	 * @param sub2
 	 */
-	private void init(int snap, int sub1, int sub2) {
+	private void init(int sub1, int sub2) {
 		this.sub1 = sub1;
 		this.sub2 = sub2;
 		set1 = new HashSet<>();
@@ -71,8 +72,8 @@ public class ResultsService {
 	 * @param sub1
 	 * @param sub2
 	 */
-	public void findResults(int snap, int sub1, int sub2){
-		init(snap, sub1, sub2);
+	public void findResults(int sub1, int sub2){
+		init(sub1, sub2);
 		try{
 			log = Logger.getAnonymousLogger();
 			if(!this.createFileIfNotPresent(Constants.TEMPURL))
@@ -129,26 +130,6 @@ public class ResultsService {
 		}
 	}
 	
-	/**
-	 * Save the results to a list
-	 * @param file1
-	 * @param file2
-	 * @param result
-	 */
-	private void saveResult(String file1, String file2, double result) {
-		results.add(new FileResult(file1, file2, result));
-	}
-	
-	
-	/**
-	 * Check if file exists in the folder
-	 * @param filename
-	 * @return
-	 */
-	private boolean fileExists(String filename) {
-		File file = new File(Constants.RESULTURL + filename);
-		return file.exists();
-	}
 	
 	/**
 	 * Save the two files to the database
@@ -158,22 +139,22 @@ public class ResultsService {
 	 * @param match2
 	 */
 	private void saveFiles(String file1, String match1, String file2, String match2, double plag) throws IOException{
-		InputStream is1 = new FileInputStream(new File(Constants.RESULTURL + match1));
-		InputStream is2 = new FileInputStream(new File(Constants.RESULTURL + match2));
-		if(set1.contains(file1) && set2.contains(file2)) {
-			this.resultsDao.addResults(sub1, sub2, file1, file2, is1, is2, plag);
-		}else if(set1.contains(file2) && set2.contains(file1)) {
-			this.resultsDao.addResults(sub2, sub1, file1, file2, is1, is2, plag);			
+		try(InputStream is1 = new FileInputStream(new File(Constants.RESULTURL + match1)); 
+				InputStream is2 = new FileInputStream(new File(Constants.RESULTURL + match2))){
+			if(set1.contains(file1) && set2.contains(file2)) {
+				this.resultsDao.addResults(sub1, sub2, file1, file2, is1, is2, plag);
+			}else if(set1.contains(file2) && set2.contains(file1)) {
+				this.resultsDao.addResults(sub2, sub1, file1, file2, is1, is2, plag);			
+			}
+		}catch(IOException e) {
+			log.log(Level.CONFIG, e.getMessage());
 		}
-		is1.close();
-		is2.close();
 	}
 	
 	/**
 	 * Run JPlag library and find the results
 	 */
 	private void runJplag() {
-		//log.log(Level.INFO, "JPlag");
 		String[] tm = {Constants.TEMPURL, "-l", language, "-r", Constants.RESULTURL, "-s"};
 		CommandLineOptions op;
 		try {
@@ -195,7 +176,6 @@ public class ResultsService {
 		File file = new File(Constants.ASSIGNMENTURL + sub);
 		if(!file.exists())
 			return;
-		//log.log(Level.INFO, "Sub: " + sub);
 		List<File> subdirs = this.getSubdirs(file);
 		subdirs.add(file);
 		for(File sFile : subdirs) {
@@ -269,7 +249,7 @@ public class ResultsService {
 	}
 	
 	/**
-	 * 
+	 * File result class to temporially store the result of two files.
 	 * @author takyon
 	 *
 	 */
@@ -279,9 +259,9 @@ public class ResultsService {
 		private double result;
 		
 		public FileResult(String file1, String file2, double result) {
-			this.file1 = file1;
-			this.file2 = file2;
-			this.result = result;
+			this.setFile1(file1);
+			this.setFile2(file2);
+			this.setResult(result);
 		}
 		
 		public String getFile1() {

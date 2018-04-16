@@ -1,35 +1,34 @@
-
-<div class="container-fluid">
-
-    <div ng-show="model.error" class="alert alert-danger" role="alert">
+<div id="main">	
+	<div ng-show="model.error" class="alert alert-danger" role="alert">
         {{model.error}}
     </div>
-
-
-    <h1>Login</h1>
-    <input ng-model="user.username"
-           class="form-control"
-           placeholder="username"/>
-
-
-    <input ng-model="user.password"
-           class="form-control"
-           type="password"
-           placeholder="password"/>
-
-    <label class="register-label user-type-class">
-        <input class="form-group radio-inline" type="radio" name="TYPE" value="0"  ng-model="user.role">
-        Student</label>
-    <label class="register-label user-type-class">
-        <input class="form-group radio-inline" type="radio" name="TYPE" value="1" ng-model="user.role" >
-        Professor</label>
-
-    <a class="btn btn-primary btn-block"
-       ng-click="model.login(user)">
-        Login
-    </a>
-    <a class="btn btn-success btn-block"
-       href="#!/register">
-        Register
-    </a>
+					
+	<div id="box">
+		<br />
+		<h1 style="margin-top: -10px;">Login</h1> 
+		<br />
+		<input ng-model="user.username" class="form-control" placeholder="Username"/>
+		<br />
+		<input ng-model="user.password" class="form-control" type="password" placeholder="Password"/>
+		<br/>
+       	<div class="form-row">
+		    <div class="form-group col-md-5">
+		    		<label class="register-label user-type-class">
+        				<input class="form-check-input " type="radio" name="TYPE" value="0"  ng-model="user.role" checked /> &nbsp;Student
+        			</label>      
+		    </div>
+		    <div class="form-group col-md-5">
+		    		<label class="register-label user-type-class">
+        				<input class="form-check-input " type="radio" name="TYPE" value="1" ng-model="user.role" >&nbsp;Professor
+        			</label>
+		    </div>
+	  	</div>
+	  	<div class="form-row">
+		    <div class="form-group col-md-9">
+		    		 <a class="btn btn-primary" ng-click="model.login(user)">Login</a>     
+		    		<a class="btn btn-info" href="#!/register">Register</a>
+		    </div>
+	  	</div>
+        
+	</div>
 </div>

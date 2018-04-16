@@ -9,6 +9,7 @@
         vm.fetchCourses = fetchCourses;
         vm.fetchAssignments = fetchAssignments;
         vm.viewAllSubmissions = viewAllSubmissions;
+        vm.viewSnapshots = viewSnapshots;
         vm.addCourse = addCourse;
         vm.addAssignment = addAssignment;
         vm.editCourse = editCourse;
@@ -21,6 +22,7 @@
         vm.runNewSnapshot = runNewSnapshot;
         vm.pushDeleteAssignment = pushDeleteAssignment;
         vm.pushDeleteCourse = pushDeleteCourse;
+        vm.comapreSubmissions = comapreSubmissions;
         // vm.professorName = $rootScope.currentUser.username;
         vm.pid = $routeParams.pid;
         vm.sid = $routeParams.sid;
@@ -82,7 +84,6 @@
 
         function fetchSnapshots(aid) {
             var promise  = ProfessorService.getSnapshots(aid);
-
             promise
                 .then(function (response) {
                     if(response.data){
@@ -134,7 +135,47 @@
         }
 
         function viewAllSubmissions() {
-           // TODO
+        		
+        		var promise = ProfessorService.allSubmission();
+        		
+        		promise
+        			.then(function(res){
+        				vm.allSubmissions = res.data;
+        			})
+        			.catch(function(err){
+        				console.log("error fetching all submissions")
+        			})
+           
+        }
+        
+        function viewSnapshots(){
+	        	var promise = ProfessorService.allManualSnapshots();
+	    		
+	    		promise
+	    			.then(function(res){
+	    				vm.allManualSnapshots = res.data;
+	    			})
+	    			.catch(function(err){
+	    				console.log("error fetching all submissions")
+	    			})
+        }
+        
+        function comapreSubmissions(sub){
+        		
+        		var promise = ProfessorService.compareSubmissions(sub, sub.pid);
+
+            promise
+                .then(function (res) {
+                    if(res.data){
+                        
+                        $window.location.reload();
+                        
+                    }
+                })
+                .catch(function (err) {
+                    console.log("Error Comparing Submissions.\n Contact Admin")
+
+                })
         }
         
         function addCourse() {
@@ -169,13 +210,13 @@
             promise
                 .then(function (res) {
                     if(res.data){
-                        // $location.url("#!/dashboard/"+ vm.pid +"/semester/"+vm.sid+"/course/"+vm.cid);
+                        
                         $window.location.reload();
                         
                     }
                 })
                 .catch(function (err) {
-                    alert("error adding the assignment.\n Contact Admin")
+                    console.log("error adding the assignment.\n Contact Admin")
                 })
         }
 
@@ -187,13 +228,13 @@
             promise
                 .then(function (res) {
                     if(res.data){
-                        // $location.url("#!/dashboard/"+ vm.pid +"/semester/"+vm.sid);
+                        
                         $window.location.reload();
                         
                     }
                 })
                 .catch(function (err) {
-                    alert("error adding the assignment.\n Contact Admin")
+                    console.log("error adding the assignment.\n Contact Admin")
                 })
         }
 
@@ -203,13 +244,13 @@
             promise
                 .then(function (res) {
                     if(res.data){
-                        // $location.url("#!/dashboard/"+ vm.pid +"/semester/"+vm.sid+"/course/"+vm.cid);
+                        
                         $window.location.reload();
                         
                     }
                 })
                 .catch(function (err) {
-                    alert("error adding the assignment.\n Contact Admin")
+                    console.log("error adding the assignment.\n Contact Admin")
 
                 })
         }
@@ -220,14 +261,12 @@
             promise
                 .then(function (res) {
                     if(res.data){
-                        // $location.url("/dashboard/"+ vm.pid +"/semester/"+vm.sid);
-                        // console.log("in course update")
-                        // $window.location.href = "#!/dashboard/"+ vm.pid +"/semester/"+vm.sid;
+                        
                         $window.location.reload();
                     }
                 })
                 .catch(function (err) {
-                    alert("error adding the course.\n Contact Admin")
+                    console.log("error adding the course.\n Contact Admin")
 
                 })
         }
@@ -243,11 +282,11 @@
             promise
                 .then(function (params) {
                     if(params.data){
-                        alert("Successfully Started\nPlease wait for notification in Dashboard");
+                        console.log("Successfully Started\nPlease wait for notification in Dashboard");
                     }
                 })
                 .catch(function (err) {
-                    alert("Error in starting the snaphot. Please contact Admin")
+                    console.log("Error in starting the snaphot. Please contact Admin")
                 })
         }
 
@@ -261,7 +300,7 @@
                     }
                 })
                 .catch(function (err) {
-                    alert("Error in deleting assignment")
+                    console.log("Error in deleting assignment")
                 })
         }
 
@@ -275,7 +314,7 @@
                     }
                 })
                 .catch(function (err) {
-                    alert("Error in deleting course")
+                    console.log("Error in deleting course")
                 })
         }
     }

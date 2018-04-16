@@ -18,7 +18,10 @@
             "updateCourse":updateCourse,
             "runSnapshot":runSnapshot,
             "deleteCourse":deleteCourse,
-            "deleteAssignment":deleteAssignment
+            "deleteAssignment":deleteAssignment,
+            "allSubmission":allSubmission,
+            "compareSubmissions":compareSubmissions,
+            "allManualSnapshots":allManualSnapshots
         };
         return api;
 
@@ -75,6 +78,18 @@
 
         function deleteAssignment(aid) {
             return $http.get("/rest/assignment/delete?id="+aid);
+        }
+        
+        function allSubmission(){
+        		return $http.get("/rest/submission/submissions");
+        }
+        
+        function compareSubmissions(sub, pid){
+        		return $http.get("/rest/submission/multiple?submissions="+sub.submissions+"&professor_id="+pid);
+        }
+        
+        function allManualSnapshots(){
+        		return $http.get("/rest/snapshot/all");
         }
 
     }

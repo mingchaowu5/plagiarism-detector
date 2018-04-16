@@ -1,22 +1,20 @@
 <div class="container-fluid marginTop backStyle" style="padding-top: 70px;padding-bottom: 70px" >
-    <div ng-show="model.error" class="alert alert-danger" role="alert" >
+   <!--  <div ng-show="model.error" class="alert alert-danger" role="alert" >
         {{model.error}}
     </div>
     <div class="alert alert-success" ng-show="model.message">
         {{model.message}}
-    </div>
+    </div> -->
 
     <div class="col-md-8">
-        <form action="#/addCourse"
+       <!--  <form action="#/addCourse"
               name="form"
               novalidate
               method="POST">
      
-          
-     
             <div class="form-group">
                 <label class="register-label" for="first-name">CourseName</label>
-                <input name="coursename" required class="form-control" ng-model="model.course.coursename"
+                <input name="coursename" required class="form-control" ng-model="model.newcourse.coursename"
                        id="coursename"
                        type="text"
                        placeholder="coursename"/>
@@ -24,16 +22,42 @@
             <div>
 				<select class="custom-select" id="inputSemester">
 					<option selected>Choose semester..</option>
-					<div ng-repeat="sem in model.semesters">
-					<option value={{sem.name}}>{{sem.name}}</option>
+					<div >
+					<option  ng-repeat="semester in model.semesters" value=semester.name   id="semestername" ng-model="model.newcourse.name" >{{semester.name}}</option>
 					</div>
 					<option value="All">All</option>
 				</select>
     		</div>
             <div class="form-group" style="padding-top: 2%">
-                <button ng-click="form.$valid && model.addCourse(model.course)" type="button" class="btn btn-primary col-md-12 col-sm-12 col-xs-12">Add course</button>
+                <button ng-click="form.$valid && model.createCourse(model.newcourse)" type="button" class="btn btn-primary col-md-12 col-sm-12 col-xs-12">Add course</button>
             </div>
            
+        </form>
+         -->
+        <form>
+            <div class="">
+
+                <div class="form-group">
+                    <label class="register-label" >Course Name</label>
+                    <input name="courseName" required class="form-control" ng-model="model.newCourse.name" type="text" placeholder=" Name"/>
+                </div>
+               
+				 <div>
+				<select class="custom-select" id="inputSemester">
+					<option selected>Choose semester..</option>
+					<div >
+					<option  ng-repeat="semester in model.semesters" value=semester.name   id="semestername" ng-model="model.newcourse.semester" >{{semester.name}}</option>
+					</div>
+					<option value="All">All</option>
+				</select>
+    		</div>
+                <!--<input class="input-sm" type="text" name="cid" value="{{model.newCourse.sid}}" hidden="true">-->
+
+                <div class="form-group" style="padding-top: 2%">
+                    <button ng-click="model.createCourse(model.newCourse)" type="button" class="btn btn-primary col-md-12 col-sm-12 col-xs-12">Add</button>
+                </div>
+
+            </div>
         </form>
     </div>
    

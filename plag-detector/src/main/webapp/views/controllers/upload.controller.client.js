@@ -3,7 +3,7 @@
         .module("PlagApp")
         .controller("uploadController", uploadController);
 
-    function uploadController(UserService, $location,$rootScope,$routeParams) {
+    function uploadController(UserService, $location,$rootScope,$routeParams,$window) {
         var vm = this;
 
         vm.sid = $routeParams.sid;
@@ -40,10 +40,12 @@
                 url : '/rest/assignment/upload', // or whatever
                 dataType : 'json',
                 success : function (response) {
-                    alert("The server says: " + response);
+                		$window.location.href = "#!/student/"+ vm.sid + "/assignment/" + vm.aid;
+                     $window.location.reload();
+                		//alert("The server says: " + response + vid);
                 },
                 error: function (err) {
-                    alert("Error from the server side" + err);
+                    console.log("Error from the server side" + err);
                 }
             })
         ;

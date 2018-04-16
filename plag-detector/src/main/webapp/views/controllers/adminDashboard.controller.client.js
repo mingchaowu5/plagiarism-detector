@@ -11,7 +11,7 @@
 		vm.changeRole=changeRole;
 		//vm.createUser = createUser;
 		//vm.createCourse = createCourse;
-		//vm.getAllSemesters = getAllSemesters;
+		vm.fetchSemesters = fetchSemesters;
 		//vm.updateUser = updateUser;
 		//vm.updateCourse = updateCourse;
 		
@@ -69,7 +69,7 @@
 		   promise
            .then(function (response) {
                if(response.data){
-                   vm.users = response.data;
+                   vm.semesters = response.data;
                }
            })
            .catch(function (err) {
@@ -98,9 +98,9 @@
            .catch(function (err) {
                console.log("error find users for the course -> " + cID);
            })
-		   var promise = AdminService.getAllSemesters();
+		   var promise3 = AdminService.getAllSemesters();
 			
-		   promise
+		   promise3
            .then(function (response) {
                if(response.data){
                    vm.semesters = response.data;
@@ -207,7 +207,7 @@
 //	        }
 		 
 		   function fetchSemesters() {
-	            var promise = ProfessorService.getAllSemesters();
+	            var promise = AdminService.getAllSemesters();
 
 	            promise
 	                .then(function (response) {

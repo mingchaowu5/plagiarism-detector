@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import edu.northeastern.cs5500.models.submission.Sub1;
 import edu.northeastern.cs5500.models.submission.Submission;
 
 /**
@@ -23,6 +24,12 @@ public class SubmissionController {
 
 	@Autowired
 	private SubmissionService submissionService;
+	
+	@GetMapping(value = "/submissions")
+	public ResponseEntity<List<Sub1>> latestAllSubmissions() {
+		List<Sub1> submissions = this.submissionService.getAllSubmission();
+		return new ResponseEntity<>(submissions, HttpStatus.OK);
+	}
 	
 	/**
 	 * Get latest submissions for an assignment
@@ -54,6 +61,16 @@ public class SubmissionController {
 			@RequestParam(value = "student_id") int studentId) {
 		Integer i = this.submissionService.insert(assignmentId, studentId);
 		return new ResponseEntity<>(i, HttpStatus.OK);
+	}
+	
+	/**
+	 * Get all multiple submissions over all the semesters
+	 * @return	Boolean
+	 */
+	@GetMapping(value = "/multiple")
+	public ResponseEntity<Boolean> multiple(@RequestParam(value = "submissions") int[] subs, @RequestParam(value = "professor_id") int profId) {
+		this.submissionService.compareMultipleSubmissions(subs, profId);
+		return new ResponseEntity<>(true, HttpStatus.OK);
 	}
 	
 }

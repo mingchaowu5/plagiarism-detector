@@ -1,6 +1,5 @@
 package edu.northeastern.cs5500.models.notification;
 
-import java.sql.Date;
 
 public class Notification {
 	private int id;

@@ -4,12 +4,13 @@
         .module("PlagApp")
         .controller("studentDashboardController", studentDashboardController);
 
-    function studentDashboardController(StudentService, $location, $routeParams,$rootScope, $scope) {
+    function studentDashboardController(StudentService, $location, $routeParams,$rootScope, $scope, $window) {
         var vm = this;
         // vm.fetchCourses = fetchCourses;
         vm.fetchAssignments = fetchAssignments;
         vm.loadAllcourses = loadAllcourses;
         vm.addCourseToStudent = addCourseToStudent;
+        vm.showDashboard = showDashboard;
         // vm.studentName = $rootScope.currentUser.username;
         vm.studentId = $routeParams.sid;
         vm.courseID = $routeParams.cid;
@@ -103,6 +104,12 @@
                 })
         }
         
+        function showDashboard(){
+        		$window.location.href = "#!/student/"+ vm.studentId;
+            $window.location.reload();
+                
+        }
+        
         function loadAllcourses() {
             var promise = StudentService.fetchAllCoursesAvailable(vm.studentId);
             
@@ -118,7 +125,7 @@
         }
 
         function addCourseToStudent(courseID, studentId) {
-            var promise = StudentService.addCourseToStudent(courseID, studentId);
+            var promise = StudentService.addCourseToStudent(courseID, vm.studentId);
 
             promise
                 .then(function (response) {
@@ -131,7 +138,7 @@
                     }
                 })
                 .catch(function (err) {
-                    alert("error in adding course to Student")
+                    console.log("error in adding course to Student")
                 })
         }
 

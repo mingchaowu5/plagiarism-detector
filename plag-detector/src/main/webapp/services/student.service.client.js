@@ -37,7 +37,7 @@
         }
 
         function addCourseToStudent(courseID, studentId) {
-            return $http.get("/rest/course/add?sid=" + studentId + "&cid=" + courseID);
+            return $http.get("/rest/course/add?student_id=" + studentId + "&course_id=" + courseID);
         }
 
     }

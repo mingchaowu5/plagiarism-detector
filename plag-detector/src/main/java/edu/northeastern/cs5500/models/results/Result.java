@@ -1,6 +1,5 @@
 package edu.northeastern.cs5500.models.results;
 
-import java.io.File;
 
 public class Result {
 	
