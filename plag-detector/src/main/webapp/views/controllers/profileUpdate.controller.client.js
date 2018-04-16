@@ -21,7 +21,7 @@
             promise
                 .then(function (response) {
                     if(response){
-                        var courses = response.data;
+                        //var courses = response.data;
 
                         $rootScope.currentCourse = course;
 

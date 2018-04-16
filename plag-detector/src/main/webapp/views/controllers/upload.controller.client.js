@@ -45,7 +45,7 @@
                 		//alert("The server says: " + response + vid);
                 },
                 error: function (err) {
-                    alert("Error from the server side" + err);
+                    console.log("Error from the server side" + err);
                 }
             })
         ;

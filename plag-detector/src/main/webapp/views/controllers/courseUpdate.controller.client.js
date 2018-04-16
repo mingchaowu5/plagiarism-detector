@@ -22,7 +22,7 @@
             promise
                 .then(function (response) {
                     if(response){
-                        var course = response.data;
+                        //var course = response.data;
 
                         $location.url("/admin");
 

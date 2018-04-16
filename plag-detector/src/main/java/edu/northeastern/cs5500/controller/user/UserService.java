@@ -107,11 +107,7 @@ public class UserService {
 	 * @return	User: the details of the user which is logging in the system.
 	 */
 	public User login(final String username, final String password, final int type) {
-		User user = userDao.login(username, password, type);
-		if(user == null){
-			return new User();
-		}
-		return user;
+		return userDao.login(username, password, type);
 	}
 	
 	/**

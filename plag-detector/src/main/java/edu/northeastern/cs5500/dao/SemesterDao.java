@@ -27,7 +27,7 @@ public class SemesterDao {
 	 * @return
 	 */
 	public List<Semester> getAllSemester(){
-			try {
+		try {
 			String sql = "Select * from Semester";
 			RowMapper<Semester> rowMapper = new BeanPropertyRowMapper<>(Semester.class);
 			return this.jdbcTemplate.query(sql, rowMapper);

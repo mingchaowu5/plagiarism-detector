@@ -138,7 +138,7 @@
                     }
                 })
                 .catch(function (err) {
-                    alert("error in adding course to Student")
+                    console.log("error in adding course to Student")
                 })
         }
 

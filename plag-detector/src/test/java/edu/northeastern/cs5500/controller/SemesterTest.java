@@ -1,28 +1,26 @@
 package edu.northeastern.cs5500.controller;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
+import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.web.context.WebApplicationContext;
-
 import edu.northeastern.cs5500.PlagDetectorApplicationTests;
+import edu.northeastern.cs5500.dao.SemesterDao;
+import edu.northeastern.cs5500.models.semester.Semester;
 
 public class SemesterTest extends PlagDetectorApplicationTests{
 	
 	@Autowired
-	private WebApplicationContext webApplicationContext;
-	
-	private MockMvc mockMvc;
+	private SemesterDao semesterDao;
 	
 	@Before
 	public void setup() {
-		mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
+		
 	}
 	
 	/**
@@ -31,8 +29,8 @@ public class SemesterTest extends PlagDetectorApplicationTests{
 	 */
 	@Test
 	public void testAllSemesters() throws Exception {
-		mockMvc.perform(get("/rest/semester/all")).andExpect(status().isOk())
-		.andExpect(content().contentType("application/json;charset=UTF-8"));
+		List<Semester> list = this.semesterDao.getAllSemester();
+		assertTrue(list.size() > 0);
 	}
 	
 	
@@ -42,6 +40,34 @@ public class SemesterTest extends PlagDetectorApplicationTests{
 	 */
 	@Test
 	public void testSemesterForId() throws Exception {
-		mockMvc.perform(get("/rest/semester/").param("id", "-1")).andExpect(status().isNoContent());
+		List<Semester> list = this.semesterDao.getAllSemester();
+		if(list.size() > 0) {
+			int id = list.get(0).getId();
+			Semester s = this.semesterDao.findSemesterById(id);
+			assertEquals(list.get(0).getName(), s.getName());
+		}
+	}
+	
+	/**
+	 * Test the end-point for CRUD operations on semester
+	 * @throws Exception
+	 */
+	@Test
+	public void testCRUDOnSemester() throws Exception {
+		String name = "Test Assignment123";
+		this.semesterDao.addSemester(name);
+		List<Semester> list = this.semesterDao.getAllSemester();
+		if(list.size() > 0) {
+			int id = -1;
+			for(Semester s : list) {
+				if(s.getName().equals(name)) {
+					id = s.getId();
+					break;
+				}
+			}
+			if(id > -1) {
+				assertTrue(this.semesterDao.deleteSemester(id) == 1);
+			}
+		}
 	}
 }

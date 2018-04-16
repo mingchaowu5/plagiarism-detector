@@ -36,7 +36,7 @@
             promise
                 .then(function (response) {
                     if(response){
-                        var course = response.data;
+                        //var course = response.data;
                         console.log("add course");
                         $location.url("/admin");
 

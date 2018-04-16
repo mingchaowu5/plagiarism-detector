@@ -173,7 +173,7 @@
                     }
                 })
                 .catch(function (err) {
-                    alert("Error Comparing Submissions.\n Contact Admin")
+                    console.log("Error Comparing Submissions.\n Contact Admin")
 
                 })
         }

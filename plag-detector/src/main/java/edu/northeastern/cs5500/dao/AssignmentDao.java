@@ -30,7 +30,7 @@ public class AssignmentDao {
 	 */
 	public List<Assignment> findAllAssignments(){
 		try {
-			String sql = "Select * from Assignment";
+			String sql = "Select * from Assignment ORDER BY id";
 			RowMapper<Assignment> rowMapper = new BeanPropertyRowMapper<>(Assignment.class);
 			return this.jdbcTemplate.query(sql, rowMapper);
 		}

@@ -37,7 +37,8 @@ public class ResultsService {
 	
 	private int sub1;
 	private int sub2;
-	private Set<String> set1, set2;
+	private Set<String> set1;
+	private Set<String> set2;
 	private Logger log;
 	private Map<String, String> map;
 	private List<FileResult> results;

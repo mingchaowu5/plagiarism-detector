@@ -133,11 +133,10 @@ public class AssignmentService {
 	 * @return	boolean:	true iff and only if the file/folder is successfully created
 	 * @throws IOException
 	 */
-	private boolean createFileIfNotPresent(String filePath) throws IOException{
+	private boolean createFileIfNotPresent(String filePath){
 		File file = new File(filePath);
 		if(!file.exists()) {
 			return file.mkdir();
-			//return file.createNewFile();
 		}
 		return true;
 	}

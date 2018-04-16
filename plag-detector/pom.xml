@@ -25,11 +25,11 @@
 		
 		<sonar.exclusions>
         src/main/webapp/css/*, src/main/webapp/js/*, src/main/webapp/views/*, src/main/java/edu/northeastern/cs5500/models/*, 
-        src/main/java/edu/northeastern/cs5500/controller/result/*, src/main/java/edu/northeastern/cs5500/jobs/*,
+        src/main/java/edu/northeastern/cs5500/controller/*, src/main/java/edu/northeastern/cs5500/jobs/*,
 	    </sonar.exclusions>
 	    <sonar.coverage.exclusions>
 	      src/main/webapp/views/*, src/main/java/edu/northeastern/cs5500/models/*, src/main/java/edu/northeastern/cs5500/jobs/*,
-	      src/main/java/edu/northeastern/cs5500/controller/result/*
+	      src/main/java/edu/northeastern/cs5500/controller/*
 	    </sonar.coverage.exclusions>
 	    <sonar.host.url>http://www.example.com/</sonar.host.url>
 	    <sonar.jdbc.url>jdbc:postgresql://www.example.com/sonar</sonar.jdbc.url>
