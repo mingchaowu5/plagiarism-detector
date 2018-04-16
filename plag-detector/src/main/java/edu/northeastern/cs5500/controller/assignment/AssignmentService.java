@@ -163,12 +163,10 @@ public class AssignmentService {
 	 * delete the zip file once successfully extracted on the instance
 	 * @param filename: name of the zip to be deleted
 	 * @param path: where the zip is present
+	 * @throws IOException 
 	 */
-	private void deleteZip(String filename, String path) {
-		File file = new File(path + filename);
-        if(file.exists()) {
-        		file.delete();
-        }
+	private void deleteZip(String filename, String path) throws IOException {
+        	Files.deleteIfExists(Paths.get(path + filename));
 	}
 	
 	/**
