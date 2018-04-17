@@ -10,10 +10,11 @@ pipeline {
        stage('Build') {
            steps {
                echo "Building"
-		sh 'mvn install:install-file -Dfile=./plag-detector/lib/jplag-2.11.9-SNAPSHOT-jar-with-dependencies.jar -DgroupId=jplag -DartifactId=jplag -Dversion=2.11.9 -Dpackaging=jar'
+		
               sh 'mvn -f plag-detector/pom.xml clean install'
-               sh 'mvn -f plag-detector/pom.xml compile'
-               sh 'mvn -f plag-detector/pom.xml package'
+	      sh 'mvn install:install-file -Dfile=./plag-detector/lib/jplag-2.11.9-SNAPSHOT-jar-with-dependencies.jar -DgroupId=jplag -DartifactId=jplag -Dversion=2.11.9 -Dpackaging=jar'
+              sh 'mvn -f plag-detector/pom.xml compile'
+              sh 'mvn -f plag-detector/pom.xml package'
            }
        }
        stage('Test'){
@@ -25,10 +26,11 @@ pipeline {
       stage('SonarQube') {
               steps {
                   withSonarQubeEnv('SonarQube') {
-				sh 'mvn install:install-file -Dfile=./plag-detector/lib/jplag-2.11.9-SNAPSHOT-jar-with-dependencies.jar -DgroupId=jplag -DartifactId=jplag -Dversion=2.11.9 -Dpackaging=jar'
+				
                         sh 'mvn -f plag-detector/pom.xml clean install'
-                          sh 'mvn -f plag-detector/pom.xml clean install'
-                          sh 'mvn -f plag-detector/pom.xml sonar:sonar'
+			sh 'mvn install:install-file -Dfile=./plag-detector/lib/jplag-2.11.9-SNAPSHOT-jar-with-dependencies.jar -DgroupId=jplag -DartifactId=jplag -Dversion=2.11.9 -Dpackaging=jar'
+                        sh 'mvn -f plag-detector/pom.xml clean install'
+                        sh 'mvn -f plag-detector/pom.xml sonar:sonar'
                   }
               }
           }
@@ -40,7 +42,8 @@ pipeline {
    script {
                       def qg = waitForQualityGate()
                       if (qg.status != 'OK') {
-                                        }
+                        
+                }
               }
             }
           }
