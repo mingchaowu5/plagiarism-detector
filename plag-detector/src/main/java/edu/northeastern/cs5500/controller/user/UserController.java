@@ -59,7 +59,7 @@ public class UserController {
 		user.setUsername(username);
 		user.setType(type);
 		User u = this.userService.addUser(user);	
-		return new ResponseEntity<>(u, HttpStatus.OK);
+		return new ResponseEntity<>(user, HttpStatus.OK);
 	}
 	
 	/**

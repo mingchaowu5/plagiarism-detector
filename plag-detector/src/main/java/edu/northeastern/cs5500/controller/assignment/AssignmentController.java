@@ -2,6 +2,9 @@ package edu.northeastern.cs5500.controller.assignment;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -100,6 +103,23 @@ public class AssignmentController {
 	}
 	
 	/**
+	 * Upload github for a particular student and assignment
+	 * @param	studentId:	id of the student who is uploading the assignment
+	 * 			assignmentId:	id of the assignment for which files are being uploaded
+	 * @return	Boolean:		true iff and only if the assignment was successfully uploaded and unzipped.
+	 */
+	@GetMapping(value = "/github")
+	public ResponseEntity<Boolean> uploadGithubAssignment(@RequestParam(value = "git") String link, 
+			@RequestParam(value = "student_id") int studentId, @RequestParam(value = "assignment_id") int assignmentId){
+		
+		boolean flag = this.assignmentService.uploadGit(link, studentId, assignmentId);
+		if(flag) {
+			this.assignmentService.insertIntoQueue(studentId, assignmentId);
+		}
+		return new ResponseEntity<>(flag, HttpStatus.OK);
+	}
+	
+	/**
 	 * Upload zip file for a particular student and assignment
 	 * @param	studentId:	id of the student who is uploading the assignment
 	 * 			assignmentId:	id of the assignment for which files are being uploaded
@@ -114,4 +134,6 @@ public class AssignmentController {
 		}
 		return new ResponseEntity<>(flag, HttpStatus.OK);
 	}
+	
+	
 }
