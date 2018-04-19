@@ -27,17 +27,17 @@
 
 	<ul class="nav nav-tabs">
 	  <li class="nav-item">
-	    <a ng-click="users = true; semesters = false; courses = false" class="nav-link active" >Users</a>
+	    <a ng-click="model.users = true; semesters = false; courses = false" class="nav-link active" >Users</a>
 	  </li>
 	  <li class="nav-item">
-	    <a ng-click="users = false; semesters = true; courses = false" class="nav-link" >Semesters</a>
+	    <a ng-click="model.users = false; semesters = true; courses = false" class="nav-link" >Semesters</a>
 	  </li>
 	  <li class="nav-item">
-	    <a ng-click="users = false; semesters = false; courses = true" class="nav-link" >Courses</a>
+	    <a ng-click="model.users = false; semesters = false; courses = true" class="nav-link" >Courses</a>
 	  </li>
 	</ul>
 	
-	<div class="panel-body" ng-if="users">
+	<div class="panel-body" ng-if="model.users">
 		<div><button type="button" class="btn btn-success">Add New User</button></div>
 		<br />
 		<table class="table table-bordered bordered table-striped table-condensed" ui-jq=”datatable” ui-options=”options” >

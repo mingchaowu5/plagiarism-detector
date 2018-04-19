@@ -9,7 +9,8 @@
         var api = {
             "assignmentResults":assignmentResults,
             "fetchEdgeStudents":fetchEdgeStudents,
-            "fetchFilesToCompare":fetchFilesToCompare
+            "fetchFilesToCompare":fetchFilesToCompare,
+            "sendActionMail":sendActionMail
         };
         return api;
 
@@ -23,6 +24,10 @@
 
         function fetchFilesToCompare(id) {
             return $http.get("/rest/snapshot/file?id="+id);
+        }
+
+        function sendActionMail(sid1, sid2) {
+            
         }
 
     }

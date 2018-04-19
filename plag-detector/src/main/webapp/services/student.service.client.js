@@ -12,7 +12,8 @@
             "fetchAssignments": fetchAssignments,
             "fetchAssignmentVersions":fetchAssignmentVersions,
             "fetchAllCoursesAvailable":fetchAllCoursesAvailable,
-            "addCourseToStudent":addCourseToStudent
+            "addCourseToStudent":addCourseToStudent,
+            "uploadGitLink":uploadGitLink
         };
         return api;
 
@@ -40,5 +41,8 @@
             return $http.get("/rest/course/add?student_id=" + studentId + "&course_id=" + courseID);
         }
 
+        function uploadGitLink(gitlink,sid, aid) {
+            return $http.get("/rest/assignment/github?student_id="+sid+"&assignment_id="+aid+"&git="+gitlink);
+        }
     }
 })();

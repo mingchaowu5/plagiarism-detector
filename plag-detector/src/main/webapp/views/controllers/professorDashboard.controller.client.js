@@ -216,7 +216,7 @@
                     }
                 })
                 .catch(function (err) {
-                    console.log("error adding the assignment.\n Contact Admin")
+                    alert("error adding the assignment.\n Contact Admin")
                 })
         }
 
@@ -234,7 +234,7 @@
                     }
                 })
                 .catch(function (err) {
-                    console.log("error adding the assignment.\n Contact Admin")
+                    alert("error adding the assignment.\n Contact Admin")
                 })
         }
 
@@ -250,7 +250,7 @@
                     }
                 })
                 .catch(function (err) {
-                    console.log("error adding the assignment.\n Contact Admin")
+                    alert("error adding the assignment.\n Contact Admin")
 
                 })
         }
@@ -266,7 +266,7 @@
                     }
                 })
                 .catch(function (err) {
-                    console.log("error adding the course.\n Contact Admin")
+                    alert("error adding the course.\n Contact Admin")
 
                 })
         }
@@ -282,11 +282,11 @@
             promise
                 .then(function (params) {
                     if(params.data){
-                        console.log("Successfully Started\nPlease wait for notification in Dashboard");
+                        alert("Successfully Started\nPlease wait for notification in Dashboard");
                     }
                 })
                 .catch(function (err) {
-                    console.log("Error in starting the snaphot. Please contact Admin")
+                    alert("Error in starting the snaphot. Please contact Admin")
                 })
         }
 
@@ -300,7 +300,7 @@
                     }
                 })
                 .catch(function (err) {
-                    console.log("Error in deleting assignment")
+                    alert("Error in deleting assignment")
                 })
         }
 
@@ -314,7 +314,7 @@
                     }
                 })
                 .catch(function (err) {
-                    console.log("Error in deleting course")
+                    alert("Error in deleting course")
                 })
         }
     }

@@ -129,12 +129,18 @@
 
             promise
                 .then(function (response) {
-                    if(response.data){
-                        $("#modalCloseBtn").click( function()
-                            {
-                                $location.url("#!/student/"+ vm.studentId);
-                            }
-                        );
+                    if(response){
+                        $window.location.reload();
+                        // $("#modal-footer").on("click", "#modalCloseBtnStu", function () {
+                        //     alert("Hi");
+                        //   });
+                        // $(document).ready(function() {
+                        //     $("#modalCloseBtnStu").click( function(){
+                        //         console.log("here")
+                        //         $location.url("#!/student/"+ vm.studentId);
+                        //     });
+                        //   });
+                        
                     }
                 })
                 .catch(function (err) {

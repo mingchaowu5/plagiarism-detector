@@ -15,6 +15,22 @@
         vm.viewFilesTogether = viewFilesTogether;
         vm.showDisplay = showDisplay;
 
+        vm.takeActionMail = takeActionMail;
+
+        function takeActionMail() {
+            var promise = ResultsService.sendActionMail(vm.results.submission1, vm.results.submission2);
+
+            promise.
+                then(function (params) {
+                    if(params.data){
+                        alert("Mail sent successfully")
+                    }
+                })
+                .catch(function (err) {
+                    alert("error in sending mail")
+                })
+        }
+
         function init() {
             var promise = ResultsService.assignmentResults(vm.assignmentID);
 

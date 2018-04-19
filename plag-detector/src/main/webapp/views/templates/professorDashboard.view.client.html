@@ -36,12 +36,12 @@
                 </ul>
             </nav>
         </div>
-        <div class="col-sm-12 col-lg-10">
+        <div class="col-sm-9 col-lg-10">
             <!-- your page content -->
 
 
 
-            <div class="col-md-12 user-view-block pre-scrollable" >
+            <div class="col-md-9 user-view-block pre-scrollable" >
                 <!--The Panels to show-->
 
                 <div ng-switch="model.loadProfileEditdiv">
@@ -163,6 +163,8 @@
 
                     </div>
                     <div ng-switch-when="ASSIGNMENTS">
+                            <h2>Showing all the Assignments</h2>
+                        
                         <!--<ng-include src="'views/user/templates/profile-settings.view.client.html'"></ng-include>-->
                         <div ng-repeat="assignment in model.assignments">
                             <div class="col-md-5">
@@ -253,6 +255,8 @@
 
                     </div>
                     <div ng-switch-when="SNAPSHOTS">
+                            <h2>Showing all the Snapshots</h2>
+                        
                         <!--<ng-include src="'views/user/templates/user-comments.view.client.html'"></ng-include>-->
                         <div ng-repeat="snapshot in model.snapshots">
                             <div class="col-md-5">
@@ -332,7 +336,27 @@
 
 
             </div>
-            
+            <div class="col-md-3">
+                <ul class="list-group list-unstyled">
+                    <li class="list-group-item list-group-item-heading list-group-item-info text-center">
+                       <span class="text-center">Notifications</span>
+                    </li>
+                    <li class="list-group-item">
+                        Plagarism detected! - 30% Click here
+                    </li>
+                    <li class="list-group-item">
+                        Plagarism detected! - 32% Click here
+                    </li>
+                    <li class="list-group-item" ng-repeat="notification in model.notifications">
+                        <div class="row text-center">
+                            {{notification.text}}
+                        </div>
+                        <div class="row text-center">
+                            {{notification.date}}
+                        </div>
+                    </li>
+                </ul>
+            </div>
         </div>
     </div>
 

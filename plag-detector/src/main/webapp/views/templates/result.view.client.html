@@ -65,7 +65,7 @@
 
 
 <div class="row">
-    <div style="padding-top: 70px">
+    <div style="padding-top: 70px; padding-left: 25px">
         <div style="height: 900px" id="mynetwork"></div>
     </div>
     <!-- <div class="col-lg-6 col-sm-12 col-md-6">
@@ -114,11 +114,18 @@
                         </div>
                         <div class="modal-body">
                             <div class="row">
-                                <h2>Plagarised Percentage</h2>
-                                <h3>Student : {{model.selectedNodeInfo}}</h3>
-                                <h3 ng-if="model.nodePercentage">Plagarised Percentage : {{model.nodePercentage}}%</h3>
-                                <h3 ng-if="model.edgePercentage">Plagarised Percentage : {{model.edgePercentage}}% with</h3>
-                                <h3>Student : {{model.selectedNodeInfo2}}</h3>
+                                <div class="col-md-6">
+                                        <h2>Plagarised Percentage</h2>
+                                        <h3 ng-if="model.selectedNodeInfo">Student : {{model.selectedNodeInfo}}</h3>
+                                        <h3 ng-if="model.nodePercentage">Plagarised Percentage : {{model.nodePercentage}}%</h3>
+                                        <h3 ng-if="model.edgePercentage">Plagarised Percentage : {{model.edgePercentage}}% with</h3>
+                                        <h3 ng-if="model.selectedNodeInfo2">Student : {{model.selectedNodeInfo2}}</h3>
+                                </div>
+                                <div class="col-md-6">
+                                        <h3> Take Action </h3>
+                                        <a class="btn btn-primary" ng-click="model.takeActionMail()">Send Mail</a>
+                                </div>
+                                
                             </div>
                             <div class="row">
                                 <table class="table table-responsive">
