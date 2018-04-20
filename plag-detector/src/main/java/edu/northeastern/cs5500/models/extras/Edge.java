@@ -11,6 +11,9 @@ public class Edge {
 		this.value = value;
 	}
 	
+	public Edge() {
+	}
+
 	public int getFrom() {
 		return from;
 	}

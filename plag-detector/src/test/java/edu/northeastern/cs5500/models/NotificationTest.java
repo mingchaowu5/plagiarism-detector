@@ -5,11 +5,11 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
 import edu.northeastern.cs5500.models.notification.Notification;
-import edu.northeastern.cs5500.models.submission.Sub1;
 
 public class NotificationTest {
 	
 Notification stuass = new Notification();
+Notification stuass2 = new Notification(2, "ass1", 2, "ass1");
 	
 	/**
 	 * Test Name
@@ -18,6 +18,7 @@ Notification stuass = new Notification();
 	public void testName() {
 		stuass.setDate("ass1");
 		assertEquals(stuass.getDate(), "ass1");
+		assertEquals(stuass.getDate(), stuass2.getDate());
 	}
 	
 	/**
