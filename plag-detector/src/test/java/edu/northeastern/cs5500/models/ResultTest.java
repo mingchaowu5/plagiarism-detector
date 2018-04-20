@@ -8,6 +8,12 @@ import org.junit.Test;
 
 import edu.northeastern.cs5500.models.results.Result;
 
+
+/** 
+ * 
+ * @author varunnandu
+ *
+ */
 public class ResultTest {
 	
 	Result r = new Result();

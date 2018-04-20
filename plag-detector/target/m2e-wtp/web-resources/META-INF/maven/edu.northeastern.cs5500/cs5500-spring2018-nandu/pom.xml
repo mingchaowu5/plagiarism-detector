@@ -29,7 +29,7 @@
 	    </sonar.exclusions>
 	    <sonar.coverage.exclusions>
 	      src/main/webapp/**,src/main/java/edu/northeastern/cs5500/controller/**, src/main/java/edu/northeastern/cs5500/jobs/**, src/main/java/edu/northeastern/cs5500/ServletInitializer.java, src/main/java/edu/northeastern/cs5500/mail/**,
-	      src/main/java/edu/northeastern/cs5500/mail/**, src/main/java/edu/northeastern/cs5500/models/results/**, src/main/java/edu/northeastern/cs5500/models/file/**, src/main/java/edu/northeastern/cs5500/Constants.java, src/main/java/edu/northeastern/cs5500/dao/**
+	      src/main/java/edu/northeastern/cs5500/mail/**, src/main/java/edu/northeastern/cs5500/models/results/**, src/main/java/edu/northeastern/cs5500/models/file/**, src/main/java/edu/northeastern/cs5500/Constants.java
 	    </sonar.coverage.exclusions>
 
 	    <sonar.host.url>http://www.example.com/</sonar.host.url>

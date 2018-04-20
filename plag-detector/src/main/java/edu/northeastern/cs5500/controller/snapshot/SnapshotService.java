@@ -18,6 +18,11 @@ import edu.northeastern.cs5500.models.results.Result;
 import edu.northeastern.cs5500.models.snapshot.Snapshot;
 import edu.northeastern.cs5500.models.submission.Submission;
 
+/** 
+ * 
+ * @author varunnandu
+ *
+ */
 @Service
 public class SnapshotService {
 
@@ -122,6 +127,11 @@ public class SnapshotService {
 	public Result getFiles(int id) {
 		return this.resultsDao.getFileData(id);
 	}
+	
+	/** 
+	 * 
+	 * @return
+	 */
 	
 	public List<Snapshot> getAllManualSnapshots(){
 		return this.snapshotDao.getAllManualSnapshots();

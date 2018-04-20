@@ -14,6 +14,11 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
+/** 
+ * 
+ * @author varunnandu
+ *
+ */
 
 @EnableAutoConfiguration(exclude = {JpaRepositoriesAutoConfiguration.class})
 @SpringBootApplication
@@ -29,6 +34,11 @@ public class PlagDetectorApplication extends SpringBootServletInitializer{
 		SpringApplication.run(PlagDetectorApplication.class, args);
 		Constants.createFolders();
 	}
+	
+	/** 
+	 * Send Mail
+	 * @return
+	 */
 	
 	@Bean
 	public JavaMailSender getJavaMailSender() {

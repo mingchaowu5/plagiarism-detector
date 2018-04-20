@@ -7,11 +7,19 @@ import org.junit.Test;
 
 import edu.northeastern.cs5500.models.course.Course;
 
+/** 
+ * 
+ * @author varunnandu
+ *
+ */
 public class CourseTest {
 	
 	private Course course = new Course();
 	Course c2 = new Course(90, "course2", 90);
 	
+	/** 
+	 * Test
+	 */
 	@Test
 	public void testId() {
 		course.setId(90);
@@ -19,12 +27,18 @@ public class CourseTest {
 		assertEquals(course.getId(), c2.getId());
 	}
 	
+	/** 
+	 * Test
+	 */
 	@Test
 	public void testName() {
 		course.setName("Course 1");
 		assertTrue(course.getName() == "Course 1");
 	}
 	
+	/** 
+	 * Test
+	 */
 	@Test
 	public void testSemester() {
 		course.setSemester(23);;

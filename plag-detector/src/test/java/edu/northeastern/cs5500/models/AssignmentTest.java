@@ -9,6 +9,11 @@ import org.junit.Test;
 
 import edu.northeastern.cs5500.models.assignment.Assignment;
 
+/** 
+ * 
+ * @author varunnandu
+ *
+ */
 public class AssignmentTest {
 
 	private Assignment assignment;

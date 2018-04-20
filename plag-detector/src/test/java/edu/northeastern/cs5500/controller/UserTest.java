@@ -14,19 +14,22 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import edu.northeastern.cs5500.PlagDetectorApplicationTests;
-import edu.northeastern.cs5500.dao.SnapshotDao;
 import edu.northeastern.cs5500.dao.UserDao;
 import edu.northeastern.cs5500.models.person.Professor;
 import edu.northeastern.cs5500.models.person.Student;
 import edu.northeastern.cs5500.models.person.User;
 
+/** 
+ * 
+ * @author varunnandu
+ *
+ */
 public class UserTest extends PlagDetectorApplicationTests{
 
 	@Autowired
 	private UserDao udao;
 	
 	@Autowired
-	private SnapshotDao sdao;
 	
 	@Test
 	public void testAllUsers() {

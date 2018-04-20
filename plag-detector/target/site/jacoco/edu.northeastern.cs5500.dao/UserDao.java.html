@@ -1,0 +1,481 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>UserDao.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">cs5200-spring2018-nandu</a> &gt; <a href="index.source.html" class="el_package">edu.northeastern.cs5500.dao</a> &gt; <span class="el_source">UserDao.java</span></div><h1>UserDao.java</h1><pre class="source lang-java linenums">package edu.northeastern.cs5500.dao;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
+
+import edu.northeastern.cs5500.models.file.FileStructure;
+import edu.northeastern.cs5500.models.person.Professor;
+import edu.northeastern.cs5500.models.person.Student;
+import edu.northeastern.cs5500.models.person.StudentAssignmentMap;
+import edu.northeastern.cs5500.models.person.User;
+
+@Transactional
+@Repository
+<span class="fc" id="L23">public class UserDao {</span>
+
+	@Autowired
+	private JdbcTemplate jdbcTemplate;
+	
+<span class="fc" id="L28">	private Logger log = Logger.getAnonymousLogger();</span>
+	
+	/**
+	 * Find professor details by a snapshot id
+	 * @param snapshotId
+	 * @return
+	 */
+	public User findUserBySnapshotId(int snapshotId) {
+		try {
+<span class="fc" id="L37">			String sql = &quot;SELECT User.id, User.firstName, User.lastName, User.email FROM User join Professor on User.id = Professor.id join ProfessorSnapshotMapping on ProfessorSnapshotMapping.Professor = Professor.id WHERE ProfessorSnapshotMapping.snapshot = ?&quot;;</span>
+<span class="fc" id="L38">			RowMapper&lt;User&gt; mapper = new BeanPropertyRowMapper&lt;&gt;(User.class);</span>
+<span class="fc" id="L39">			return jdbcTemplate.queryForObject(sql, mapper, snapshotId);			</span>
+		}
+<span class="fc" id="L41">		catch(Exception e) {</span>
+<span class="fc" id="L42">			log.log(Level.INFO, e.getMessage());</span>
+<span class="fc" id="L43">			return null;</span>
+		}
+	}
+	
+	/**
+	 * Find user by ID
+	 * @param userId
+	 * @return
+	 */
+	public User findUserById(int userId) {
+		try {
+<span class="fc" id="L54">			String sql = &quot;SELECT User.id, User.firstName, User.lastName, User.email FROM User WHERE User.id = ?&quot;;</span>
+<span class="fc" id="L55">			RowMapper&lt;User&gt; mapper = new BeanPropertyRowMapper&lt;&gt;(User.class);</span>
+<span class="fc" id="L56">			return jdbcTemplate.queryForObject(sql, mapper, userId);</span>
+		}
+<span class="nc" id="L58">		catch(Exception e) {</span>
+<span class="nc" id="L59">			log.log(Level.INFO, e.getMessage());</span>
+<span class="nc" id="L60">			return null;</span>
+		}
+	}
+	
+	/**
+	 * Find user by ID
+	 * @param userId
+	 * @return
+	 */
+	public User findUserBySubmissionId(int subId) {
+		try {
+<span class="nc" id="L71">			String sql = &quot;SELECT User.id, User.firstName, User.lastName, User.email FROM Submission JOIN User ON Submission.student = User.id WHERE Submission.id = ?&quot;;</span>
+<span class="nc" id="L72">			RowMapper&lt;User&gt; mapper = new BeanPropertyRowMapper&lt;&gt;(User.class);</span>
+<span class="nc" id="L73">			return jdbcTemplate.queryForObject(sql, mapper, subId);</span>
+		}
+<span class="nc" id="L75">		catch(Exception e) {</span>
+<span class="nc" id="L76">			log.log(Level.INFO, e.getMessage());</span>
+<span class="nc" id="L77">			return null;</span>
+		}
+	}
+	
+	/**
+	 * Find User by type
+	 * @param type
+	 * @return
+	 */
+	public List&lt;User&gt; findUserByType(int type) {
+		try {
+<span class="nc" id="L88">			String sql = &quot;SELECT User.id, User.firstName, User.lastName, User.email FROM User WHERE User.type = ?&quot;;</span>
+<span class="nc" id="L89">			RowMapper&lt;User&gt; mapper = new BeanPropertyRowMapper&lt;&gt;(User.class);</span>
+<span class="nc" id="L90">			return jdbcTemplate.query(sql, mapper, type);			</span>
+		}
+<span class="nc" id="L92">		catch(Exception e) {</span>
+<span class="nc" id="L93">			log.log(Level.INFO, e.getMessage());</span>
+<span class="nc" id="L94">			return new ArrayList&lt;&gt;();</span>
+		}
+	}
+	
+	/**
+	 * Get User details for a submission ID
+	 * @param submissionId
+	 * @return
+	 */
+	public String getNameOfStudent(int submissionId) {
+		try {
+<span class="fc" id="L105">			String sql = &quot;Select User.firstName, User.lastName from User join Student on User.id = Student.id join Submission on Student.id = Submission.student where Submission.id = ?&quot;;</span>
+<span class="fc" id="L106">			RowMapper&lt;User&gt; mapper = new BeanPropertyRowMapper&lt;&gt;(User.class);</span>
+<span class="nc" id="L107">			User user =  jdbcTemplate.queryForObject(sql, mapper, submissionId);</span>
+<span class="nc" id="L108">			return user.getFirstName() + &quot; &quot; + user.getLastName();</span>
+		}
+<span class="fc" id="L110">		catch(Exception e) {</span>
+<span class="fc" id="L111">			log.log(Level.INFO, e.getMessage());</span>
+<span class="fc" id="L112">			return &quot;&quot;;</span>
+		}
+	}
+	
+	/**
+	 * Delete Student from the table
+	 * @param id
+	 * @return
+	 */
+	public int deleteStudent(int id) {
+		try {
+<span class="nc" id="L123">			String sql = &quot;DELETE FROM Student WHERE id = ?&quot;;</span>
+<span class="nc" id="L124">			return jdbcTemplate.update(sql, new Object[] {id});</span>
+		}
+<span class="nc" id="L126">		catch(Exception e) {</span>
+<span class="nc" id="L127">			log.log(Level.INFO, e.getMessage());</span>
+<span class="nc" id="L128">			return 0;</span>
+		}
+	}
+	
+	/**
+	 * Delete Student from the table
+	 * @param id
+	 * @return
+	 */
+	public int deleteProfessor(int id) {
+		try {
+<span class="nc" id="L139">			String sql = &quot;DELETE FROM Professor WHERE id = ?&quot;;</span>
+<span class="nc" id="L140">			return jdbcTemplate.update(sql, new Object[] {id});</span>
+		}
+<span class="nc" id="L142">		catch(Exception e) {</span>
+<span class="nc" id="L143">			log.log(Level.INFO, e.getMessage());</span>
+<span class="nc" id="L144">			return 0;</span>
+		}
+	}
+	
+	/**
+	 * Insert Student into the table
+	 * @param id
+	 * @return
+	 */
+	public int insertStudent(int id) {
+		try {
+<span class="nc" id="L155">			String sql = &quot;INSERT INTO Student(id) VALUES(?)&quot;;</span>
+<span class="nc" id="L156">			return jdbcTemplate.update(sql, new Object[] {id});</span>
+		}
+<span class="nc" id="L158">		catch(Exception e) {</span>
+<span class="nc" id="L159">			log.log(Level.INFO, e.getMessage());</span>
+<span class="nc" id="L160">			return 0;</span>
+		}
+	}
+	
+	/**
+	 * Delete Student from the table
+	 * @param id
+	 * @return
+	 */
+	public int insertProfessor(int id) {
+		try {
+<span class="nc" id="L171">			String sql = &quot;INSERT INTO Professor(id) VALUES(?)&quot;;</span>
+<span class="nc" id="L172">			return jdbcTemplate.update(sql, new Object[] {id});</span>
+		}
+<span class="nc" id="L174">		catch(Exception e) {</span>
+<span class="nc" id="L175">			log.log(Level.INFO, e.getMessage());</span>
+<span class="nc" id="L176">			return 0;</span>
+		}
+	}
+	
+	/**
+	 * 
+	 * @param user
+	 */
+	public User addNewUser(final User user) {
+<span class="nc" id="L185">		int type = 0;</span>
+		try {
+<span class="nc" id="L187">			String sql = &quot;INSERT INTO User(firstName, lastName, email, userName, password) VALUES(?, ?, ?, ?, ?)&quot;;</span>
+<span class="nc" id="L188">			jdbcTemplate.update(sql, new Object[] {user.getFirstName(), user.getLastName(), user.getEmail(), user.getUsername(), user.getPassword()});</span>
+		}
+<span class="nc" id="L190">		catch(Exception e) {</span>
+<span class="nc" id="L191">			return null;</span>
+<span class="nc" id="L192">		}</span>
+<span class="nc" id="L193">		int rId = findId(user);</span>
+<span class="nc bnc" id="L194" title="All 2 branches missed.">		if(user.getType() == 0) {</span>
+<span class="nc" id="L195">			type = 0;</span>
+			try {
+<span class="nc" id="L197">				String sql2 = &quot;INSERT INTO Student (id) VALUES(?)&quot;;</span>
+<span class="nc" id="L198">				jdbcTemplate.update(sql2, new Object[] {rId});</span>
+			}
+<span class="nc" id="L200">			catch(Exception e) {</span>
+<span class="nc" id="L201">				log.log(Level.INFO, e.getMessage());</span>
+<span class="nc" id="L202">				return null;</span>
+<span class="nc" id="L203">			}</span>
+		
+		}
+<span class="nc bnc" id="L206" title="All 2 branches missed.">		else if(user.getType() == 1){</span>
+			try {
+<span class="nc" id="L208">				type = 1;</span>
+<span class="nc" id="L209">				String sql2 = &quot;INSERT INTO Professor (id) VALUES(?)&quot;;</span>
+<span class="nc" id="L210">				jdbcTemplate.update(sql2, new Object[] {rId});	</span>
+			}
+<span class="nc" id="L212">			catch(Exception e) {</span>
+<span class="nc" id="L213">				log.log(Level.INFO, e.getMessage());</span>
+<span class="nc" id="L214">			}</span>
+		}
+<span class="nc" id="L216">		return this.login(user.getUsername(), user.getPassword(), type);</span>
+	}
+	
+	/**
+	 * 
+	 * @param user
+	 */
+	public void updateUser(final User user) {
+		try {
+<span class="nc" id="L225">			String sql = &quot;UPDATE User SET firstName = ?, lastName = ?, email = ?, userName = ?, password = ? WHERE id = ?&quot;;</span>
+<span class="nc" id="L226">			jdbcTemplate.update(sql, new Object[] {user.getFirstName(), user.getLastName(), user.getEmail(), user.getUsername(), user.getPassword(), user.getId()});</span>
+		}
+<span class="nc" id="L228">		catch(Exception e){</span>
+<span class="nc" id="L229">			log.log(Level.INFO, e.getMessage());</span>
+<span class="nc" id="L230">		}</span>
+<span class="nc" id="L231">	}</span>
+	
+	/**
+	 * 
+	 * @param id
+	 * @param type
+	 * @return
+	 */
+	public int deleteUser(int id, int type) {
+		try {
+<span class="nc" id="L241">			String sql = &quot;DELETE FROM User WHERE id = ?&quot;;</span>
+<span class="nc" id="L242">			jdbcTemplate.update(sql, new Object[] {id});</span>
+		}
+<span class="nc" id="L244">		catch(Exception e) {</span>
+<span class="nc" id="L245">			log.log(Level.INFO, e.getMessage());</span>
+<span class="nc" id="L246">		}</span>
+		
+<span class="nc bnc" id="L248" title="All 2 branches missed.">		if(type == 0) {</span>
+			try {
+<span class="nc" id="L250">				String sql2 = &quot;DELETE FROM Student WHERE id = ?&quot;;</span>
+<span class="nc" id="L251">				return jdbcTemplate.update(sql2, new Object[] {id});</span>
+			}
+<span class="nc" id="L253">			catch(Exception e) {</span>
+<span class="nc" id="L254">			}</span>
+		}
+<span class="nc bnc" id="L256" title="All 2 branches missed.">		else if(type == 1){</span>
+			try {
+<span class="nc" id="L258">				String sql2 = &quot;DELETE FROM Professor WHERE id = ?&quot;;</span>
+<span class="nc" id="L259">				return jdbcTemplate.update(sql2, new Object[] {id});	</span>
+			}
+<span class="nc" id="L261">			catch(Exception e) {</span>
+<span class="nc" id="L262">				log.log(Level.INFO, e.getMessage());</span>
+			}
+		}
+<span class="nc" id="L265">		return 0;</span>
+	}
+	
+	/**
+	 * 
+	 * @param username
+	 * @param password
+	 * @param type
+	 * @return
+	 */
+	public User login(final String username, final String password, int type) {
+<span class="nc bnc" id="L276" title="All 2 branches missed.">		if(type == 1) {</span>
+			try {
+<span class="nc" id="L278">				String sql = &quot;SELECT * FROM User join Professor on  Professor.id = User.id WHERE User.username = ? AND User.password = ?&quot;;</span>
+<span class="nc" id="L279">				RowMapper&lt;Professor&gt; mapper = new BeanPropertyRowMapper&lt;&gt;(Professor.class);</span>
+<span class="nc" id="L280">				return jdbcTemplate.queryForObject(sql, mapper, username, password);				</span>
+			}
+<span class="nc" id="L282">			catch(Exception e) {</span>
+<span class="nc" id="L283">				log.log(Level.INFO, e.getMessage());</span>
+<span class="nc" id="L284">				return null;</span>
+			}
+			
+<span class="nc bnc" id="L287" title="All 2 branches missed.">		} else if(type == 0) {</span>
+			
+			try {
+<span class="nc" id="L290">			String sql = &quot;SELECT * FROM User join Student on  Student.id = User.id WHERE User.username = ? AND User.password = ?&quot;;</span>
+<span class="nc" id="L291">			RowMapper&lt;Student&gt; mapper = new BeanPropertyRowMapper&lt;&gt;(Student.class);</span>
+<span class="nc" id="L292">			return jdbcTemplate.queryForObject(sql, mapper, username, password);</span>
+			}
+<span class="nc" id="L294">			catch(Exception e) {</span>
+<span class="nc" id="L295">				log.log(Level.INFO, e.getMessage());</span>
+<span class="nc" id="L296">				return null;</span>
+			}
+		}
+<span class="nc" id="L299">		return null;</span>
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public List&lt;User&gt; findAllUsers(){
+		try {
+<span class="fc" id="L308">			List&lt;User&gt; results = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L309">			List&lt;Professor&gt; temp1 = this.findAllProfessors();</span>
+<span class="fc bfc" id="L310" title="All 2 branches covered.">			for(Professor p : temp1) {</span>
+<span class="fc" id="L311">				User u = new User(p.getId(), p.getFirstName(), p.getLastName(), p.getEmail(), p.getUsername(), p.getPassword());</span>
+<span class="fc" id="L312">				u.setType(1);</span>
+<span class="fc" id="L313">				results.add(u);</span>
+<span class="fc" id="L314">			}</span>
+<span class="fc" id="L315">			List&lt;Student&gt; temp2 = this.findAllStudents();</span>
+<span class="fc bfc" id="L316" title="All 2 branches covered.">			for(Student s : temp2) {</span>
+<span class="fc" id="L317">				User u = new User(s.getId(), s.getFirstName(), s.getLastName(), s.getEmail(), s.getUsername(), s.getPassword());</span>
+<span class="fc" id="L318">				u.setType(0);</span>
+<span class="fc" id="L319">				results.add(u);</span>
+<span class="fc" id="L320">			}</span>
+<span class="fc" id="L321">			return results;</span>
+		}
+<span class="nc" id="L323">		catch(Exception e) {</span>
+<span class="nc" id="L324">			log.log(Level.INFO, e.getMessage());</span>
+<span class="nc" id="L325">			return new ArrayList&lt;&gt;();</span>
+		}
+	}
+	
+	/**
+	 * 
+	 * @param username
+	 * @param password
+	 * @return
+	 */
+	public Integer getTypeFromUsernamePassword(String username, String password) {
+		try {
+<span class="fc" id="L337">			String sql = &quot;Select * from User where User.username = ? AND User.password = ?&quot;;</span>
+<span class="fc" id="L338">			RowMapper&lt;User&gt; rowMapper = new BeanPropertyRowMapper&lt;&gt;(User.class);</span>
+<span class="fc" id="L339">			User user =  jdbcTemplate.queryForObject(sql, rowMapper, username, password);</span>
+			try {
+<span class="fc" id="L341">			String sql2 = &quot;Select * from Student where Student.id = ?&quot;;</span>
+<span class="fc" id="L342">			RowMapper&lt;Student&gt; map1 = new BeanPropertyRowMapper&lt;&gt;(Student.class);</span>
+<span class="nc" id="L343">			Student s =  jdbcTemplate.queryForObject(sql2, map1, user.getId());</span>
+<span class="fc" id="L344">			} catch(Exception e) {</span>
+<span class="fc" id="L345">				System.out.println(user.getId());</span>
+<span class="fc" id="L346">				String sql3 = &quot;Select * from Professor where Professor.id = ?&quot;;</span>
+<span class="fc" id="L347">				RowMapper&lt;Professor&gt; map2 = new BeanPropertyRowMapper&lt;&gt;(Professor.class);</span>
+<span class="fc" id="L348">				Professor p =  jdbcTemplate.queryForObject(sql3, map2, user.getId());</span>
+<span class="pc bpc" id="L349" title="1 of 2 branches missed.">				if(p != null)</span>
+<span class="fc" id="L350">					return 1;</span>
+<span class="nc" id="L351">			}</span>
+<span class="nc" id="L352">			return 0;</span>
+<span class="fc" id="L353">		}catch(Exception e) {</span>
+<span class="fc" id="L354">			log.log(Level.INFO, e.getMessage());</span>
+<span class="fc" id="L355">			return -1;</span>
+		}
+	}
+	
+	/**
+	 * 
+	 * @param user
+	 * @return
+	 */
+	public Integer findId(final User user) {	
+		try {
+<span class="nc" id="L366">			String sql = &quot;SELECT * FROM User WHERE User.username = ? AND User.password = ?&quot;;</span>
+<span class="nc" id="L367">			RowMapper&lt;User&gt; mapper = new BeanPropertyRowMapper&lt;&gt;(User.class);</span>
+<span class="nc" id="L368">			User u =  jdbcTemplate.queryForObject(sql, mapper, user.getUsername(), user.getPassword());</span>
+<span class="nc" id="L369">			return u.getId();</span>
+			
+		}
+<span class="nc" id="L372">		catch(Exception e) {</span>
+<span class="nc" id="L373">			log.log(Level.INFO, e.getMessage());</span>
+<span class="nc" id="L374">			return null;</span>
+		}
+	}
+
+	/**
+	 * 
+	 * @return
+	 */
+	public List&lt;Professor&gt; findAllProfessors(){
+		try {
+<span class="fc" id="L384">			String sql = &quot;Select User.* from User join Professor on User.id = Professor.id&quot;;</span>
+<span class="fc" id="L385">			RowMapper&lt;Professor&gt; rowMapper = new BeanPropertyRowMapper&lt;&gt;(Professor.class);</span>
+<span class="fc" id="L386">			return this.jdbcTemplate.query(sql, rowMapper);</span>
+<span class="nc" id="L387">		}catch(Exception e) {</span>
+<span class="nc" id="L388">			log.log(Level.INFO, e.getMessage());</span>
+<span class="nc" id="L389">			return new ArrayList&lt;&gt;();</span>
+		}
+	}
+
+	/**
+	 * 
+	 * @return
+	 */
+	public List&lt;Student&gt; findAllStudents(){
+		try {
+<span class="fc" id="L399">		String sql = &quot;Select User.* from User join Student on User.id = Student.id&quot;;</span>
+<span class="fc" id="L400">		RowMapper&lt;Student&gt; rowMapper = new BeanPropertyRowMapper&lt;&gt;(Student.class);</span>
+<span class="fc" id="L401">		return this.jdbcTemplate.query(sql, rowMapper);</span>
+<span class="nc" id="L402">		}catch(Exception e) {</span>
+<span class="nc" id="L403">			log.log(Level.INFO, e.getMessage());</span>
+<span class="nc" id="L404">			return new ArrayList&lt;&gt;();</span>
+		}
+	}
+	
+	
+	
+	/**
+	 * 
+	 * @param courseId
+	 * @return
+	 */
+	public List&lt;Integer&gt; findStudentsForCourse(int courseId) {
+	
+		try {
+<span class="fc" id="L418">			String sql = &quot;SELECT StudentCourseMapping.student FROM StudentCourseMapping WHERE StudentCourseMapping.course = ?&quot;;</span>
+<span class="fc" id="L419">			RowMapper&lt;Integer&gt; mapper = new BeanPropertyRowMapper&lt;&gt;(Integer.class);</span>
+<span class="nc" id="L420">			return  jdbcTemplate.query(sql, mapper, courseId);</span>
+<span class="fc" id="L421">		}catch(Exception e) {</span>
+<span class="fc" id="L422">			log.log(Level.INFO, e.getMessage());</span>
+<span class="fc" id="L423">			return null;</span>
+			}
+	}
+	
+	/**
+	 * 
+	 * @param studentId
+	 * @param assignmentId
+	 * @return
+	 */
+	public Integer findStudentAssignmentId(int studentId, int assignmentId) {
+		try {
+<span class="nc" id="L435">			String sql = &quot;SELECT * FROM StudentAssignmentMapping WHERE StudentAssignmentMapping.student = ? AND StudentAssignmentMapping.assignment = ?&quot;;</span>
+<span class="nc" id="L436">			RowMapper&lt;StudentAssignmentMap&gt; mapper = new BeanPropertyRowMapper&lt;&gt;(StudentAssignmentMap.class);</span>
+<span class="nc" id="L437">			StudentAssignmentMap user =  jdbcTemplate.queryForObject(sql, mapper, studentId, assignmentId);</span>
+<span class="nc" id="L438">			return user.getId();</span>
+<span class="nc" id="L439">		}catch(Exception e) {</span>
+<span class="nc" id="L440">			log.log(Level.INFO, e.getMessage());</span>
+<span class="nc" id="L441">			return null;</span>
+		}
+	}
+	
+	/**
+	 * 
+	 * @param assignmentId
+	 * @return
+	 */
+	public List&lt;Student&gt; findAllStudentsForAssignment(int assignmentId) {
+		try {
+<span class="nc" id="L452">			String sql = &quot;Select Student.id, User.firstName, User.lastName, User.email, User.userName, User.password, Student.universityID from StudentAssignmentMapping join Student on Student.id = StudentAssignmentMapping.student join User on User.id = Student.id WHERE StudentAssignmentMapping.assignment = ?&quot;;</span>
+<span class="nc" id="L453">			RowMapper&lt;Student&gt; rowMapper = new BeanPropertyRowMapper&lt;&gt;(Student.class);</span>
+<span class="nc" id="L454">			return this.jdbcTemplate.query(sql, rowMapper, assignmentId);</span>
+<span class="nc" id="L455">		}catch(Exception e) {</span>
+<span class="nc" id="L456">			log.log(Level.INFO, e.getMessage());</span>
+<span class="nc" id="L457">			return new ArrayList&lt;&gt;();</span>
+		}
+	}
+	
+
+	/**
+	 * 
+	 * @param sa
+	 * @return
+	 */
+	public Integer findStudentIdFromStudentAssignment(int sa) {
+		try {
+<span class="nc" id="L469">			String sql = &quot;SELECT * FROM StudentAssignmentMapping WHERE StudentAssignmentMapping.id = ?&quot;;</span>
+<span class="nc" id="L470">			RowMapper&lt;StudentAssignmentMap&gt; mapper = new BeanPropertyRowMapper&lt;&gt;(StudentAssignmentMap.class);</span>
+<span class="nc" id="L471">			StudentAssignmentMap user =  jdbcTemplate.queryForObject(sql, mapper, sa);</span>
+<span class="nc" id="L472">			return user.getStudent();</span>
+		}
+<span class="nc" id="L474">		catch(Exception e) {</span>
+<span class="nc" id="L475">			log.log(Level.INFO, e.getMessage());</span>
+<span class="nc" id="L476">			return null;</span>
+		}
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.6.201602180812</span></div></body></html>

@@ -8,6 +8,11 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Component;
 
+/** 
+ * 
+ * @author varunnandu
+ *
+ */
 @Component
 public class MailClient {
   
@@ -15,6 +20,13 @@ public class MailClient {
     public JavaMailSender emailSender;
  
     private Logger log;
+    
+    /** 
+     * 
+     * @param to
+     * @param subject
+     * @param text
+     */
 
     public void sendSimpleMessage(String to, String subject, String text) {
     		log = Logger.getAnonymousLogger();

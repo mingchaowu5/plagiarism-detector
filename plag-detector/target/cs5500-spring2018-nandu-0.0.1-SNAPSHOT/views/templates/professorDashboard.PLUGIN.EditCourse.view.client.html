@@ -1,6 +1,6 @@
 <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal">&times;</button>
-    <h2 class="modal-title text-center">Edit Course</h2>
+    <h2 class="modal-title text-center">Edit Courses</h2>
 </div>
 <div class="modal-body">
 
@@ -19,7 +19,10 @@
                 <!--<input class="input-sm" type="text" name="cid" value="{{model.newAssignment.cid}}" hidden="true">-->
 
                 <div class="form-group" style="padding-top: 2%">
-                    <button ng-click="model.pushUpdateCourse(model.selectedCourse)" type="button" class="btn btn-primary col-md-12 col-sm-12 col-xs-12">Add</button>
+                    <button ng-click="model.pushUpdateCourse(model.selectedCourse)" type="button" class="btn btn-primary col-md-12 col-sm-12 col-xs-12" style="margin-bottom:10px;">Update</button>
+                    
+                    <button ng-click="model.pushDeleteCourse(model.selectedCourse)" type="button" class="btn btn-primary col-md-12 col-sm-12 col-xs-12">Delete</button>
+                    
                 </div>
 
             </div>

@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>CourseDao.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">cs5200-spring2018-nandu</a> &gt; <a href="index.source.html" class="el_package">edu.northeastern.cs5500.dao</a> &gt; <span class="el_source">CourseDao.java</span></div><h1>CourseDao.java</h1><pre class="source lang-java linenums">package edu.northeastern.cs5500.dao;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
+
+import edu.northeastern.cs5500.models.course.Course;
+
+@Transactional
+@Repository
+
+<span class="fc" id="L20">public class CourseDao {</span>
+
+	@Autowired
+	private JdbcTemplate jdbcTemplate;
+	
+<span class="fc" id="L25">	private Logger log = Logger.getAnonymousLogger();</span>
+
+	/**
+	 * 
+	 * @return
+	 */
+	public List&lt;Course&gt; getAllCourses() {
+		try {
+<span class="fc" id="L33">			String sql = &quot;Select * from Courses&quot;;</span>
+<span class="fc" id="L34">			RowMapper&lt;Course&gt; rowMapper = new BeanPropertyRowMapper&lt;&gt;(Course.class);</span>
+<span class="fc" id="L35">			return this.jdbcTemplate.query(sql, rowMapper);</span>
+<span class="nc" id="L36">		}catch(Exception e) {</span>
+<span class="nc" id="L37">			log.log(Level.INFO, e.getMessage());</span>
+<span class="nc" id="L38">			return new ArrayList&lt;&gt;();</span>
+		}
+	}
+	
+	/**
+	 * 
+	 * @param professorId
+	 * @param courseId
+	 */
+	public void assignProfessorToCourse(int professorId, int courseId) {
+		try {
+<span class="nc" id="L49">			String sql = &quot;INSERT INTO ProfessorCourseMapping (professor, course) VALUES (?, ?)&quot;;</span>
+<span class="nc" id="L50">			jdbcTemplate.update(sql, new Object[] {professorId, courseId});</span>
+<span class="nc" id="L51">		}catch(Exception e) {</span>
+<span class="nc" id="L52">			log.log(Level.INFO, e.getMessage());</span>
+<span class="nc" id="L53">		}</span>
+<span class="nc" id="L54">	}</span>
+	
+	/**
+	 * 
+	 * @param studentId
+	 * @param courseId
+	 * @return
+	 */
+	public int registerStudentForCourse(int studentId, int courseId){
+<span class="nc bnc" id="L63" title="All 2 branches missed.">		if(checkRegister(studentId, courseId) == null) {</span>
+			try {
+<span class="nc" id="L65">				String sql = &quot;INSERT INTO StudentCourseMapping (student, course) VALUES (?, ?)&quot;;</span>
+<span class="nc" id="L66">				return jdbcTemplate.update(sql, new Object[] {studentId, courseId});</span>
+<span class="nc" id="L67">			}catch(Exception e) {</span>
+<span class="nc" id="L68">				log.log(Level.INFO, e.getMessage());</span>
+			}
+		}
+<span class="nc" id="L71">		return 0;</span>
+	}
+	
+	/**
+	 * 
+	 * @param course
+	 * @param semesterId
+	 * @return
+	 */
+	public int addCourse(final Course course, int semesterId) {
+		try {
+<span class="nc" id="L82">			String sql = &quot;INSERT INTO Courses (name, semester) VALUES (?, ?)&quot;;</span>
+<span class="nc" id="L83">			return jdbcTemplate.update(sql, new Object[] {course.getName(), semesterId});</span>
+<span class="nc" id="L84">		}catch(Exception e) {</span>
+<span class="nc" id="L85">			log.log(Level.INFO, e.getMessage());</span>
+		}
+<span class="nc" id="L87">		return 0;</span>
+	}
+	
+	/**
+	 * 
+	 * @param course
+	 * @return
+	 */
+	public int updateCourse(final Course course) {
+		try {
+<span class="nc" id="L97">			String sql = &quot;UPDATE Courses SET name = ?, semester = ? WHERE id = ?&quot;;</span>
+<span class="nc" id="L98">			return jdbcTemplate.update(sql, new Object[] {course.getName(), course.getSemester(), course.getId()});</span>
+		}
+<span class="nc" id="L100">		catch(Exception e){</span>
+<span class="nc" id="L101">			log.log(Level.INFO, e.getMessage());</span>
+		}
+<span class="nc" id="L103">		return 0;</span>
+	}
+	
+	/**
+	 * 
+	 * @param id
+	 * @return
+	 */
+	public int deleteCourse(final int id) {
+		try {
+			
+<span class="nc" id="L114">			String sql = &quot;DELETE FROM Courses WHERE id = ?&quot;;</span>
+<span class="nc" id="L115">			return jdbcTemplate.update(sql, new Object[] {id});</span>
+		}
+<span class="nc" id="L117">		catch(Exception e){</span>
+<span class="nc" id="L118">			log.log(Level.INFO, e.getMessage());</span>
+		}
+<span class="nc" id="L120">		return 0;</span>
+	}
+
+	/**
+	 * 
+	 * @param id
+	 * @return
+	 */
+	public List&lt;Course&gt; getAllCoursesForSemester(int id) {
+		try {
+<span class="fc" id="L130">			String sql = &quot;Select Courses.id, Courses.name, Courses.semester from Courses WHERE Courses.semester = ?&quot;;</span>
+<span class="fc" id="L131">			RowMapper&lt;Course&gt; rowMapper = new BeanPropertyRowMapper&lt;&gt;(Course.class);</span>
+<span class="fc" id="L132">			return this.jdbcTemplate.query(sql, rowMapper, id);</span>
+		}
+<span class="nc" id="L134">		catch(Exception e) {</span>
+<span class="nc" id="L135">			log.log(Level.INFO, e.getMessage());</span>
+<span class="nc" id="L136">			return new ArrayList&lt;&gt;();</span>
+		}
+	}
+	
+	/**
+	 * 
+	 * @param id
+	 * @return
+	 */
+	public List&lt;Course&gt; getAllCoursesForProfessor(int id) {
+		try {
+<span class="fc" id="L147">			String sql = &quot;Select Courses.id, Courses.name, Courses.semester from Courses join ProfessorCourseMapping on Courses.id = ProfessorCourseMapping.course WHERE ProfessorCourseMapping.professor = ?&quot;;</span>
+<span class="fc" id="L148">			RowMapper&lt;Course&gt; rowMapper = new BeanPropertyRowMapper&lt;&gt;(Course.class);</span>
+<span class="fc" id="L149">			return this.jdbcTemplate.query(sql, rowMapper, id);</span>
+<span class="nc" id="L150">		}catch(Exception e) {</span>
+<span class="nc" id="L151">			log.log(Level.INFO, e.getMessage());</span>
+<span class="nc" id="L152">			return new ArrayList&lt;&gt;();</span>
+		}
+	}
+	
+	/**
+	 * 
+	 * @param studentId
+	 * @return
+	 */
+	public List&lt;Course&gt; getAllCoursesForStudent(int studentId) {
+		try {
+<span class="fc" id="L163">			String sql = &quot;Select Courses.id, Courses.name, Courses.semester from Courses join StudentCourseMapping on Courses.id = StudentCourseMapping.course WHERE StudentCourseMapping.student = ?&quot;;</span>
+<span class="fc" id="L164">			RowMapper&lt;Course&gt; rowMapper = new BeanPropertyRowMapper&lt;&gt;(Course.class);</span>
+<span class="fc" id="L165">			return this.jdbcTemplate.query(sql, rowMapper, studentId);</span>
+		}
+<span class="nc" id="L167">		catch(Exception e) {</span>
+<span class="nc" id="L168">			log.log(Level.INFO, e.getMessage());</span>
+<span class="nc" id="L169">			return new ArrayList&lt;&gt;();</span>
+		}
+	}
+	/** 
+	 * 
+	 * @param studentId
+	 * @param courseId
+	 * @return
+	 */
+	
+	public Course checkRegister(int studentId, int courseId) {
+		try {
+<span class="nc" id="L181">			String sql = &quot;Select id, course as semester from StudentCourseMapping where student = ? and course = ?&quot;;</span>
+<span class="nc" id="L182">			RowMapper&lt;Course&gt; rowMapper = new BeanPropertyRowMapper&lt;&gt;(Course.class);</span>
+<span class="nc" id="L183">			return jdbcTemplate.queryForObject(sql, rowMapper, studentId, courseId);</span>
+<span class="nc" id="L184">		}catch(Exception e) {</span>
+<span class="nc" id="L185">			log.log(Level.INFO, e.getMessage());</span>
+		}
+		
+<span class="nc" id="L188">		return null;</span>
+		
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.6.201602180812</span></div></body></html>

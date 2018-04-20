@@ -13,6 +13,12 @@ import edu.northeastern.cs5500.PlagDetectorApplicationTests;
 import edu.northeastern.cs5500.dao.SemesterDao;
 import edu.northeastern.cs5500.models.semester.Semester;
 
+
+/** 
+ * 
+ * @author varunnandu
+ *
+ */
 public class SemesterTest extends PlagDetectorApplicationTests{
 	
 	@Autowired

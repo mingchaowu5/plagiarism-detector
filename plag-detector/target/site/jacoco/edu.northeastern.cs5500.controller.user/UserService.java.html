@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>UserService.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">cs5200-spring2018-nandu</a> &gt; <a href="index.source.html" class="el_package">edu.northeastern.cs5500.controller.user</a> &gt; <span class="el_source">UserService.java</span></div><h1>UserService.java</h1><pre class="source lang-java linenums">package edu.northeastern.cs5500.controller.user;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import edu.northeastern.cs5500.dao.AssignmentDao;
+import edu.northeastern.cs5500.dao.UserDao;
+import edu.northeastern.cs5500.mail.MailClient;
+import edu.northeastern.cs5500.models.assignment.Assignment;
+import edu.northeastern.cs5500.models.person.User;
+
+@Service
+<span class="fc" id="L15">public class UserService {</span>
+
+	@Autowired
+	private UserDao userDao;
+	
+	@Autowired
+	private AssignmentDao assignmentDao;
+	
+	@Autowired
+	private MailClient mail;
+	
+	/**
+	 * Edit an user
+	 * @param user: contains the details of the user to be edited
+	 * @return	boolean: returns true iff and only if the user is successfully
+	 * 					 edited in the database
+	 */
+	public User editUser(User user) {
+		try {
+<span class="nc" id="L34">			User oldUser = this.userDao.findUserById(user.getId());</span>
+<span class="nc bnc" id="L35" title="All 2 branches missed.">			if(oldUser.getId() &gt; 0) {</span>
+<span class="nc bnc" id="L36" title="All 2 branches missed.">				if(oldUser.getId() != user.getId()) {</span>
+					//this.changeRole(user.getId(), oldUser.getType());
+				}
+			}
+<span class="nc" id="L40">			userDao.updateUser(user);</span>
+<span class="nc" id="L41">			return user;</span>
+<span class="nc" id="L42">		}catch(Exception e) {</span>
+<span class="nc" id="L43">			return null;</span>
+		}
+	}
+	
+	/**
+	 * Add a new user
+	 * @param user: contains the details of the user to be added
+	 * @return	boolean: returns true iff and only if the user is successfully
+	 * 					 added to the database
+	 */
+	public User addUser(User user) {
+		try {
+<span class="nc" id="L55">			return userDao.addNewUser(user);</span>
+			
+<span class="nc" id="L57">		}catch(Exception e) {</span>
+<span class="nc" id="L58">			return null;</span>
+		}
+	}
+	
+	/**
+	 * Get all the users of the dashboard
+	 * @return List: of all the users
+	 */
+	public List&lt;User&gt; getAllUsers(){
+<span class="nc" id="L67">		return this.userDao.findAllUsers();</span>
+	}
+	
+	/**
+	 * Check if user-name already taken
+	 * @param username:	to be checked in the database
+	 * @return	boolean:	true iff and only if the user-name is not already in use.
+	 */
+	public boolean isUsernamePresent(String username) {
+<span class="nc" id="L76">		return false;</span>
+	}
+	
+	/**
+	 * Delete the user
+	 * @param	id: of the user to be deleted
+	 * 			type: of the user who is being deleted
+	 * @return boolean: true iff and only if the user is successfully deleted
+	 */
+	public boolean delete(int id, int type) {
+<span class="nc bnc" id="L86" title="All 2 branches missed.">		return userDao.deleteUser(id, type) == 1 ? true : false;</span>
+	}
+	
+	/**
+	 * Change role of the user
+	 */
+	public boolean changeRole(int id, int type) {
+<span class="nc bnc" id="L93" title="All 2 branches missed.">		if(type == 0) {</span>
+<span class="nc" id="L94">			this.userDao.deleteStudent(id);</span>
+<span class="nc bnc" id="L95" title="All 2 branches missed.">			return this.userDao.insertProfessor(id) == 1?true:false;</span>
+		}else {
+<span class="nc" id="L97">			this.userDao.deleteProfessor(id);</span>
+<span class="nc bnc" id="L98" title="All 2 branches missed.">			return this.userDao.insertStudent(id) == 1?true:false;</span>
+		}
+	}
+	
+	/**
+	 * Get details of an user
+	 * @param username:	of the user
+	 * @param password:	of the user
+	 * @param type:	of the user
+	 * @return	User: the details of the user which is logging in the system.
+	 */
+	public User login(final String username, final String password, final int type) {
+<span class="nc" id="L110">		return userDao.login(username, password, type);</span>
+	}
+	
+	/**
+	 * Get list of users of a specific user type
+	 * @param type:	is an integer which represents whether the user is professor or student
+	 * @return	List:	of users of the specified type
+	 */
+	public List&lt;User&gt; getUsersOfType(int type){
+<span class="nc" id="L119">		return this.userDao.findUserByType(type);</span>
+	}
+	
+	/**
+	 * Get a list of professors who take a specific course
+	 * @param id: represents a course
+	 * @return	List: is a list of professors who take a course
+	 */
+	public List&lt;User&gt; getProfessorsOfCourse(int id){
+<span class="nc" id="L128">		return null;</span>
+	}
+	
+	/**
+	 * Get a list of students who take a specific course
+	 * @param id: represents a course
+	 * @return	List: is a list of students who take a course
+	 */
+	public List&lt;User&gt; getStudentsInCourse(int id){
+<span class="nc" id="L137">		return null;</span>
+	}
+	
+	/**
+	 * Get a list of students who have submitted a specific assignment
+	 * @param id: represents an assignment
+	 * @return	List: is a list of students
+	 */
+	public List&lt;User&gt; getStudentOfAssignment(int id){
+<span class="nc" id="L146">		return null;</span>
+	}
+	
+	/**
+	 * Get user id
+	 * @param snapId
+	 * @return
+	 */
+	public User getUserId(int snapId) {
+<span class="nc" id="L155">		return this.userDao.findUserBySnapshotId(snapId);</span>
+	}
+	
+	/**
+	 * Send mail to the student
+	 * @param sId
+	 * @param pId
+	 * @param aId
+	 */
+	public void sendMail(int sId1, int sId2, int pId, int aId) {
+<span class="nc" id="L165">		User p = this.userDao.findUserById(pId);</span>
+<span class="nc" id="L166">		User s = this.userDao.findUserBySubmissionId(sId1);</span>
+<span class="nc" id="L167">		Assignment a = this.assignmentDao.findAssignmentById(aId);</span>
+<span class="nc bnc" id="L168" title="All 2 branches missed.">		String name = (a == null)?&quot;&quot;:a.getName();</span>
+<span class="nc" id="L169">		String text = &quot;Hello &quot;  +s.getFirstName() + &quot;,\n&quot; + &quot;Plagiarism has been detected in your assignment, &quot; + name</span>
+<span class="nc" id="L170">				 + &quot;\n. Please go and meet the professor, &quot; + p.getFirstName() + &quot; &quot; + p.getLastName();</span>
+<span class="nc" id="L171">		mail.sendSimpleMessage(s.getEmail(), &quot;Plagiarism detected in your submission&quot;, text);</span>
+<span class="nc" id="L172">		s = this.userDao.findUserBySubmissionId(sId2);</span>
+<span class="nc" id="L173">		text = &quot;Hello &quot;  +s.getFirstName() + &quot;,\n&quot; + &quot;Plagiarism has been detected in your assignment, &quot; + name</span>
+<span class="nc" id="L174">				 + &quot;\n. Please go and meet the professor, &quot; + p.getFirstName() + &quot; &quot; + p.getLastName();</span>
+<span class="nc" id="L175">		mail.sendSimpleMessage(s.getEmail(), &quot;Plagiarism detected in your submission&quot;, text);		</span>
+<span class="nc" id="L176">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.6.201602180812</span></div></body></html>

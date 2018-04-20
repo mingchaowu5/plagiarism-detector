@@ -5,7 +5,11 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
 import edu.northeastern.cs5500.models.submission.Sub1;
-
+/** 
+ * 
+ * @author varunnandu
+ *
+ */
 public class Sub1Test {
 	Sub1 stuass = new Sub1();
 	Sub1 s2 = new Sub1("ass1", "ass1", "ass1", 0, "ass1");

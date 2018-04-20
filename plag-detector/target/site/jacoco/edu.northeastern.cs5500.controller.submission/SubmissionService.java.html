@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>SubmissionService.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">cs5200-spring2018-nandu</a> &gt; <a href="index.source.html" class="el_package">edu.northeastern.cs5500.controller.submission</a> &gt; <span class="el_source">SubmissionService.java</span></div><h1>SubmissionService.java</h1><pre class="source lang-java linenums">package edu.northeastern.cs5500.controller.submission;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import edu.northeastern.cs5500.Constants;
+import edu.northeastern.cs5500.dao.SnapshotDao;
+import edu.northeastern.cs5500.dao.SubmissionDao;
+import edu.northeastern.cs5500.models.submission.Sub1;
+import edu.northeastern.cs5500.models.submission.Submission;
+
+@Service
+<span class="fc" id="L17">public class SubmissionService {</span>
+
+	@Autowired
+	private SubmissionDao submissionDao;
+	
+	@Autowired
+	private SnapshotDao snapshotDao;
+	
+	public List&lt;Sub1&gt; getAllSubmission(){
+<span class="nc" id="L26">		return this.submissionDao.getAllSubmission();</span>
+	}
+	
+	/**
+	 * Connect to the database layer and get the semesters
+	 * @return
+	 */
+	public List&lt;Submission&gt; getLatestSubmissionsForAssignment(int id){
+<span class="fc" id="L34">		return this.submissionDao.getLatestSubmissionIdByAssignment(id);</span>
+	}
+	
+	/**
+	 * Get all the submissions of the assignment
+	 * @param assignmentId
+	 * @param studentId
+	 * @return
+	 */
+	public List&lt;Submission&gt; getAllSubmissionsForAssignment(int assignmentId, int studentId){
+<span class="fc" id="L44">		return this.submissionDao.getAllSubmissionsIdByAssignment(studentId, assignmentId);</span>
+	}
+	
+	/**
+	 * Insert a new submission
+	 * @param assignmentId
+	 * @param studentId
+	 * @return
+	 */
+	public Integer insert(int assignmentId, int studentId) {
+<span class="nc" id="L54">		return this.submissionDao.addSubmission(assignmentId, studentId, Constants.getCurrentDate());</span>
+	}
+	
+	/**
+	 * Compare multiple submissions of the different students
+	 * @param subs
+	 * @param profId
+	 */
+	public void compareMultipleSubmissions(int []subs, int profId) {
+<span class="nc" id="L63">		List&lt;Integer&gt; list = Arrays.stream(subs).boxed().collect(Collectors.toList());</span>
+<span class="nc" id="L64">		int snapshotId = this.snapshotDao.addAllSnapshots(list, Constants.getCurrentDate(), 2);</span>
+<span class="nc" id="L65">		this.snapshotDao.addAssignmentSnapshot(snapshotId, profId);</span>
+<span class="nc" id="L66">	}</span>
+	
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.6.201602180812</span></div></body></html>

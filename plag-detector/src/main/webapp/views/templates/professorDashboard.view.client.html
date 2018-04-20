@@ -341,19 +341,16 @@
                     <li class="list-group-item list-group-item-heading list-group-item-info text-center">
                        <span class="text-center">Notifications</span>
                     </li>
-                    <li class="list-group-item">
-                        Plagarism detected! - 30% Click here
-                    </li>
-                    <li class="list-group-item">
-                        Plagarism detected! - 32% Click here
-                    </li>
                     <li class="list-group-item" ng-repeat="notification in model.notifications">
-                        <div class="row text-center">
+                    <a style="color:#337ab7" href="#!/results/{{notification.snapshot}}">
+                    	<div class="row text-center">
                             {{notification.text}}
                         </div>
                         <div class="row text-center">
                             {{notification.date}}
                         </div>
+                    </a>
+                        
                     </li>
                 </ul>
             </div>

@@ -6,6 +6,11 @@ import org.junit.Test;
 
 import edu.northeastern.cs5500.models.person.StudentAssignmentMap;
 
+/** 
+ * 
+ * @author varunnandu
+ *
+ */
 public class StudentAssignmentTest {
 	
 	StudentAssignmentMap stuass = new StudentAssignmentMap();

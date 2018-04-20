@@ -1,12 +1,16 @@
 package edu.northeastern.cs5500.models;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
 
 import org.junit.Test;
 
 import edu.northeastern.cs5500.models.assignment.Language;
 
+/** 
+ * 
+ * @author varunnandu
+ *
+ */
 public class LanguageTest {
 	private Language language = new Language();
 	private Language lan = new Language("Nami", "Name", 2);

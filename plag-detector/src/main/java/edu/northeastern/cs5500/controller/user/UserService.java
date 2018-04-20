@@ -11,6 +11,11 @@ import edu.northeastern.cs5500.mail.MailClient;
 import edu.northeastern.cs5500.models.assignment.Assignment;
 import edu.northeastern.cs5500.models.person.User;
 
+/** 
+ * 
+ * @author varunnandu
+ *
+ */
 @Service
 public class UserService {
 

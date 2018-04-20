@@ -6,11 +6,18 @@ import org.junit.Test;
 
 import edu.northeastern.cs5500.models.file.FileStructure;
 
-
+/** 
+ * 
+ * @author varunnandu
+ *
+ */
 public class FileStructureTest {
 FileStructure fr = new FileStructure();
 FileStructure f2 = new FileStructure(30, 40, "File1");
 	
+	/** 
+	 * Test
+	 */
 	@Test
 	public void testName() {
 		fr.setFile("File1");;

@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>CourseService.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">cs5200-spring2018-nandu</a> &gt; <a href="index.source.html" class="el_package">edu.northeastern.cs5500.controller.course</a> &gt; <span class="el_source">CourseService.java</span></div><h1>CourseService.java</h1><pre class="source lang-java linenums">package edu.northeastern.cs5500.controller.course;
+
+import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import edu.northeastern.cs5500.dao.CourseDao;
+import edu.northeastern.cs5500.models.course.Course;
+
+/**
+ * Course Service class,
+ * makes several calls to the Data Layer to fetch or insert the course data
+ * @author takyon
+ *
+ */
+@Service
+<span class="fc" id="L17">public class CourseService {</span>
+
+	@Autowired
+	private CourseDao courseDao;
+	
+	/**
+	 * Connect to the database layer and get all the courses
+	 * @return	List: of all the courses in the database(except the deleted ones)
+	 */
+	public List&lt;Course&gt; getAllCourses(){
+<span class="fc" id="L27">		return this.courseDao.getAllCourses();</span>
+	}
+	
+	/**
+	 * Connect to the database layer and get all the courses for a 
+	 * particular semester
+	 * @param	id:	of a particular semester
+	 * @return	List:	of all the courses in the database for a semester
+	 */
+	public List&lt;Course&gt; getAllCoursesForSemester(int id){
+<span class="fc" id="L37">		return this.courseDao.getAllCoursesForSemester(id);</span>
+	}
+	
+	/**
+	 * Connect to the database layer and get all the courses for a 
+	 * particular professor
+	 * @param	id:	of a particular professor
+	 * @return	List:	of all the courses in the database for a professor
+	 */
+	public List&lt;Course&gt; getAllCoursesForProfessor(int id){
+<span class="fc" id="L47">		return this.courseDao.getAllCoursesForProfessor(id);</span>
+	}
+	
+	/**
+	 * Connect to the database layer and get all the courses for a 
+	 * particular student
+	 * @param	id:	of a particular student
+	 * @return	List:	of all the courses in the database for a student
+	 */
+	public List&lt;Course&gt; getAllCoursesForStudent(int id){
+<span class="fc" id="L57">		return this.courseDao.getAllCoursesForStudent(id);</span>
+	}
+	
+	/**
+	 * Delete a particular course from the system
+	 * @param	id:	of the course to be deleted
+	 * @return	boolean:	true if and only iff the course is successfully deleted
+	 */
+	public boolean deleteCourse(int id) {
+<span class="nc bnc" id="L66" title="All 2 branches missed.">		return this.courseDao.deleteCourse(id) == 1?true:false;</span>
+	}
+	
+	/**
+	 * Insert a new course in the system
+	 * @param	semesterId:	is the id of the semester to which this course is begin added
+	 * 			name:	of the course to be added
+	 * @return	boolean:	true if and only iff the assignment is successfully inserted
+	 */
+	public boolean insertCourse(int semesterId, String name) {
+<span class="nc" id="L76">		Course course = new Course();</span>
+<span class="nc" id="L77">		course.setName(name);</span>
+<span class="nc bnc" id="L78" title="All 2 branches missed.">		return this.courseDao.addCourse(course, semesterId) == 1?true:false;</span>
+	}
+	
+	/**
+	 * Edit a course in the system
+	 * @param	semesterId:	is the id of the semester to which this course is begin added
+	 * 			name:	of the course to be added
+	 * @return	boolean:	true if and only iff the assignment is successfully inserted
+	 */
+	public boolean editCourse(int id, int semesterId, String name) {
+<span class="nc" id="L88">		Course course = new Course();</span>
+<span class="nc" id="L89">		course.setName(name);</span>
+<span class="nc" id="L90">		course.setId(id);</span>
+<span class="nc" id="L91">		course.setSemester(semesterId);</span>
+<span class="nc bnc" id="L92" title="All 2 branches missed.">		return this.courseDao.updateCourse(course) == 1?true:false;</span>
+	}
+	
+	/**
+	 * 
+	 * @param courseId
+	 * @param studentId
+	 * @return
+	 */
+	public boolean addCourseToStudent(int courseId, int studentId) {
+<span class="nc bnc" id="L102" title="All 2 branches missed.">		return this.courseDao.registerStudentForCourse(studentId, courseId) == 1?true:false;</span>
+	}
+	
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.6.201602180812</span></div></body></html>

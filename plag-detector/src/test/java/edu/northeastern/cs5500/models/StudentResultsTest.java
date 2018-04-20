@@ -6,11 +6,19 @@ import org.junit.Test;
 
 import edu.northeastern.cs5500.models.results.StudentResults;
 
+/** 
+ * 
+ * @author varunnandu
+ *
+ */
 public class StudentResultsTest {
 	
 	StudentResults fr = new StudentResults();
 	StudentResults f2 = new StudentResults(10, 20, 30, 40);
 	
+	/** 
+	 * Test
+	 */
 	@Test
 	public void testName() {
 		fr.setId(10);

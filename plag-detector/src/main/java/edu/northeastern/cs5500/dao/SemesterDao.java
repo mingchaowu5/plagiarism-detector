@@ -13,6 +13,12 @@ import org.springframework.transaction.annotation.Transactional;
 
 import edu.northeastern.cs5500.models.semester.Semester;
 
+
+/** 
+ * 
+ * @author varunnandu
+ *
+ */
 @Transactional
 @Repository
 public class SemesterDao {

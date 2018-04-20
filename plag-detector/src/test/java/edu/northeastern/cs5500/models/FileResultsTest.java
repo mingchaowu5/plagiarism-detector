@@ -6,10 +6,19 @@ import org.junit.Test;
 
 import edu.northeastern.cs5500.models.results.FileResults;
 
+/** 
+ * 
+ * @author varunnandu
+ *
+ */
 public class FileResultsTest {
 	
 	FileResults fr = new FileResults();
 	FileResults f2 = new FileResults(10, 20, 30, 40);
+	
+	/** 
+	 * Test
+	 */
 	
 	@Test
 	public void testName() {

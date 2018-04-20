@@ -8,6 +8,11 @@ import org.springframework.stereotype.Service;
 import edu.northeastern.cs5500.dao.SemesterDao;
 import edu.northeastern.cs5500.models.semester.Semester;
 
+/** 
+ * 
+ * @author varunnandu
+ *
+ */
 @Service
 public class SemesterService {
 
