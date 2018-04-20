@@ -12,12 +12,17 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import edu.northeastern.cs5500.models.file.FileStructure;
 import edu.northeastern.cs5500.models.person.Professor;
 import edu.northeastern.cs5500.models.person.Student;
 import edu.northeastern.cs5500.models.person.StudentAssignmentMap;
 import edu.northeastern.cs5500.models.person.User;
 
+
+/** 
+ * 
+ * @author varunnandu
+ *
+ */
 @Transactional
 @Repository
 public class UserDao {

@@ -6,6 +6,11 @@ import org.junit.Test;
 
 import edu.northeastern.cs5500.models.notification.Notification;
 
+/** 
+ * 
+ * @author varunnandu
+ *
+ */
 public class NotificationTest {
 	
 Notification stuass = new Notification();

@@ -16,7 +16,6 @@ import edu.northeastern.cs5500.models.person.User;
 import edu.northeastern.cs5500.models.snapshot.Snapshot;
 import edu.northeastern.cs5500.models.submission.Submission;
 
-
 @Component
 public class ScheduleController {
 	
@@ -73,9 +72,9 @@ public class ScheduleController {
 	 * Send Notification
 	 */
 	private void sendNotification(int type) {
-		String text = "Your requested report is now generated";
+		String text = "Requested report generated";
 		if(type == 0) {
-			text = "A student submission triggered the report";
+			text = "New Submission triggered report";
 		}
 		this.notificationService.addNotification(text, t);
 	}

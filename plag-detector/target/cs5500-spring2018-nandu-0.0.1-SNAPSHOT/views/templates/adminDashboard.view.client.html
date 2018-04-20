@@ -1,0 +1,196 @@
+
+<div class = "content-fluid">
+	<!-- <div>
+		<div class="input-group ">
+			<div class="input-group-prepend">
+				
+				<button class="btn btn-outline-secondary" type="button">Semester</button>
+
+				<select class="custom-select" id="inputSemester">
+					<option selected>Choose semester..</option>
+					<div >
+					<option  ng-repeat="semester in model.semesters" value=semester.name>{{semester.name}}</option>
+					</div>
+					
+					
+				</select>
+				<button type="button" class="btn btn-success"
+					ng-click="model.findCourseBySem(semester.id)">Search
+					Course</button>
+
+			</div>
+
+
+		</div>
+	</div> -->
+
+
+	<ul class="nav nav-tabs">
+	  <li class="nav-item">
+	    <a ng-click="model.users = true; semesters = false; courses = false" class="nav-link active" >Users</a>
+	  </li>
+	  <li class="nav-item">
+	    <a ng-click="model.users = false; semesters = true; courses = false" class="nav-link" >Semesters</a>
+	  </li>
+	  <li class="nav-item">
+	    <a ng-click="model.users = false; semesters = false; courses = true" class="nav-link" >Courses</a>
+	  </li>
+	</ul>
+	
+	<div class="panel-body" ng-if="model.users">
+		<div><button type="button" class="btn btn-success">Add New User</button></div>
+		<br />
+		<table class="table table-bordered bordered table-striped table-condensed" ui-jq=”datatable” ui-options=”options” >
+			<thead>
+				<th>Firstname</th>
+				<th>Lastname</th>
+				<th>Type</th>
+				<th>Action</th>
+			</thead>
+			<tbody>
+				<tr ng-repeat="row in model.users" style="background-color:#EDEBEB; padding:10px;">
+					<td>{{row.firstName}}</td>
+					<td>{{row.lastName}}</td>
+					<td>{{row.type == 0 ? 'Student':'Professor'}}</td>
+					<td>
+						<a ng-click="model.changeRole(row.id, row.type)" style="cursor: pointer"><span class="glyphicon glyphicon glyphicon-edit"> </span></a> &nbsp;
+						<a style="cursor: pointer"href="#!/admin/profileUpdate/{{row.id}}"><span class="glyphicon glyphicon glyphicon-pencil"></span></a>&nbsp;
+						<a ng-click="model.removeUsers(row.id)" style="cursor: pointer"><span class="glyphicon glyphicon glyphicon-remove"></span></a>&nbsp;
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	
+	<div class="panel-body" ng-if="semesters">
+		<div><button type="button" class="btn btn-success">Add New Semesters</button></div>
+		<br />
+		<table class="table table-bordered bordered table-striped table-condensed" ui-jq=”datatable” ui-options=”options” >
+			<thead>
+				<th>Name</th>
+				<th>Action</th>
+			</thead>
+			<tbody>
+				<tr ng-repeat="row in model.semesters" style="background-color:#EDEBEB; padding:10px;">
+					<td>{{row.name}}</td>
+					<td>
+						<a style="cursor: pointer"href="#!/admin/semesterUpdate/{{row.id}}"><span class="glyphicon glyphicon glyphicon-pencil"></span></a>&nbsp;
+						<a ng-click="model.deleteSemester(row.id)" style="cursor: pointer"><span class="glyphicon glyphicon glyphicon-remove"></span></a>&nbsp;
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	
+	<div class="panel-body" ng-if="courses">
+		<div><button type="button" class="btn btn-success">Add New Course</button></div>
+		<br />
+		<table class="table table-bordered bordered table-striped table-condensed" ui-jq=”datatable” ui-options=”options” >
+			<thead>
+				<th>Name</th>
+				<th>Action</th>
+			</thead>
+			<tbody>
+				<tr ng-repeat="row in model.courses" style="background-color:#EDEBEB; padding:10px;">
+					<td>{{row.name}}</td>
+					<td>
+						<a style="cursor: pointer"href="#!/admin/courseUpdate/{{row.id}}"><span class="glyphicon glyphicon glyphicon-pencil"></span></a>&nbsp;
+						<a ng-click="model.deleteCourses(row.id)" style="cursor: pointer"><span class="glyphicon glyphicon glyphicon-remove"></span></a>&nbsp;
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+
+	<!-- <div>
+		<div  style='float: left;'>
+		
+			<ul class="list-group col-xs-4">
+			<label>Users</label>
+				<li class="list-group-item" ng-repeat="user in model.users">
+					<div class="text-center">
+						{{user.type}} <span>
+						<a ng-click="model.changeRole(user.id, user.type)" style="cursor: pointer">
+					<span class="glyphicon glyphicon glyphicon-edit"> </span></a>
+					{{user.firstName}} {{user.lastName}} </span>  <span
+							class="pull-right"> 
+								<a style="cursor: pointer"href="#!/admin/profileUpdate/{{user.id}}">
+								 <span class="glyphicon glyphicon glyphicon-pencil"></span>
+							</a>
+						</span> <span class="pull-right"> <a
+								ng-click="model.removeUsers(user.id)" style="cursor: pointer"> 
+								<span class="glyphicon glyphicon glyphicon-remove"></span>
+							</a>
+						</span>
+						
+					</div>
+				</li>
+			</ul>
+
+
+			
+			
+			<ul class="list-group col-xs-4">
+			<label>Semester</label>
+				<li class="list-group-item" ng-repeat="semester in model.semesters">
+					<div class="text-center">
+						{{semester.name}} <span> <span
+							class="pull-right"> 
+								<a style="cursor: pointer" href="#!/admin/semesterUpdate/{{semester.id}}">
+									<span class="glyphicon glyphicon glyphicon-pencil"></span>
+							</a>
+						</span> <span class="pull-right"> <a
+								ng-click="model.deleteSemester(semester.id)" style="cursor: pointer"> <span
+									class="glyphicon glyphicon glyphicon-remove"></span>
+							</a>
+						</span>
+						</span>
+					</div>
+				</li>
+			</ul>
+			
+			<ul class="list-group col-xs-4" >
+			<label>courses</label>
+				<li class="list-group-item" ng-repeat="course in model.courses">
+					<div class="text-center">
+						{{course.name}} <span> <span
+							class="pull-right"> 
+								<a style="cursor: pointer" href="#!/admin/courseUpdate/{{course.id}}">
+									<span class="glyphicon glyphicon glyphicon-pencil"></span>
+							</a>
+						</span> <span class="pull-right"> <a
+								ng-click="model.deleteCourses(course.id)" style="cursor: pointer"> <span
+									class="glyphicon glyphicon glyphicon-remove"></span>
+							</a>
+						</span>
+						</span>
+					</div>
+				</li>
+			</ul>
+
+		</div>
+		<div style='float: right; width: 20%;' align="right">
+			
+		<div>
+				<a style="cursor: pointer" href="#!/admin/addSemester ">
+					<button type="button" class="btn btn-info">Add Semester</button>
+				</a>
+			</div>
+			<div>
+				<a style="cursor: pointer" href="#!/admin/addCourse ">
+					<button type="button" class="btn btn-info">Add Course</button>
+				</a>
+			</div>
+			
+			<div>
+				<a style="cursor: pointer" href="#!/register">
+					<button type="button" class="btn btn-primary">Add User</button>
+				</a>
+			</div>
+			
+		
+		</div>
+	</div>-->
+
+</div>
+

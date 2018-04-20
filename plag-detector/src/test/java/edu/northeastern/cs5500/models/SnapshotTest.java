@@ -7,12 +7,20 @@ import org.junit.Test;
 
 import edu.northeastern.cs5500.models.snapshot.Snapshot;
 
+/** 
+ * 
+ * @author varunnandu
+ *
+ */
 public class SnapshotTest {
 
 	
 	private Snapshot semester = new Snapshot();
 	private Snapshot sem2 = new Snapshot(3, 3, "Fall 2018");
 	
+	/** 
+	 * Test
+	 */
 	@Test
 	public void test1() {
 		semester.setId(3);
@@ -20,6 +28,9 @@ public class SnapshotTest {
 		assertEquals(semester.getId(), sem2.getId());
 	}
 	
+	/** 
+	 * Test
+	 */
 	@Test
 	public void test2() {
 		semester.setSubmission(30);;

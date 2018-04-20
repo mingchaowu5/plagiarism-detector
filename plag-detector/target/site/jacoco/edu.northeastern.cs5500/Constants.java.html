@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>Constants.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">cs5200-spring2018-nandu</a> &gt; <a href="index.source.html" class="el_package">edu.northeastern.cs5500</a> &gt; <span class="el_source">Constants.java</span></div><h1>Constants.java</h1><pre class="source lang-java linenums">package edu.northeastern.cs5500;
+
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+/**
+ * Class to store constants used across the database
+ * @author takyon
+ *
+ */
+public interface Constants {
+	
+	public static final String ASSIGNMENTURL = &quot;/home/ec2-user/assignments/&quot;;
+	public static final String TEMPURL = &quot;/home/ec2-user/temp/&quot;;
+	public static final String RESULTURL = &quot;/home/ec2-user/result/&quot;;
+	//public static final String ASSIGNMENTURL = &quot;jplag_results/assignments/&quot;;
+	//public static final String TEMPURL = &quot;jplag_results/temp/&quot;;
+	//public static final String RESULTURL = &quot;jplag_results/result/&quot;;
+	
+	/**
+	 * Get current date
+	 * @return String: which represents the current date
+	 */
+	public static String getCurrentDate() {
+<span class="nc" id="L29">		java.util.Date dt = new java.util.Date();</span>
+
+<span class="nc" id="L31">		java.text.SimpleDateFormat sdf = </span>
+		     new java.text.SimpleDateFormat(&quot;yyyy-MM-dd HH:mm:ss&quot;);
+
+<span class="nc" id="L34">		return sdf.format(dt);</span>
+	}
+	
+	/**
+	 * Create Folder
+	 */
+	public static void createFolders() {
+<span class="nc" id="L41">		try{File f1 = new File(ASSIGNMENTURL);</span>
+
+<span class="nc bnc" id="L43" title="All 2 branches missed.">		if(f1.exists()) {</span>
+<span class="nc" id="L44">			Files.delete(f1.toPath());</span>
+		}
+<span class="nc" id="L46">		f1.mkdir();</span>
+<span class="nc" id="L47">		f1 = new File(TEMPURL);</span>
+<span class="nc bnc" id="L48" title="All 2 branches missed.">		if(f1.exists()) {</span>
+<span class="nc" id="L49">			Files.delete(f1.toPath());</span>
+		}
+<span class="nc" id="L51">		f1.mkdir();</span>
+		
+		
+<span class="nc" id="L54">		f1 = new File(RESULTURL);</span>
+<span class="nc bnc" id="L55" title="All 2 branches missed.">		if(f1.exists()) {</span>
+<span class="nc" id="L56">			Files.delete(f1.toPath());</span>
+		}
+<span class="nc" id="L58">		f1.mkdir();</span>
+<span class="nc" id="L59">		}catch(IOException e) {</span>
+<span class="nc" id="L60">			Logger log = Logger.getAnonymousLogger();</span>
+<span class="nc" id="L61">			log.log(Level.INFO, &quot;Unable to add/delete folders&quot;);</span>
+<span class="nc" id="L62">		}</span>
+<span class="nc" id="L63">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.6.201602180812</span></div></body></html>

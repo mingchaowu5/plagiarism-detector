@@ -6,6 +6,11 @@ import org.junit.Test;
 
 import edu.northeastern.cs5500.models.submission.Submission;
 
+/** 
+ * 
+ * @author varunnandu
+ *
+ */
 public class SubmissionTest {
 	
 Submission stuass = new Submission();

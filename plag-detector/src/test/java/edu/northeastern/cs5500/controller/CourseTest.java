@@ -13,6 +13,11 @@ import org.springframework.web.context.WebApplicationContext;
 
 import edu.northeastern.cs5500.PlagDetectorApplicationTests;
 
+/** 
+ * 
+ * @author varunnandu
+ *
+ */
 public class CourseTest extends PlagDetectorApplicationTests{
 
 	@Autowired

@@ -1,4 +1,4 @@
-<div class="modal-header">
+<div class="modal-header" style="background-color:#659DBD; font-weight:bold;">
     <button type="button" class="close" data-dismiss="modal">&times;</button>
     <h2 class="modal-title text-center">Add Assignment</h2>
 </div>
@@ -14,16 +14,26 @@
                 <label class="register-label" for="assignmentName">Assignment Name</label>
                 <input name="assignmentName" required class="form-control" ng-model="model.newAssignment.name" type="text" placeholder=" Name"/>
             </div>
-            <div ng-show="form.$submitted || form.assignmentName.$touched"
-                 class="">
-                <div ng-show="form.assignmentName.$error.required" class="alert" style="color: whitesmoke">
-                    Please choose name for assignemnt
+            
+            <div class="form-group">
+                <label class="register-label" for="languageName">Language</label>
+                <select name="languageName" required class="form-control" ng-model="model.newAssignment.lang" >
+	                	<option value="1" selected>Python</option>
+	                	<option value="2">Java</option>
+	                	<option value="3">C/C++</option>
+	                	<option value="4">C#</option>
+                </select>
+            </div>
+            
+            <div ng-show="form.$submitted || form.assignmentName.$touched" class="">
+                <div ng-show="form.assignmentName.$error.required" class="alert" style="color: #ff0000">
+                    Please choose name for assignment
                 </div>
             </div>
 
             <!--<input class="input-sm" type="text" name="cid" value="{{model.newAssignment.cid}}" hidden="true">-->
 
-            <div class="form-group" style="padding-top: 2%">
+            <div class="modal-footer" style="padding-top: 2%">
                 <button ng-click="model.pushAssignment(model.newAssignment)" type="button" class="btn btn-primary col-md-12 col-sm-12 col-xs-12">Add</button>
             </div>
 

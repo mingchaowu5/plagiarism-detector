@@ -1,0 +1,298 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>ResultsService.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">cs5200-spring2018-nandu</a> &gt; <a href="index.source.html" class="el_package">edu.northeastern.cs5500.controller.result</a> &gt; <span class="el_source">ResultsService.java</span></div><h1>ResultsService.java</h1><pre class="source lang-java linenums">package edu.northeastern.cs5500.controller.result;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileFilter;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import org.apache.commons.io.FileUtils;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import edu.northeastern.cs5500.Constants;
+import edu.northeastern.cs5500.dao.AssignmentDao;
+import edu.northeastern.cs5500.dao.ResultsDao;
+
+@Service
+<span class="fc" id="L37">public class ResultsService {</span>
+	
+	private int sub1;
+	private int sub2;
+	private Set&lt;String&gt; set1;
+	private Set&lt;String&gt; set2;
+	private Logger log;
+	private Map&lt;String, String&gt; map;
+	private List&lt;FileResult&gt; results;
+<span class="fc" id="L46">	private String language = &quot;python3&quot;;</span>
+	
+	@Autowired
+	private ResultsDao resultsDao;
+	
+	@Autowired
+	private AssignmentDao assignmentDao;
+	
+	/**
+	 * initialize the instance variables
+	 * @param snap
+	 * @param sub1
+	 * @param sub2
+	 */
+	private void init(int sub1, int sub2) {
+<span class="nc" id="L61">		this.sub1 = sub1;</span>
+<span class="nc" id="L62">		this.sub2 = sub2;</span>
+<span class="nc" id="L63">		set1 = new HashSet&lt;&gt;();</span>
+<span class="nc" id="L64">		set2 = new HashSet&lt;&gt;();</span>
+<span class="nc" id="L65">		map = new HashMap&lt;&gt;();</span>
+<span class="nc" id="L66">		results = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L67">		this.language = this.assignmentDao.getLanguage(sub1);</span>
+<span class="nc" id="L68">	}</span>
+	
+	/**
+	 * Find and store results for the two submissions
+	 * @param snap
+	 * @param sub1
+	 * @param sub2
+	 */
+	public void findResults(int sub1, int sub2){
+<span class="nc" id="L77">		init(sub1, sub2);</span>
+		try{
+<span class="nc" id="L79">			log = Logger.getAnonymousLogger();</span>
+<span class="nc bnc" id="L80" title="All 2 branches missed.">			if(!this.createFileIfNotPresent(Constants.TEMPURL))</span>
+<span class="nc" id="L81">				return;</span>
+<span class="nc bnc" id="L82" title="All 2 branches missed.">			if(!this.createFileIfNotPresent(Constants.RESULTURL))</span>
+<span class="nc" id="L83">				return;</span>
+<span class="nc" id="L84">			FileUtils.cleanDirectory(new File(Constants.TEMPURL));</span>
+<span class="nc" id="L85">			FileUtils.cleanDirectory(new File(Constants.RESULTURL));</span>
+<span class="nc" id="L86">			findFiles(sub1, set1);</span>
+<span class="nc" id="L87">			findFiles(sub2, set2);</span>
+<span class="nc" id="L88">			runJplag();</span>
+<span class="nc" id="L89">			readResults();</span>
+<span class="nc" id="L90">			saveToDatabase();</span>
+<span class="nc" id="L91">		}catch(IOException e) {</span>
+<span class="nc" id="L92">			log.log(Level.INFO, e.getMessage());</span>
+<span class="nc" id="L93">		}</span>
+<span class="nc" id="L94">	}</span>
+	
+	/**
+	 * 
+	 * @throws IOException
+	 */
+	private void saveToDatabase() throws IOException{
+<span class="nc bnc" id="L101" title="All 2 branches missed.">		for(FileResult fr : results) {</span>
+<span class="nc" id="L102">			this.saveFiles(fr.getFile1(), map.get(fr.getFile1()), fr.getFile2(), map.get(fr.getFile2()), fr.getResult());</span>
+<span class="nc" id="L103">		}</span>
+<span class="nc" id="L104">	}</span>
+	
+	/**
+	 * Read the results given out by the Jplag library
+	 */
+	private void readResults() throws IOException{
+<span class="nc" id="L110">		File file = new File(Constants.RESULTURL + &quot;index.html&quot;);</span>
+<span class="nc bnc" id="L111" title="All 2 branches missed.">		if(!file.exists()) {</span>
+<span class="nc" id="L112">			return;</span>
+		}
+<span class="nc" id="L114">		Document doc = Jsoup.parse(file, &quot;UTF-8&quot;);</span>
+<span class="nc" id="L115">		Element table = doc.select(&quot;table&quot;).get(2); //select the first table.</span>
+<span class="nc" id="L116">		Elements rows = table.select(&quot;tr&quot;);</span>
+<span class="nc" id="L117">		int k = 0;</span>
+<span class="nc bnc" id="L118" title="All 2 branches missed.">		for (int i = 0; i &lt; rows.size(); i++) { //first row is the col names so skip it.</span>
+<span class="nc" id="L119">		    Element row = rows.get(i);</span>
+<span class="nc" id="L120">		    Elements cols = row.select(&quot;td&quot;);</span>
+<span class="nc" id="L121">		    String mFile = cols.get(0).text();</span>
+<span class="nc bnc" id="L122" title="All 2 branches missed.">		    for(int j = 2;j&lt;cols.size();++j) {</span>
+<span class="nc" id="L123">		    		String tFile = cols.get(j).select(&quot;a&quot;).text();</span>
+<span class="nc" id="L124">		    		String per = cols.get(j).select(&quot;font&quot;).text();</span>
+<span class="nc" id="L125">		    		double d = Double.parseDouble(per.substring(1, per.length() - 2));	</span>
+<span class="nc" id="L126">		    		String mMatch = &quot;match&quot; + k + &quot;-0.html&quot;;</span>
+<span class="nc" id="L127">		    		String tMatch = &quot;match&quot; + k + &quot;-1.html&quot;;</span>
+<span class="nc" id="L128">		    		saveFiles(mFile, mMatch, tFile, tMatch, d);</span>
+<span class="nc" id="L129">		    		++k;</span>
+		    }
+		}
+<span class="nc" id="L132">	}</span>
+	
+	
+	/**
+	 * Save the two files to the database
+	 * @param file1
+	 * @param match1
+	 * @param file2
+	 * @param match2
+	 */
+	private void saveFiles(String file1, String match1, String file2, String match2, double plag) throws IOException{
+<span class="nc" id="L143">		try(InputStream is1 = new FileInputStream(new File(Constants.RESULTURL + match1)); </span>
+<span class="nc" id="L144">				InputStream is2 = new FileInputStream(new File(Constants.RESULTURL + match2))){</span>
+<span class="nc bnc" id="L145" title="All 4 branches missed.">			if(set1.contains(file1) &amp;&amp; set2.contains(file2)) {</span>
+<span class="nc" id="L146">				this.resultsDao.addResults(sub1, sub2, file1, file2, is1, is2, plag);</span>
+<span class="nc bnc" id="L147" title="All 4 branches missed.">			}else if(set1.contains(file2) &amp;&amp; set2.contains(file1)) {</span>
+<span class="nc" id="L148">				this.resultsDao.addResults(sub2, sub1, file1, file2, is1, is2, plag);			</span>
+			}
+<span class="nc bnc" id="L150" title="All 16 branches missed.">		}catch(IOException e) {</span>
+<span class="nc" id="L151">			log.log(Level.CONFIG, e.getMessage());</span>
+<span class="nc" id="L152">		}</span>
+<span class="nc" id="L153">	}</span>
+	
+	/**
+	 * Run JPlag library and find the results
+	 */
+	public void runJplag() throws IOException, MalformedURLException {
+<span class="nc" id="L159">        FileUtils.copyURLToFile(new URL(&quot;https://github.com/jplag/jplag/releases/download/v2.11.9-SNAPSHOT/jplag-2.11.9-SNAPSHOT-jar-with-dependencies.jar&quot;), new File(&quot;jplag-2.11.9-SNAPSHOT-jar-with-dependencies.jar&quot;));</span>
+<span class="nc" id="L160">        String command=&quot;java -jar jplag-2.11.9-SNAPSHOT-jar-with-dependencies.jar &quot;+ Constants.TEMPURL +&quot; -l &quot;+ language +&quot; -r &quot;+ Constants.RESULTURL +&quot; -s  &quot;;</span>
+<span class="nc" id="L161">        StringBuilder output = new StringBuilder();</span>
+        Process p;
+        try {
+<span class="nc" id="L164">                p = Runtime.getRuntime().exec(command);</span>
+<span class="nc" id="L165">                p.waitFor();</span>
+<span class="nc" id="L166">                BufferedReader reader =</span>
+<span class="nc" id="L167">                    new BufferedReader(new InputStreamReader(p.getInputStream()));</span>
+
+<span class="nc" id="L169">                String line = &quot;&quot;;</span>
+<span class="nc bnc" id="L170" title="All 2 branches missed.">                while ((line = reader.readLine())!= null) {</span>
+<span class="nc" id="L171">                        output.append(line + &quot;\n&quot;);</span>
+                }
+
+<span class="nc" id="L174">        } catch (Exception e) {</span>
+<span class="nc" id="L175">                log.log(Level.INFO,&quot;Context : &quot;+ &quot;No directories found to parse&quot;);</span>
+<span class="nc" id="L176">        }</span>
+<span class="nc" id="L177">     }</span>
+	
+	/**
+	 * Find and copy all the files for this submission
+	 * @param sub
+	 * @param set
+	 * @throws IOException
+	 */
+	private void findFiles(int sub, Set&lt;String&gt; set) throws IOException{
+<span class="nc" id="L186">		File file = new File(Constants.ASSIGNMENTURL + sub);</span>
+<span class="nc bnc" id="L187" title="All 2 branches missed.">		if(!file.exists())</span>
+<span class="nc" id="L188">			return;</span>
+<span class="nc" id="L189">		List&lt;File&gt; subdirs = this.getSubdirs(file);</span>
+<span class="nc" id="L190">		subdirs.add(file);</span>
+<span class="nc bnc" id="L191" title="All 2 branches missed.">		for(File sFile : subdirs) {</span>
+<span class="nc" id="L192">			File[] allFiles = sFile.listFiles();</span>
+<span class="nc bnc" id="L193" title="All 4 branches missed.">			if(allFiles == null || allFiles.length == 0)</span>
+<span class="nc" id="L194">				continue;</span>
+<span class="nc bnc" id="L195" title="All 2 branches missed.">			for(File tFile : allFiles) {</span>
+<span class="nc bnc" id="L196" title="All 2 branches missed.">				if(!tFile.isDirectory()) {</span>
+<span class="nc" id="L197">					set.add(sub + &quot;-&quot; + tFile.getName());</span>
+<span class="nc" id="L198">					this.copyFile(tFile, sub);</span>
+				}
+			}
+<span class="nc" id="L201">		}</span>
+<span class="nc" id="L202">	}</span>
+	
+	/**
+	 * Copy file from source to temp location
+	 * @param source
+	 * @param sub
+	 * @throws IOException
+	 */
+	private void copyFile(File source, int sub) throws IOException {
+<span class="nc" id="L211">		log.log(Level.INFO, &quot;File: &quot; + source.getAbsolutePath());</span>
+<span class="nc" id="L212">		Files.copy(Paths.get(source.getAbsolutePath()), Paths.get(Constants.TEMPURL + sub + &quot;-&quot; + source.getName()),</span>
+                StandardCopyOption.REPLACE_EXISTING);
+<span class="nc" id="L214">	}</span>
+	
+	/**
+	 * Get all the sub-directories in the folder
+	 * @param file
+	 * @return List: of sub-directories
+	 */
+	private List&lt;File&gt; getSubdirs(File file) {
+<span class="nc bnc" id="L222" title="All 4 branches missed.">		if(file == null || !file.exists())</span>
+<span class="nc" id="L223">			return new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L224">	    List&lt;File&gt; subdirs = Arrays.asList(file.listFiles(new FileFilter() {</span>
+	        public boolean accept(File f) {
+<span class="nc" id="L226">	            return f.isDirectory();</span>
+	        }
+	    }));
+	    
+<span class="nc" id="L230">	    subdirs = new ArrayList&lt;&gt;(subdirs);</span>
+	    
+<span class="nc" id="L232">	    List&lt;File&gt; deepSubdirs = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L233" title="All 2 branches missed.">	    for(File subdir : subdirs) {</span>
+<span class="nc" id="L234">	        deepSubdirs.addAll(getSubdirs(subdir));  </span>
+<span class="nc" id="L235">	    }</span>
+<span class="nc" id="L236">	    subdirs.addAll(deepSubdirs);</span>
+<span class="nc" id="L237">	    return subdirs;</span>
+	}
+	
+	/**
+	 * creates a file/folder given as the input to the function if not exists
+	 * @param filePath: path and name of the file to created
+	 * @return	boolean:	true iff and only if the file/folder is successfully created
+	 * @throws IOException
+	 */
+	private boolean createFileIfNotPresent(String filePath){
+<span class="nc" id="L247">		File file = new File(filePath);</span>
+<span class="nc bnc" id="L248" title="All 2 branches missed.">		if(!file.exists()) {</span>
+<span class="nc" id="L249">			return file.mkdir();</span>
+		}
+<span class="nc" id="L251">		return true;</span>
+	}
+	
+	/**
+	 * 
+	 */
+	public void deleteEntries(int sub1, int sub2) {
+<span class="nc" id="L258">		this.resultsDao.deleteResults(sub1, sub2);</span>
+<span class="nc" id="L259">	}</span>
+	
+	/**
+	 * File result class to temporially store the result of two files.
+	 * @author takyon
+	 *
+	 */
+	private class FileResult{
+		private String file1;
+		private String file2;
+		private double result;
+		
+<span class="nc" id="L271">		public FileResult(String file1, String file2, double result) {</span>
+<span class="nc" id="L272">			this.setFile1(file1);</span>
+<span class="nc" id="L273">			this.setFile2(file2);</span>
+<span class="nc" id="L274">			this.setResult(result);</span>
+<span class="nc" id="L275">		}</span>
+		
+		public String getFile1() {
+<span class="nc" id="L278">			return file1;</span>
+		}
+		public void setFile1(String file1) {
+<span class="nc" id="L281">			this.file1 = file1;</span>
+<span class="nc" id="L282">		}</span>
+		public String getFile2() {
+<span class="nc" id="L284">			return file2;</span>
+		}
+		public void setFile2(String file2) {
+<span class="nc" id="L287">			this.file2 = file2;</span>
+<span class="nc" id="L288">		}</span>
+		public double getResult() {
+<span class="nc" id="L290">			return result;</span>
+		}
+		public void setResult(double result) {
+<span class="nc" id="L293">			this.result = result;</span>
+<span class="nc" id="L294">		}</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.6.201602180812</span></div></body></html>

@@ -13,6 +13,11 @@ import edu.northeastern.cs5500.models.extras.Edge;
 import edu.northeastern.cs5500.models.extras.Graph;
 import edu.northeastern.cs5500.models.extras.Node;
 
+/** 
+ * 
+ * @author varunnandu
+ *
+ */
 public class ExtrasTest {
 	Node n1 = new Node(10, 20.8, "Node 1");
 	Node n2 = new Node(30, 40.90, "Node 2");
@@ -23,7 +28,9 @@ public class ExtrasTest {
 	List<Node> nlist = new ArrayList();
 	List<Edge> elist = new ArrayList();
 	
-	
+	/** 
+	 * Test
+	 */
 	@Test
 	public void testNode() {
 		Node n3 = new Node();
@@ -34,6 +41,10 @@ public class ExtrasTest {
 		assertEquals(n3.getLabel(), "Node3");
 		assertNotNull(n3.getValue());
 	}
+	
+	/** 
+	 * Test
+	 */
 	
 	@Test
 	public void testEdge() {
@@ -46,6 +57,9 @@ public class ExtrasTest {
 		assertTrue(n3.getFrom() == 10);
 	}
 	
+	/** 
+	 * Test
+	 */
 	@Test
 	public void testGraph() {
 		

@@ -1,17 +1,19 @@
 package edu.northeastern.cs5500.models;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
 
-import org.junit.Before;
+
 import org.junit.Test;
 
-import edu.northeastern.cs5500.models.assignment.Assignment;
 import edu.northeastern.cs5500.models.person.Professor;
 import edu.northeastern.cs5500.models.person.Student;
 import edu.northeastern.cs5500.models.person.User;
 
+/**
+ * 
+ * @author varunnandu
+ *
+ */
 public class UserTest {
 	
 	private User user = new User();
@@ -70,6 +72,9 @@ public class UserTest {
 	Student stu = new Student();
 	Student stu2 = new Student(33, "Google", "Facebook", "g@f.com", "google", "facebook", 25);
 	
+	/** 
+	 * Test
+	 */
 	@Test
 	public void testStudent() {
 		stu.setUniversityId(25);
@@ -80,6 +85,9 @@ public class UserTest {
 	Professor pro = new Professor();
 	Professor pro2 = new Professor(33, "Google", "Facebook", "g@f.com", "google", "facebook", "WVH");
 	
+	/** 
+	 * Test
+	 */
 	@Test
 	public void testProfessor() {
 		pro.setOfficeLocation("WVH");

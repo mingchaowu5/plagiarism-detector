@@ -15,7 +15,14 @@
             "addNewCourse":addNewCourse,
             "fetchNotifications":fetchNotifications,
             "updateAssignemnt":updateAssignemnt,
-            "updateCourse":updateCourse
+            "updateCourse":updateCourse,
+            "runSnapshot":runSnapshot,
+            "deleteCourse":deleteCourse,
+            "deleteAssignment":deleteAssignment,
+            "allSubmission":allSubmission,
+            "compareSubmissions":compareSubmissions,
+            "allManualSnapshots":allManualSnapshots,
+            "multipleSubmission":multipleSubmission
         };
         return api;
 
@@ -38,7 +45,7 @@
 
         //New API
         function addNewAssignemnt(newAssignemnt) {
-            return $http.get("/rest/assignment/add?cid="+newAssignemnt.cid+"&name="+newAssignemnt.name);
+            return $http.get("/rest/assignment/insert?course_id="+newAssignemnt.cid+"&name="+newAssignemnt.name+"&language_id="+newAssignemnt.lang);
         }
 
         //New API
@@ -53,13 +60,47 @@
 
         //New API
         function updateAssignemnt(assignemnt) {
-            return $http.get("/rest/assignment/update?cid="+assignemnt.cid+"&name="+assignemnt.name+"&id="+assignemnt.id);
+            return $http.get("/rest/assignment/update?course_id="+assignemnt.cid+"&name="+assignemnt.name+"&assignment_id="+assignemnt.id+"&language_id="+assignemnt.lang);
         }
 
         //New API
         function updateCourse(course) {
             return $http.get("/rest/course/edit?semester_id="+course.sid+"&name="+course.name+"&id="+course.id);
         }
+        
+        // New API
+        function runSnapshot(aid, pid) {
+            return $http.get("/rest/snapshot/run?assignment_id="+aid+"&professor_id="+pid);
+        }
+
+        function deleteCourse(cid) {
+            return $http.get("/rest/course/delete?id="+cid);
+        }
+
+        function deleteAssignment(aid) {
+            return $http.get("/rest/assignment/delete?id="+aid);
+        }
+        
+        function allSubmission(){
+        		return $http.get("/rest/submission/submissions");
+        }
+        
+        function compareSubmissions(sub, pid){
+        		return $http.get("/rest/submission/multiple?submissions="+sub.submissions+"&professor_id="+pid);
+        }
+        
+        function allManualSnapshots(){
+        		return $http.get("/rest/snapshot/all");
+        }
+
+        function multipleSubmission(submissions, sid) {
+            var str = ""
+            submissions.forEach(function (ele) {
+                str += "&submissions[]="+ele;
+            })
+            return $http.get("/rest/submission/multiple?"+str+"&professor_id="+sid);
+        }
+        ///rest/submission/multiple?submissions=&professor_id=
 
     }
 })();

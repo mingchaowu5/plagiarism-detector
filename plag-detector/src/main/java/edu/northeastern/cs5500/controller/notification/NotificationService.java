@@ -7,6 +7,11 @@ import edu.northeastern.cs5500.Constants;
 import edu.northeastern.cs5500.dao.NotificationDao;
 import edu.northeastern.cs5500.models.notification.Notification;
 
+/** 
+ * 
+ * @author varunnandu
+ *
+ */
 
 @Service
 public class NotificationService {

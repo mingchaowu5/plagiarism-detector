@@ -15,6 +15,12 @@ import org.springframework.transaction.annotation.Transactional;
 import edu.northeastern.cs5500.models.snapshot.Snapshot;
 import edu.northeastern.cs5500.models.submission.Submission;
 
+
+/** 
+ * 
+ * @author varunnandu
+ *
+ */
 @Transactional
 @Repository
 public class SnapshotDao {
