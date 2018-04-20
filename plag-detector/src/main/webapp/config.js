@@ -70,8 +70,7 @@
             .when("/register",{
                 templateUrl:"views/templates/register.view.client.html",
                 controller: 'registerController',
-                controllerAs: 'model',
-                resolve: { loggedin: checkLoggedin }
+                controllerAs: 'model'
             })
             .when("/dashboard/:pid",{
                 templateUrl:"views/templates/professorDashboard.view.client.html",
@@ -125,7 +124,8 @@
              .when("/admin",{
                 templateUrl:"views/templates/adminDashboard.view.client.html",
                 controller: 'adminDashboardController',
-                controllerAs: 'model'
+                controllerAs: 'model',
+                resolve: { loggedin: checkLoggedin }
             })
            
             //addcourse

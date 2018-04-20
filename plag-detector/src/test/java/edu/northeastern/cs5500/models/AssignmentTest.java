@@ -12,6 +12,7 @@ import edu.northeastern.cs5500.models.assignment.Assignment;
 public class AssignmentTest {
 
 	private Assignment assignment;
+	private Assignment ass = new Assignment(1, "Name", 0, 0);
 
 	@Before
 	public void before() {
@@ -26,6 +27,7 @@ public class AssignmentTest {
 		assertNull(assignment.getName());
 		assignment.setName("Name");
 		assertEquals("Name", assignment.getName());
+		assertEquals(assignment.getName(), ass.getName());
 	}
 	
 	/**
@@ -47,4 +49,15 @@ public class AssignmentTest {
 		assignment.setId(1);
 		assertEquals(1, assignment.getId());
 	}
+	
+	/**
+	 * Test Id
+	 */
+	@Test
+	public void testLanguage() {
+		assignment.setLangId(1);
+		assertTrue(assignment.getLangId() == 1);
+	}
+	
+	
 }
