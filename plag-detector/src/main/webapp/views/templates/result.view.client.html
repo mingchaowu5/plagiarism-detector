@@ -1,84 +1,21 @@
 
-<!--<div class="row">-->
-    <!--<div style="padding-top: 70px">-->
-        <!--<div style="height: 900px" id="mynetwork"></div>-->
-    <!--</div>-->
-    <!--<div class="col-lg-6 col-sm-12 col-md-6">-->
-        <!--<ng-gauge size="200" type="full" thick="5" min="0" max="120"-->
-                  <!--value="68.2" cap="round" label="Match"  foreground-color="#ffcc66"-->
-                  <!--background-color="rgba(255,255,255, 0.4)" append="%">-->
 
-        <!--</ng-gauge>-->
-    <!--</div>-->
-
-
-    <!--<button id="myButton" type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal" style="visibility: hidden;"></button>-->
-
-<!--&lt;!&ndash; Modal &ndash;&gt;-->
-<!--<div id="myModal" class="modal fade" role="dialog">-->
-  <!--<div class="modal-dialog">-->
-
-    <!--&lt;!&ndash; Modal content&ndash;&gt;-->
-    <!--<div class="modal-content">-->
-      <!--<div class="modal-header">-->
-        <!--<button type="button" class="close" data-dismiss="modal">&times;</button>-->
-        <!--<h4 class="modal-title">Detail Plagarism Information</h4>-->
-      <!--</div>-->
-      <!--<div class="modal-body">-->
-          <!--<div class="row">-->
-                <!--<h3>{{model.selectedNodeInfo}}</h3>-->
-                <!--<h2>Plagarised Percentage</h2>-->
-                <!--<h3>{{model.nodePercentage}}%</h3>-->
-                <!--<h3>{{model.edgePercentage}}%</h3>-->
-                <!--<h3>{{model.selectedNodeInfo2}}</h3>-->
-          <!--</div>-->
-          <!--<div class="row"> -->
-                <!--<table>-->
-                    <!--<tr>-->
-                        <!--<th>name 1</th>-->
-                        <!--<th>name 2</th>-->
-                        <!--<th>percentage similarity</th>-->
-                        <!--<th>file 1</th>-->
-                        <!--<th>file 2</th>                            -->
-                    <!--</tr>-->
-                    <!--<tr ng-repeat="row in model.results">-->
-                        <!--<tr>{{row.name1}}</tr>-->
-                        <!--<tr>{{row.name2}}</tr>-->
-                        <!--<tr>{{row.value}}</tr>-->
-                        <!--<tr>{{row.file1}}</tr>-->
-                        <!--<tr>{{row.file2}}</tr>-->
-                    <!--</tr>-->
-                <!--</table>-->
-          <!--</div>-->
-        <!---->
-        <!---->
-      <!--</div>-->
-      <!--<div class="modal-footer">-->
-        <!--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
-      <!--</div>-->
-    <!--</div>-->
-
-  <!--</div>-->
-<!--</div>-->
-<!--</div>-->
 
 
 
 <div class="row">
-    <div style="padding-top: 70px; padding-left: 25px">
+        <h2 class="text-center">Graph Visualizer for showing relation between Plagarised students</h2>
+        <p>* Here the Nodes represent the students and edges represent the plagarised percentage between the students.</p>
+        <p>** The nodes and edges in <span style="color: pink">RED</span>  color are the plagarised stdents who have crossed the threshold, whereas <span style="color: blue">BLUE</span>  is plagarised but then below threshold</p>
+
+    <div style="padding-top: 50px; padding-left: 25px">
         <div style="height: 900px" id="mynetwork"></div>
     </div>
-    <!-- <div class="col-lg-6 col-sm-12 col-md-6">
-        <ng-gauge size="200" type="full" thick="5" min="0" max="120"
-                  value="68.2" cap="round" label="Match"  foreground-color="#ffcc66"
-                  background-color="rgba(255,255,255, 0.4)" append="%">
-
-        </ng-gauge>
-    </div> -->
+    
 
 </div>
 <div class="row" style="padding-bottom: 50px">
-    <h2>Student detail View</h2>
+    <h2 class="text-center">Student detail View</h2>
     <table class="table table-responsive">
             <thead>
                 <tr>

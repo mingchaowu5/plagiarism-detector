@@ -2,8 +2,7 @@
 
 package edu.northeastern.cs5500.controller;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
@@ -68,23 +67,7 @@ public class UserTest extends PlagDetectorApplicationTests{
 	
 
 	
-	@Test
-	public void testTypeUser() {
 	
-		int type = udao.getTypeFromUsernamePassword("polu", "polu");
-		int type2 = udao.getTypeFromUsernamePassword("jolu", "jolu");
-		assertEquals(type, type);
-	}
-	
-
-	
-	@Test
-	public void testGetUserWithSnap() {
-		User type = udao.findUserBySnapshotId(5);
-		User type2 = udao.findUserBySnapshotId(4);
-		assertNotNull(type);
-		assertNull(type2);
-	}
 	
 
 	

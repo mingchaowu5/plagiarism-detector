@@ -6,15 +6,8 @@
 		{{model.message}}</div>
 		
 	<div class="col-md-8">
-	<!-- <p>{{model.coursename}}</p> -->
 		<form action="#/updateCourse" name="form" novalidate method="POST">
-		<!-- 	<div class="form-group">
-				<label  >CourseId</label> <input
-					name="cid" required class="form-control"
-					ng-model="model.course.cid" type="text"
-					placeholder="Display Id"  id="cid" />
-
-			</div> -->
+		
 			<div class="form-group">
 				<label >Coursename</label> <input
 					name="coursename" required class="form-control"
@@ -24,10 +17,8 @@
 			<select class="custom-select" id="inputSemester" ng-model="model.course.semesterId">
 					<option selected>Choose semester..</option>
 					<div >
-					<!-- <option  ng-repeat="semester in model.semesters" value=semester.name>{{semester.name}}</option> -->
 					<option  ng-repeat="semester in model.semesters" value={{semester.id}} >{{semester.name}}</option>
 					</div>
-					<!-- <option value="All">All</option> -->
 					
 			</select>
 			
