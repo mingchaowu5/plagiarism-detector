@@ -36,12 +36,12 @@
                 </ul>
             </nav>
         </div>
-        <div class="col-sm-12 col-lg-10">
+        <div class="col-sm-9 col-lg-10">
             <!-- your page content -->
 
 
 
-            <div class="col-md-12 user-view-block pre-scrollable" >
+            <div class="col-md-9 user-view-block pre-scrollable" >
                 <!--The Panels to show-->
 
                 <div ng-switch="model.loadProfileEditdiv">
@@ -163,6 +163,8 @@
 
                     </div>
                     <div ng-switch-when="ASSIGNMENTS">
+                            <h2>Showing all the Assignments</h2>
+                        
                         <!--<ng-include src="'views/user/templates/profile-settings.view.client.html'"></ng-include>-->
                         <div ng-repeat="assignment in model.assignments">
                             <div class="col-md-5">
@@ -253,6 +255,8 @@
 
                     </div>
                     <div ng-switch-when="SNAPSHOTS">
+                            <h2>Showing all the Snapshots</h2>
+                        
                         <!--<ng-include src="'views/user/templates/user-comments.view.client.html'"></ng-include>-->
                         <div ng-repeat="snapshot in model.snapshots">
                             <div class="col-md-5">
@@ -332,7 +336,27 @@
 
 
             </div>
-            
+            <div class="col-md-3">
+                <ul class="list-group list-unstyled">
+                    <li class="list-group-item list-group-item-heading list-group-item-info text-center">
+                       <span class="text-center">Notifications</span>
+                    </li>
+                    <li class="list-group-item">
+                        Plagarism detected! - 30% Click here
+                    </li>
+                    <li class="list-group-item">
+                        Plagarism detected! - 32% Click here
+                    </li>
+                    <li class="list-group-item" ng-repeat="notification in model.notifications">
+                        <div class="row text-center">
+                            {{notification.text}}
+                        </div>
+                        <div class="row text-center">
+                            {{notification.date}}
+                        </div>
+                    </li>
+                </ul>
+            </div>
         </div>
     </div>
 
@@ -367,7 +391,7 @@
             					
            
 				            <tr ng-repeat="row in model.allSubmissions" style="background-color:#DAAD86; padding:10px;">
-				            <td><input class="form-check-input position-static" type="checkbox" id="select" value="{{row.submission}}" name="submission[]" ng-model="model.selectedSubmission.submissions"></td>
+				            <td><a ng-click="model.addSubmissionList(row)"><span class="glyphicon glyphicon-ok"></span></a></td>
 				            <td>{{row.student}}</td>
 				            <td>{{row.course}}</td>
 				            <td>{{row.assignment}}</td>
@@ -378,14 +402,14 @@
 				            </tr>
                     		</table>
 						<div class="modal-footer" style="background-color:#659DBD; font-weight:bold;">
-		                    <button id="modalCloseBtn" type="button" ng-click="model.comapreSubmissions(model.selectedSubmission)" class="btn btn-success" data-dismiss="modal">Check Plag</button>
+		                    <button id="modalCloseBtn" type="button" ng-click="model.compareMultiple()" class="btn btn-success" data-dismiss="modal">Check Plag</button>
 		                </div>
                     </div>
                     
                     <div ng-switch-when="ALLMANUALSNAPSHOTS">
                     		<div class="modal-header" style="background-color:#659DBD; font-weight:bold;">
 		                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-		                    <h4 class="modal-title">All Sanpshots</h4>
+		                    <h4 class="modal-title">All Snapshots</h4>
 		                </div>
                     		<table class="table table-responsive" border ="1">
                     			<thead style="background-color:#FBEEC1; font-weight:bold; padding:10px;">
@@ -396,7 +420,7 @@
             					</thead>
 
 				            <tr ng-repeat="row in model.allManualSnapshots" style="background-color:#DAAD86; padding:10px;">
-				            <td>Snapshot - {{row.id}}</td>
+				            <td><a href="#!/results/{{row.id}}" target="_blank" style="color: whitesmoke">Snapshot - {{row.id}}</a></td>
 				            <td>{{row.dateTime}}</td>
 				            </tr>
                     		</table>

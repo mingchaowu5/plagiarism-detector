@@ -10,6 +10,11 @@
         vm.routeLogin = routeLogin;
         vm.showAdmin = true;
 
+        vm.user = {}
+        vm.user.role = "0"
+
+        
+
         function validateData(user) {
             var ret = false;
 
@@ -58,10 +63,16 @@
                 .then(function (response) {
                     if(response){
                         var user = response.data;
-
+                        console.log("success in registering ")
+                        console.log(user);
                         $rootScope.currentUser = user;
 
-                        $location.url("/results");
+                        if(user.role == 0){
+                            $location.url("/student/"+user.id);
+                        }else{
+                            $location.url("/dashboard/"+user.id);
+                        }
+                        
 
                     }
                     else{

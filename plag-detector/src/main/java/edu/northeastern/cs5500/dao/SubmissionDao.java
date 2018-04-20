@@ -39,6 +39,7 @@ public class SubmissionDao {
 				if(i == 1) {
 					return getLatestSubmissionIdByStudent(studentId, assignmentId);
 				} else {
+					log.log(Level.INFO, "Sub Id = 0");
 					return 0;
 				}
 			}

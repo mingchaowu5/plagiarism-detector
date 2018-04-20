@@ -60,11 +60,13 @@ public class CourseDao {
 	 * @return
 	 */
 	public int registerStudentForCourse(int studentId, int courseId){
-		try {
-			String sql = "INSERT INTO StudentCourseMapping (student, course) VALUES (?, ?)";
-			return jdbcTemplate.update(sql, new Object[] {studentId, courseId});
-		}catch(Exception e) {
-			log.log(Level.INFO, e.getMessage());
+		if(checkRegister(studentId, courseId) == null) {
+			try {
+				String sql = "INSERT INTO StudentCourseMapping (student, course) VALUES (?, ?)";
+				return jdbcTemplate.update(sql, new Object[] {studentId, courseId});
+			}catch(Exception e) {
+				log.log(Level.INFO, e.getMessage());
+			}
 		}
 		return 0;
 	}
@@ -166,6 +168,25 @@ public class CourseDao {
 			log.log(Level.INFO, e.getMessage());
 			return new ArrayList<>();
 		}
+	}
+	/** 
+	 * 
+	 * @param studentId
+	 * @param courseId
+	 * @return
+	 */
+	
+	public Course checkRegister(int studentId, int courseId) {
+		try {
+			String sql = "Select id, course as semester from StudentCourseMapping where student = ? and course = ?";
+			RowMapper<Course> rowMapper = new BeanPropertyRowMapper<>(Course.class);
+			return jdbcTemplate.queryForObject(sql, rowMapper, studentId, courseId);
+		}catch(Exception e) {
+			log.log(Level.INFO, e.getMessage());
+		}
+		
+		return null;
+		
 	}
 
 }

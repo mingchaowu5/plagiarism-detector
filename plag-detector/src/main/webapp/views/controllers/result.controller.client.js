@@ -4,7 +4,7 @@
         .module("PlagApp")
         .controller("resultController", resultController);
 
-    function resultController(ResultsService,$location, $routeParams,$rootScope,$scope) {
+    function resultController(ResultsService,$location, $routeParams,$rootScope,$scope, $cookies) {
          var vm = this;
          vm.assignmentID = $routeParams.aid;
 
@@ -14,6 +14,24 @@
         var THRESHOLDVALUE = 30;
         vm.viewFilesTogether = viewFilesTogether;
         vm.showDisplay = showDisplay;
+
+        vm.takeActionMail = takeActionMail;
+        var localSid1;
+        var localSid2;
+
+        function takeActionMail(sid1, sid2) {
+            var promise = ResultsService.sendActionMail(localSid1, localSid2, vm.assignmentID, $cookies.getObject('loggedUser').id);
+
+            promise.
+                then(function (params) {
+                    if(params.data){
+                        alert("Mail sent successfully")
+                    }
+                })
+                .catch(function (err) {
+                    alert("error in sending mail")
+                })
+        }
 
         function init() {
             var promise = ResultsService.assignmentResults(vm.assignmentID);
@@ -112,6 +130,7 @@
         }
 
         function showDisplay(row) {
+            
             var promise = ResultsService.fetchEdgeStudents(row.from, row.to, vm.assignmentID);
 
                 promise
@@ -150,6 +169,9 @@
                         console.log(ele.label);
                         fromNode = ele.from;
                         toNode = ele.to;
+
+                        localSid1 = ele.from;
+                        localSid2 = ele.to;
                     }
                 });
 

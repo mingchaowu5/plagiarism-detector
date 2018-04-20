@@ -7,6 +7,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import edu.northeastern.cs5500.Constants;
+import edu.northeastern.cs5500.controller.notification.NotificationService;
 import edu.northeastern.cs5500.controller.result.ResultsService;
 import edu.northeastern.cs5500.controller.snapshot.SnapshotService;
 import edu.northeastern.cs5500.controller.user.UserService;
@@ -23,6 +24,10 @@ public class ScheduleController {
 	private SnapshotService snapshotService;
 	
 	@Autowired
+	private NotificationService notificationService;
+	
+	
+	@Autowired
 	private ResultsService resultsService;
 
 	@Autowired
@@ -31,7 +36,7 @@ public class ScheduleController {
 	@Autowired
 	private UserService userService;
 
-	
+	int t;
 	private Logger log;
 	
 	
@@ -49,10 +54,12 @@ public class ScheduleController {
 			log.log(Level.INFO, "Type: " + snap.getType());
 			if(snap.getType() == 0) {
 				flag = calculateIncrementalResult(snap.getId());
+				t = snap.getId();
 				sendMail(2);
 			}else {
 				flag = calculateTotalResult(snap.getId());
 				log.log(Level.INFO, "Sending Mail");
+				t = snap.getId();
 				sendMail(snap.getId());
 			}
 			if(flag)
@@ -70,7 +77,7 @@ public class ScheduleController {
 		if(user == null)
 			return;
 		mail.sendSimpleMessage(user.getEmail(), "Plag Detector Report", "Hello\nThe plag report was generated on " + 
-			Constants.getCurrentDate() + ".\nYou can log in now and check the report.\nThank You!\nAdmin");
+			Constants.getCurrentDate() + ".\nYou can log in now and check the report using the following link,\nhttp://localhost:8080/#!/results/"+t+".\nThank You!\nAdmin");
 	}
 	
 	/**

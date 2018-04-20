@@ -151,7 +151,7 @@ public class SnapshotDao {
 	 * Get a new snapshot id
 	 * @return
 	 */
-	private int getLatestSnapId() {
+	public int getLatestSnapId() {
 		int d = 0;
 		try {
 			String sql = "SELECT MAX(id) AS id FROM Snapshot";

@@ -8,6 +8,10 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import org.eclipse.jgit.api.Git;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -126,7 +130,41 @@ public class AssignmentService {
 		}
 		return true;
 	}	
-
+	
+	/**
+	 * Copy the Github Files to the path on the instance
+	 * @param repo:	is input file given by the user
+	 * @param studentId:	id the id of the student uploading the file
+	 * @param assignmentId: id of the assignment uploading the file
+	 * @return	boolean:	true iff and only if the file is successfully saved and 
+	 * 					extracted(incase of .zip) from on the instance
+	 */
+	public boolean uploadGit(String repo, int studentId, int assignmentId) {
+		
+		int submissionId = getNewSubmissionId(studentId, assignmentId);
+		StringBuilder build = new StringBuilder(Constants.ASSIGNMENTURL);
+		try {
+			build.append(submissionId);
+			File file = new File(build.toString());
+			if(!file.exists()) {
+				boolean flag = file.mkdir();
+				if(!flag) {
+					return false;
+				}
+			}
+			Git git = Git.cloneRepository()
+					.setURI(repo)
+					.setDirectory(file)
+					.call();
+			git.getRepository().close();
+			git.close();
+		}catch(Exception e) {
+			return false;
+		}
+		return true;
+	}	
+	
+	
 	/**
 	 * creates a file/folder given as the input to the function if not exists
 	 * @param filePath: path and name of the file to created

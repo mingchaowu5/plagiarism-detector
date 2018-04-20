@@ -10,9 +10,13 @@ public interface Constants {
 	//public static final String ASSIGNMENTURL = "/home/ec2-user/assignments/";
 	//public static final String TEMPURL = "/home/ec2-user/temp/";
 	//public static final String RESULTURL = "/home/ec2-user/result/";
-	public static final String ASSIGNMENTURL = "/Users/takyon/Documents/homework2/assignments/";
-	public static final String TEMPURL = "/Users/takyon/Documents/homework2/temp/";
-	public static final String RESULTURL = "/Users/takyon/Documents/homework2/result/";
+	//public static final String ASSIGNMENTURL = "/Users/takyon/Documents/homework2/assignments/";
+	//public static final String TEMPURL = "/Users/takyon/Documents/homework2/temp/";
+	//public static final String RESULTURL = "/Users/takyon/Documents/homework2/result/";
+	public static final String ASSIGNMENTURL = "jplag_results/assignments/";
+	public static final String TEMPURL = "jplag_results/temp/";
+	public static final String RESULTURL = "jplag_results/result/";
+	
 	/**
 	 * Get current date
 	 * @return String: which represents the current date

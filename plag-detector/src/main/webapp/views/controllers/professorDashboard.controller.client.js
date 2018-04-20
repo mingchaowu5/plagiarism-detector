@@ -29,6 +29,33 @@
         vm.cid = $routeParams.cid;
         vm.aid = $routeParams.aid;
 
+        vm.addSubmissionList = addSubmissionList;
+        vm.compareMultiple = compareMultiple
+
+        vm.CollectSubmissions = [];
+        function addSubmissionList(row) {
+            vm.CollectSubmissions.push(row.submission);
+            alert("Added to sending List")
+            
+            // var promise = ProfessorService.multipleSubmission(row)
+        }
+
+        function compareMultiple() {
+            console.log("comapre multiple")
+            var promise = ProfessorService.multipleSubmission(vm.CollectSubmissions, vm.pid);
+
+            promise
+                .then(function (resp) {
+                    if(resp){
+
+                        alert("Successfully sent for submission")
+                    }
+                })
+                .catch(function (err) {
+                    console.log("Error in sending multiple submissions")
+                })
+        }
+
         // vm.semesters = [{
         //         name: "Spring2018",
         //         ID: 111
@@ -216,7 +243,7 @@
                     }
                 })
                 .catch(function (err) {
-                    console.log("error adding the assignment.\n Contact Admin")
+                    alert("error adding the assignment.\n Contact Admin")
                 })
         }
 
@@ -234,7 +261,7 @@
                     }
                 })
                 .catch(function (err) {
-                    console.log("error adding the assignment.\n Contact Admin")
+                    alert("error adding the assignment.\n Contact Admin")
                 })
         }
 
@@ -250,7 +277,7 @@
                     }
                 })
                 .catch(function (err) {
-                    console.log("error adding the assignment.\n Contact Admin")
+                    alert("error adding the assignment.\n Contact Admin")
 
                 })
         }
@@ -266,7 +293,7 @@
                     }
                 })
                 .catch(function (err) {
-                    console.log("error adding the course.\n Contact Admin")
+                    alert("error adding the course.\n Contact Admin")
 
                 })
         }
@@ -282,11 +309,11 @@
             promise
                 .then(function (params) {
                     if(params.data){
-                        console.log("Successfully Started\nPlease wait for notification in Dashboard");
+                        alert("Successfully Started\nPlease wait for notification in Dashboard");
                     }
                 })
                 .catch(function (err) {
-                    console.log("Error in starting the snaphot. Please contact Admin")
+                    alert("Error in starting the snaphot. Please contact Admin")
                 })
         }
 
@@ -300,7 +327,7 @@
                     }
                 })
                 .catch(function (err) {
-                    console.log("Error in deleting assignment")
+                    alert("Error in deleting assignment")
                 })
         }
 
@@ -314,7 +341,7 @@
                     }
                 })
                 .catch(function (err) {
-                    console.log("Error in deleting course")
+                    alert("Error in deleting course")
                 })
         }
     }

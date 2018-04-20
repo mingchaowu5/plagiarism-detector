@@ -113,9 +113,9 @@ public class UserController {
 	 * @return	User: return null if the user is not present or else returns the user object
 	 */
 	@GetMapping(value = "/mail")
-	public ResponseEntity<Boolean> sendMail(@RequestParam(value = "student_id") int studentId, 
+	public ResponseEntity<Boolean> sendMail(@RequestParam(value = "student_id1") int studentId1, @RequestParam(value = "student_id2") int studentId2, 
 			@RequestParam(value = "professor_id")int profId, @RequestParam(value = "assignment_id") int assignmentId){
-		this.userService.sendMail(studentId, profId, assignmentId);
+		this.userService.sendMail(studentId1, studentId2, profId, assignmentId);
 		return new ResponseEntity<>(true, HttpStatus.OK);
 	}
 	

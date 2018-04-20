@@ -21,7 +21,8 @@
             "deleteAssignment":deleteAssignment,
             "allSubmission":allSubmission,
             "compareSubmissions":compareSubmissions,
-            "allManualSnapshots":allManualSnapshots
+            "allManualSnapshots":allManualSnapshots,
+            "multipleSubmission":multipleSubmission
         };
         return api;
 
@@ -91,6 +92,15 @@
         function allManualSnapshots(){
         		return $http.get("/rest/snapshot/all");
         }
+
+        function multipleSubmission(submissions, sid) {
+            var str = ""
+            submissions.forEach(function (ele) {
+                str += "&submissions[]="+ele;
+            })
+            return $http.get("/rest/submission/multiple?"+str+"&professor_id="+sid);
+        }
+        ///rest/submission/multiple?submissions=&professor_id=
 
     }
 })();
