@@ -27,6 +27,7 @@ public class PlagDetectorApplication extends SpringBootServletInitializer{
 
 	public static void main(String[] args) {
 		SpringApplication.run(PlagDetectorApplication.class, args);
+		Constants.createFolders();
 	}
 	
 	@Bean
