@@ -108,10 +108,10 @@ public class UserTest extends PlagDetectorApplicationTests{
 	@Test
 	public void testLogin() {
 	
-		User type = udao.login("polu", "polu", 1);
-		User type2 = udao.login("jolu", "jolu", 0);
-		assertEquals("Polu", type.getFirstName());
-		assertEquals("Jolu", type2.getFirstName());
+		User type = udao.login("jose", "jose", 1);
+		User type2 = udao.login("varun", "varun", 0);
+		assertEquals("Jose", type.getFirstName());
+		assertEquals("Varun", type2.getFirstName());
 	}
 	
 	@Test
