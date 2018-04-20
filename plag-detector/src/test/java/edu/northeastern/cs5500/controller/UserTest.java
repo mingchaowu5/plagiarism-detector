@@ -63,6 +63,7 @@ public class UserTest extends PlagDetectorApplicationTests{
 		assertTrue(u.getId() == 2);
 	}
 	
+
 	
 	@Test
 	public void testTypeUser() {
@@ -72,6 +73,7 @@ public class UserTest extends PlagDetectorApplicationTests{
 		assertEquals(type, type);
 	}
 	
+
 	
 	@Test
 	public void testGetUserWithSnap() {
@@ -81,6 +83,7 @@ public class UserTest extends PlagDetectorApplicationTests{
 		assertNull(type2);
 	}
 	
+
 	
 	@Test
 	public void testFindUserForCourse() {

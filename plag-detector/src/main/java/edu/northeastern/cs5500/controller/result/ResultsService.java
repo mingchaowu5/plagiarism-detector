@@ -1,10 +1,14 @@
 package edu.northeastern.cs5500.controller.result;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileFilter;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
@@ -28,9 +32,6 @@ import org.springframework.stereotype.Service;
 import edu.northeastern.cs5500.Constants;
 import edu.northeastern.cs5500.dao.AssignmentDao;
 import edu.northeastern.cs5500.dao.ResultsDao;
-import jplag.ExitException;
-import jplag.Program;
-import jplag.options.CommandLineOptions;
 
 @Service
 public class ResultsService {
@@ -154,17 +155,26 @@ public class ResultsService {
 	/**
 	 * Run JPlag library and find the results
 	 */
-	private void runJplag() {
-		String[] tm = {Constants.TEMPURL, "-l", language, "-r", Constants.RESULTURL, "-s"};
-		CommandLineOptions op;
-		try {
-			op = new CommandLineOptions(tm);
-			Program p = new Program(op);
-			p.run();
-		} catch (ExitException e) {
-			log.log(Level.INFO, e.getMessage());
-		}
-	}
+	public void runJplag() throws IOException, MalformedURLException {
+        FileUtils.copyURLToFile(new URL("https://github.com/jplag/jplag/releases/download/v2.11.9-SNAPSHOT/jplag-2.11.9-SNAPSHOT-jar-with-dependencies.jar"), new File("jplag-2.11.9-SNAPSHOT-jar-with-dependencies.jar"));
+        String command="java -jar jplag-2.11.9-SNAPSHOT-jar-with-dependencies.jar "+ Constants.TEMPURL +" -l "+ language +" -r "+ Constants.RESULTURL +" -s  ";
+        StringBuilder output = new StringBuilder();
+        Process p;
+        try {
+                p = Runtime.getRuntime().exec(command);
+                p.waitFor();
+                BufferedReader reader =
+                    new BufferedReader(new InputStreamReader(p.getInputStream()));
+
+                String line = "";
+                while ((line = reader.readLine())!= null) {
+                        output.append(line + "\n");
+                }
+
+        } catch (Exception e) {
+                log.log(Level.INFO,"Context : "+ "No directories found to parse");
+        }
+     }
 	
 	/**
 	 * Find and copy all the files for this submission
