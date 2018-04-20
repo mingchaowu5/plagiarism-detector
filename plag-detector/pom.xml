@@ -22,15 +22,6 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<java.version>1.8</java.version>
-		
-		<sonar.exclusions>
-		src/main/webapp/**, src/main/java/edu/northeastern/cs5500/controller/**, src/main/java/edu/northeastern/cs5500/jobs/**,
-	      src/main/java/edu/northeastern/cs5500/mail/**, src/main/java/edu/northeastern/cs5500/models/**
-	    </sonar.exclusions>
-	    <sonar.coverage.exclusions>
-	      src/main/webapp/**,src/main/java/edu/northeastern/cs5500/controller/**, src/main/java/edu/northeastern/cs5500/jobs/**,
-	      src/main/java/edu/northeastern/cs5500/mail/**, src/main/java/edu/northeastern/cs5500/models/**
-	    </sonar.coverage.exclusions>
 	    <sonar.host.url>http://www.example.com/</sonar.host.url>
 	    <sonar.jdbc.url>jdbc:postgresql://www.example.com/sonar</sonar.jdbc.url>
 	    <sonar.jdbc.driver>org.postgresql.Driver</sonar.jdbc.driver>
@@ -39,7 +30,14 @@
 	    <sonar.dynamic>reuseReports</sonar.dynamic>
 	    <sonar.sources>src/main</sonar.sources>
 	    <sonar.tests>src/test</sonar.tests>
-		
+		<sonar.exclusions>
+		src/main/webapp/**, src/main/java/edu/northeastern/cs5500/controller/**, src/main/java/edu/northeastern/cs5500/jobs/**,
+	      src/main/java/edu/northeastern/cs5500/mail/**, src/main/java/edu/northeastern/cs5500/models/**
+	    </sonar.exclusions>
+	    <sonar.coverage.exclusions>
+	      src/main/webapp/**,src/main/java/edu/northeastern/cs5500/controller/**, src/main/java/edu/northeastern/cs5500/jobs/**,
+	      src/main/java/edu/northeastern/cs5500/mail/**, src/main/java/edu/northeastern/cs5500/models/**
+	    </sonar.coverage.exclusions>
 	</properties>
 
 	<dependencies>
@@ -96,11 +94,6 @@
 		    <groupId>org.hibernate</groupId>
 		    <artifactId>hibernate-entitymanager</artifactId>
 		    <version>5.2.3.Final</version>
-		</dependency>
-		<dependency>
-			<groupId>jplag</groupId>
-			<artifactId>jplag</artifactId>
-			<version>2.11.9</version>
 		</dependency>
 		<dependency>
 		    <groupId>org.springframework.boot</groupId>

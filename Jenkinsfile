@@ -12,7 +12,6 @@ pipeline {
                echo "Building"
 		
               sh 'mvn -f plag-detector/pom.xml clean install'
-	      sh 'mvn install:install-file -Dfile=./plag-detector/lib/jplag-2.11.9-SNAPSHOT-jar-with-dependencies.jar -DgroupId=jplag -DartifactId=jplag -Dversion=2.11.9 -Dpackaging=jar'
               sh 'mvn -f plag-detector/pom.xml compile'
               sh 'mvn -f plag-detector/pom.xml package'
            }
@@ -28,7 +27,6 @@ pipeline {
                   withSonarQubeEnv('SonarQube') {
 				
                         sh 'mvn -f plag-detector/pom.xml clean install'
-			sh 'mvn install:install-file -Dfile=./plag-detector/lib/jplag-2.11.9-SNAPSHOT-jar-with-dependencies.jar -DgroupId=jplag -DartifactId=jplag -Dversion=2.11.9 -Dpackaging=jar'
                         sh 'mvn -f plag-detector/pom.xml clean install'
                         sh 'mvn -f plag-detector/pom.xml sonar:sonar'
                   }
