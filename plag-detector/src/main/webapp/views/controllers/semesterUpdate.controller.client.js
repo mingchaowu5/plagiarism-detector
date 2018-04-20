@@ -14,11 +14,12 @@
 //        }
 //        init();
 
-        function updateSemester(id,semester) {
+        function updateSemester(semid,semester) {
 
 
-            var promise = AdminService.updateSemester(id,semester);
-
+            var promise = AdminService.updateSemester(semid,semester);
+            $location.url("/admin");
+	           window.location.reload(); 
             promise
                 .then(function (response) {
                     if(response){

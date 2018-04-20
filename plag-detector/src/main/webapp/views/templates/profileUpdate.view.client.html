@@ -6,7 +6,7 @@
       <h5>{{'Role: ' + model.user.role}}</h5>
        -->
       <div>
-	<p>{{model.userId}}</p>
+	<!-- <p>{{model.userId}}</p> -->
        <!--  <div >
             <div class="form-group">
               <label for="firstName">First Name:</label>
@@ -38,7 +38,7 @@
               method="POST">
             <div class="form-group">
                 <label class="register-label" for="username">Username</label>
-                <input name="username" required class="form-control" ng-model="model.user.username" type="text" placeholder="Display Name"/>
+                <input name="username" required class="form-control" ng-model="model.user.username" type="text" value="{{user.username}}"/>
 
             </div>
             <div ng-show="form.$submitted || form.username.$touched"
@@ -49,7 +49,7 @@
             </div>
             <div class="form-group">
                 <label class="register-label" for="email">Email address</label>
-                <input name="email" required class="form-control" ng-model="model.user.email" id="email" type="email" placeholder="name@company.com"/>
+                <input name="email" required class="form-control" ng-model="model.user.email" id="email" type="email" placeholder=email/>
 
             </div>
             <div ng-show="form.$submitted || form.email.$touched"
@@ -58,37 +58,44 @@
                     Please enter a valid email address
                 </div>
             </div>
+            <!-- <p>{{model.user.firstName}}</p> -->
             <div class="form-group">
                 <label class="register-label" for="first-name">First Name</label>
                 <input name="firstname" required class="form-control" ng-model="model.user.firstname"
                                   id="firstname"
                                   
                                   type="text"
-                                  placeholder="First Name"/>
+                                  value="{{model.user.firstName}}"
+                       placeholder="{{model.user.firstName}}"/>
             </div>
-            <div ng-show="form.$submitted || form.firstname.$touched"
+           <!--  <div ng-show="form.$submitted || form.firstname.$touched"
                  class="">
                 <div ng-show="form.firstname.$error.required" class="alert" style="color: whitesmoke">
                     Please enter your first name
                 </div>
-            </div>
+            </div> -->
+           <!--  <p>{{model.user.lastName}}</p> -->
             <div class="form-group">
                 <label class="register-label" for="last-name">Last Name</label>
                 <input name="lastname" required class="form-control" ng-model="model.user.lastname"
                                   id="lastname"
                                   
                                   type="text"
-                                  placeholder="Last Name"/>
+                                 value="{{model.user.lastName}}"
+                       placeholder="{{model.user.lastName}}"/>
             </div>
-            <div ng-show="form.$submitted || form.lastname.$touched"
+            <!-- <div ng-show="form.$submitted || form.lastname.$touched"
                  class="">
                 <div ng-show="form.lastname.$error.required" class="alert" style="color: whitesmoke">
                     Please enter your last name
                 </div>
-            </div>
+            </div> -->
+            <!-- <p>{{model.user.password}}</p> -->
             <div class="form-group">
                 <label class="register-label" >Password</label>
-                    <input name="password" required id="password" class="form-control" type="password" ng-model="model.user.password" />
+                    <input name="password" required id="password" class="form-control" type="password" ng-model="model.user.password" 
+                 value="{{model.user.password}}"
+                       placeholder="{{model.user.password}}"/>
             </div>
             <div ng-show="form.$submitted || form.password.$touched"
                  class="">
@@ -96,15 +103,26 @@
                     Please choose a password
                 </div>
             </div>
-
+            
+        <label class="register-label user-type-class"  value= "{{model.userType}}"  ng-model="model.user.role" >
+        type
+		                <input  type="radio"   value= "{{model.userType}}"  ng-model="model.user.role">
+		                </label>
+		                
+			<!-- <input   name="type" required id="type" class="form-control" value=model.userType	ng-model ="model.user.type"/> -->
             <div class="form-group" style="padding-top: 2%">
-                <button ng-click="form.$valid && model.updateUser(model.userId,model.user)" type="button" class="btn btn-primary col-md-12 col-sm-12 col-xs-12">Register</button>
+                <button ng-click="form.$valid && model.profileUpdate(model.userId,model.user)" type="button" class="btn btn-primary col-md-12 col-sm-12 col-xs-12">Update</button>
             </div>
            
         </form>
+        	<!-- <p>{{model.userId}} </p>
+      		<p>{{model.userType}}</p> -->
+      		<br />
+      		<br />
+      		<br />
+      		<br />
     </div>
-
-      
+	
       </div>
 <div>    </div>
     </div>

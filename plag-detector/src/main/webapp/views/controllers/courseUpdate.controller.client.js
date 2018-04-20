@@ -7,18 +7,36 @@
     function courseUpdateController(AdminService, $location, $routeParams,$rootScope) {
         var vm = this;
         vm.updateCourse = updateCourse;
-        vm.cid = $routeParams.cid;
-        
+        vm.id = $routeParams.cid;
+        vm.fetchSemesters = fetchSemesters;
 //        function init() {
 //        	 vm.id =id;
 //        }
 //        init();
-
+        function init() {
+			fetchSemesters();
+        }
+        init();
+        function fetchSemesters(){
+        var promise = AdminService.getAllSemesters();
+		
+		   promise
+        .then(function (response) {
+            if(response.data){
+                vm.semesters = response.data;
+            }
+        })
+        
+        .catch(function (err) {
+            console.log("error find users for the semester -> " + semID);
+        })
+    }
         function updateCourse(id,course) {
 
 
             var promise = AdminService.updateCourse(id,course);
-
+            $location.url("/admin");
+	           window.location.reload(); 
             promise
                 .then(function (response) {
                     if(response){
@@ -28,12 +46,12 @@
 
                     }
                     else{
-                        vm.error = "Error in adding course";
+                        vm.error = "Error in update course";
                     }
                 })
                 .catch(function (err) {
 
-                    vm.error = "Error in  adding course";
+                    vm.error = "Error in  update course";
                 })
 
         }

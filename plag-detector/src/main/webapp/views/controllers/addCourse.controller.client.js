@@ -29,17 +29,17 @@
                 console.log("error find users for the semester -> " + semID);
             })
         }
+        
         function createCourse(course) {
 
             var promise = AdminService.createCourse(course);
-
+            $location.url("/admin");
+	           window.location.reload(); 
             promise
                 .then(function (response) {
-                    if(response){
-                        //var course = response.data;
-                        console.log("add course");
+                	if(response.data){
+                		console.log("add course");
                         $location.url("/admin");
-
                     }
                     else{
                         vm.error = "Error in creating course";

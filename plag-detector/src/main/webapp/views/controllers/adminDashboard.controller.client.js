@@ -10,10 +10,15 @@
 		vm.findCourseBySem=findCourseBySem;
 		vm.changeRole=changeRole;
 		//vm.createUser = createUser;
-		//vm.createCourse = createCourse;
+		vm.createCourse = createCourse;
+		vm.createSemester = createSemester;
 		vm.fetchSemesters = fetchSemesters;
+		vm.deleteUser= deleteUser;
+		vm.deleteCourse= deleteCourse;
+		vm.deleteSemester= deleteSemester;
 		//vm.updateUser = updateUser;
 		//vm.updateCourse = updateCourse;
+		vm.usersT = true;
 		
 //		vm.users = [ {
 //			
@@ -63,18 +68,7 @@
 //		}];
 		
 		 function init() {
-			fetchSemesters();
-			 var promise = AdminService.getAllUsers();
 		
-		   promise
-           .then(function (response) {
-               if(response.data){
-                   vm.semesters = response.data;
-               }
-           })
-           .catch(function (err) {
-               console.log("error find users for the semester -> " + semID);
-           })
 		
 		   var promise1 = AdminService.getAllUsers();
 			
@@ -98,6 +92,7 @@
            .catch(function (err) {
                console.log("error find users for the course -> " + cID);
            })
+		   
 		   var promise3 = AdminService.getAllSemesters();
 			
 		   promise3
@@ -110,6 +105,8 @@
                console.log("error find users for the semester -> " + semID);
            })
 		 }
+		 
+		 
 		 init();
 
 //		function findUserByTime(year,semid) {
@@ -138,6 +135,54 @@
                 })
                 .catch(function (err) {
                     console.log("error find coursees for the semester -> " + semID);
+                })
+            $location.url("/admin");
+        }
+		
+		function deleteUser(id,type) {
+            var promise = AdminService.deleteUser(id,type);
+            $location.url("/admin");
+            window.location.reload(); 
+            promise
+                .then(function (response) {
+                    if(response.data){
+                    	 $location.url("/admin");
+                    }
+                })
+                .catch(function (err) {
+                    console.log("error delete user -> " + id);
+                })
+            $location.url("/admin");
+        }
+		function deleteCourse(id) {
+            var promise = AdminService.deleteCourse(id);
+            $location.url("/admin");
+            window.location.reload(); 
+            promise
+                .then(function (response) {
+                    if(response.data){
+                    	 $location.url("/admin");
+                    }
+                })
+                .catch(function (err) {
+                    console.log("error delete course-> " + id);
+                })
+            $location.url("/admin");
+        }
+		function deleteSemester(id) {
+			var promise = AdminService.deleteSemester(id);
+            $location.url("/admin");
+            window.location.reload(); 
+          
+           
+            promise
+                .then(function (response) {
+                    if(response.data){
+                    	 $location.url("/admin");
+                    }
+                })
+                .catch(function (err) {
+                    console.log("error delete semester -> " + id);
                 })
             $location.url("/admin");
         }
@@ -205,7 +250,34 @@
 //	            $location.url("/admin");
 //
 //	        }
-		 
+		function createCourse(course) {
+            var promise = AdminService.createCourse(course);
+            $location.url("/admin");
+            window.location.reload(); 
+            promise
+                .then(function (response) {
+                    if(response.data){
+                       
+                    }
+                })
+                .catch(function (err) {
+                    console.log("Error in create the course")
+                })
+        }
+		function createSemester(semester) {
+            var promise = AdminService.createSemester(semester);
+            $location.url("/admin");
+            window.location.reload(); 
+            promise
+                .then(function (response) {
+                    if(response.data){
+                       
+                    }
+                })
+                .catch(function (err) {
+                    console.log("Error in create the course")
+                })
+        }
 		   function fetchSemesters() {
 	            var promise = AdminService.getAllSemesters();
 
@@ -220,7 +292,9 @@
 	                })
 	        }
 		   function changeRole(id, type){
-			   var promise = AdminService.getAllSemesters();
+			   var promise = AdminService.changeRole(id,type);
+			   $location.url("/admin");
+	           window.location.reload(); 
 			   promise
                .then(function (response) {
                    if(response.data){
