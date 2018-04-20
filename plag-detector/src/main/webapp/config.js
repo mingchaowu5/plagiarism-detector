@@ -120,12 +120,13 @@
                 controllerAs: 'model',
                 resolve: { loggedin: checkLoggedin }
             })
-            //admin
+           //admin
              .when("/admin",{
                 templateUrl:"views/templates/adminDashboard.view.client.html",
                 controller: 'adminDashboardController',
                 controllerAs: 'model',
                 resolve: { loggedin: checkLoggedin }
+
             })
            
             //addcourse
@@ -134,31 +135,36 @@
                 controller: 'courseUpdateController',
                 controllerAs: 'model',
                 resolve: { loggedin: checkLoggedin }
+
             })
             //profile
-             .when("/admin/profileUpdate/:uid",{
+             .when("/admin/profileUpdate/:uid/:tid",{
                 templateUrl:"views/templates/profileUpdate.view.client.html",
                 controller: 'profileUpdateController',
                 controllerAs: 'model',
                 resolve: { loggedin: checkLoggedin }
+
             })
              .when("/admin/addCourse",{
                 templateUrl:"views/templates/addCourse.view.client.html",
                 controller: 'adminDashboardController',
                 controllerAs: 'model',
                 resolve: { loggedin: checkLoggedin }
+
             })
             .when("/admin/addSemester",{
                 templateUrl:"views/templates/addSemester.view.client.html",
                 controller: 'adminDashboardController',
                 controllerAs: 'model',
                 resolve: { loggedin: checkLoggedin }
+
             })
-            .when("/admin/semesterUpdate/:sid",{
+              .when("/admin/semesterUpdate/:sid",{
                 templateUrl:"views/templates/semesterUpdate.view.client.html",
                 controller: 'semesterUpdateController',
                 controllerAs: 'model',
                 resolve: { loggedin: checkLoggedin }
+
             })
             .when("/logout",{
                 templateUrl:"views/templates/login.view.client.html",

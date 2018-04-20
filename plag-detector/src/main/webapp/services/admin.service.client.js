@@ -104,19 +104,19 @@
 //        }
         
         function deleteUser(id, type) {
-            return $http.get('/rest/user?id='+ id + '&type=' + type);
+              return $http.get('/rest/user/delete?id='+ id + '&type=' + type);
         }
         //new api
       
         function createCourse(course) {
-            return $http.get("/rest/course/insert?name=" + course.coursername + "&semester_id=" + course.semesterId);
+            return $http.get("/rest/course/insert?name=" + course.coursename + "&semester_id=" + course.semesterId);
         }
         function getAllCourses() {
             return $http.get("/rest/course/all");
         }
 
         function updateCourse(id, course) {
-            return $http.get("/rest/course/edit?name=" + course.coursename + "&semester_id=" + course.semester + + "&id=" + id);
+            return $http.get("/rest/course/edit?name=" + course.coursename + "&semester_id=" + course.semesterId  + "&id=" + id);
                
         }
         function deleteCourse(id) {
@@ -128,14 +128,14 @@
         }
         
         function createSemester(semester) {
-            return $http.get("/rest/semester/insert?name=" + semester.semestername);
+            return $http.get("/rest/semester/insert?name=" + semester);
         }
         
         function getAllSemesters() {
             return $http.get("/rest/semester/all");
         }
         function updateSemester(id, semester) {
-            return $http.get("/rest/semester/edit?name=" + semester.semestername + + "&id=" + id);
+            return $http.get("/rest/semester/update?name=" + semester + "&id=" + id);
                
         }
         function deleteSemester(id) {

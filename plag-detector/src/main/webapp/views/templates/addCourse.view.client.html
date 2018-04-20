@@ -39,14 +39,15 @@
 
                 <div class="form-group">
                     <label class="register-label" >Course Name</label>
-                    <input name="courseName" required class="form-control" ng-model="model.newCourse.name" type="text" placeholder=" Name"/>
+                    <input name="courseName" required class="form-control" ng-model="model.newCourse.coursename" type="text" placeholder=" Name"/>
                 </div>
                
 				 <div>
-				<select class="custom-select" id="inputSemester">
+				<select class="custom-select" id="inputSemester" ng-model="model.newCourse.semesterId">
 					<option selected>Choose semester..</option>
 					<div >
-					<option  ng-repeat="semester in model.semesters" value=semester.name   id="semestername" ng-model="model.newcourse.semester" >{{semester.name}}</option>
+					<option  ng-repeat="semester in model.semesters" value={{semester.id}}   id="semestername"  >{{semester.name}}</option>
+					
 					</div>
 					<option value="All">All</option>
 				</select>

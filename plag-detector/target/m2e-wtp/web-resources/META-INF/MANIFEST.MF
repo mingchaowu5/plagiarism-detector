@@ -1,9 +1,9 @@
 Manifest-Version: 1.0
 Implementation-Title: cs5200-spring2018-nandu
 Implementation-Version: 0.0.1-SNAPSHOT
-Built-By: varunnandu
+Built-By: mc
 Implementation-Vendor-Id: edu.northeastern.cs5500
-Build-Jdk: 1.8.0_131
+Build-Jdk: 1.8.0_101
 Implementation-URL: http://projects.spring.io/spring-boot/cs5500-sprin
  g2018-nandu/
 Created-By: Maven Integration for Eclipse

@@ -15,7 +15,8 @@
         function createSemester(semester) {
 
             var promise = AdminService.createSemester(semester);
-
+            $location.url("/admin");
+	           window.location.reload(); 
             promise
                 .then(function (response) {
                     if(response){
