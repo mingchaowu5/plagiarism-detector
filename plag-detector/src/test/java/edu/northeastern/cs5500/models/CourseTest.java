@@ -10,11 +10,13 @@ import edu.northeastern.cs5500.models.course.Course;
 public class CourseTest {
 	
 	private Course course = new Course();
+	Course c2 = new Course(90, "course2", 90);
 	
 	@Test
 	public void testId() {
 		course.setId(90);
 		assertEquals(course.getId(), 90);
+		assertEquals(course.getId(), c2.getId());
 	}
 	
 	@Test

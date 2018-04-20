@@ -8,6 +8,7 @@ import edu.northeastern.cs5500.models.submission.Sub1;
 
 public class Sub1Test {
 	Sub1 stuass = new Sub1();
+	Sub1 s2 = new Sub1("ass1", "ass1", "ass1", 0, "ass1");
 	
 	/**
 	 * Test Name
@@ -16,6 +17,7 @@ public class Sub1Test {
 	public void testName() {
 		stuass.setAssignment("ass1");
 		assertEquals(stuass.getAssignment(), "ass1");
+		assertEquals(s2.getAssignment(), stuass.getAssignment());
 	}
 	
 	/**

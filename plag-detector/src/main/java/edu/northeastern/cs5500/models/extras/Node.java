@@ -11,6 +11,9 @@ public class Node {
 		this.label = label;
 	}
 	
+	public Node() {
+	}
+
 	public int getId() {
 		return id;
 	}

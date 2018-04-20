@@ -40,7 +40,6 @@
 	    <sonar.dynamic>reuseReports</sonar.dynamic>
 	    <sonar.sources>src/main</sonar.sources>
 	    <sonar.tests>src/test</sonar.tests>
-
 	</properties>
 
 	<dependencies>

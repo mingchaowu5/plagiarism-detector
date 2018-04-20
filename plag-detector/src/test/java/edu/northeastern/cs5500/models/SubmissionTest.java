@@ -9,14 +9,16 @@ import edu.northeastern.cs5500.models.submission.Submission;
 public class SubmissionTest {
 	
 Submission stuass = new Submission();
+Submission sub2 = new Submission(10, 30, 30, "Hello");
 	
 	/**
 	 * Test Name
 	 */
 	@Test
 	public void testName() {
-		stuass.setAssignment(20);
-		assertEquals(stuass.getAssignment(), 20);
+		stuass.setAssignment(30);
+		assertEquals(stuass.getAssignment(), 30);
+		assertEquals(stuass.getAssignment(), sub2.getAssignment());
 	}
 	
 	/**
