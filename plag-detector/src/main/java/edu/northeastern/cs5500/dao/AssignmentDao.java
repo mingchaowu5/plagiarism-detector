@@ -126,22 +126,6 @@ public class AssignmentDao {
 	}
 	
 	/**
-	 * Assign assignments to students
-	 * @param listOfStudents
-	 * @param assignmentId
-	 */
-	public void assignAssignmentToStudents(List<Integer> listOfStudents, int assignmentId) {
-		for(int s: listOfStudents) {
-			try {
-				String sql = "INSERT INTO StudentAssignmentMapping (student, assignment) VALUES (?, ?)";
-				jdbcTemplate.update(sql, new Object[] {s, assignmentId});
-			}catch(Exception e) {
-				log.log(Level.INFO, e.getMessage());
-			}
-		}
-	}
-	
-	/**
 	 * Get Language of an Assignment
 	 * @param id
 	 * @return
