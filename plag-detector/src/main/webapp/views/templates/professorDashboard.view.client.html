@@ -342,12 +342,15 @@
                        <span class="text-center">Notifications</span>
                     </li>
                     <li class="list-group-item" ng-repeat="notification in model.notifications">
-                        <div class="row text-center">
+                    <a style="color:#337ab7" href="#!/results/{{notification.snapshot}}">
+                    	<div class="row text-center">
                             {{notification.text}}
                         </div>
                         <div class="row text-center">
                             {{notification.date}}
                         </div>
+                    </a>
+                        
                     </li>
                 </ul>
             </div>

@@ -38,6 +38,8 @@ $ git clone https://github.ccs.neu.edu/cs5500/team-204.git
 - navigate to recently cloned repository. It will be named **team-204** go inside and select **plag-detector**
 - Click on Finish
 - Once the project can be seen in your workspace, right click on project and do **Run as** -> **Spring Boot App**
+- Navigate to src/main/java/edu/northeastern/cs5500.Constants.java
+- Comment the first three lines in the interface and uncomment the next three lines
 
 # Some Pre Defined Data
 
