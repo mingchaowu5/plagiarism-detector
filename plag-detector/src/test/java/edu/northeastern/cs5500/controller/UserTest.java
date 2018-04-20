@@ -105,9 +105,8 @@ public class UserTest extends PlagDetectorApplicationTests{
 	
 	@Test
 	public void testLogin() {
-	
 		User type = udao.login("jose", "jose", 1);
-		User type2 = udao.login("varun", "varun", 0);
+		User type2 = udao.login("varun", "wefwefwef", 0);
 		assertNotNull(type);
 		assertNull(type2);
 	}
