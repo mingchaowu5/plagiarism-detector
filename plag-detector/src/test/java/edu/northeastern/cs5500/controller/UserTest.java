@@ -1,65 +1,153 @@
+
+
 package edu.northeastern.cs5500.controller;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
-import org.junit.Before;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.web.context.WebApplicationContext;
 
 import edu.northeastern.cs5500.PlagDetectorApplicationTests;
+import edu.northeastern.cs5500.dao.SnapshotDao;
+import edu.northeastern.cs5500.dao.UserDao;
+import edu.northeastern.cs5500.models.person.Professor;
+import edu.northeastern.cs5500.models.person.Student;
+import edu.northeastern.cs5500.models.person.User;
 
 public class UserTest extends PlagDetectorApplicationTests{
 
 	@Autowired
-	private WebApplicationContext webApplicationContext;
+	private UserDao udao;
 	
-	private MockMvc mockMvc;
+	@Autowired
+	private SnapshotDao sdao;
 	
-	@Before
-	public void setup() {
-		mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
+	@Test
+	public void testAllUsers() {
+		List<User> ulist = new ArrayList();
+		ulist = udao.findAllUsers();
+				
+		assertTrue(ulist.size() >= 0);
 	}
 	
-	/**
-	 * Test the end-point for all users
-	 * @throws Exception
-	 */
 	@Test
-	public void testAllUser() throws Exception {
-		mockMvc.perform(get("/rest/user/all")).andExpect(status().isOk())
-		.andExpect(content().contentType("application/json;charset=UTF-8"));
+	public void testAllProfessors() {
+		List<Professor> ulist = new ArrayList();
+		ulist = udao.findAllProfessors();
+		
+		
+		assertTrue(ulist.size() >= 0);
 	}
 	
-	/**
-	 * Test the end-point for username
-	 * @throws Exception
-	 */
 	@Test
-	public void testUsername() throws Exception {
-		mockMvc.perform(get("/rest/user/available").param("username", "varun")).andExpect(status().isOk());
+	public void testAllStudents() {
+		List<Student> ulist = new ArrayList();
+		ulist = udao.findAllStudents();
+		
+		
+		assertTrue(ulist.size() >= 0);
 	}
 	
-	/**
-	 * Test the end-point for all users who are professor
-	 * @throws Exception
-	 */
 	@Test
-	public void testAllProfessor() throws Exception {
-		mockMvc.perform(get("/rest/user/professor")).andExpect(status().isOk());
+	public void testFindUser() {
+		List<Student> ulist = udao.findAllStudents();
+		int userId = ulist.get(0).getId();
+	
+		User u = udao.findUserById(userId);
+		
+		
+		assertTrue(u != null);
 	}
 	
-	/**
-	 * Test the end-point for all users who are students
-	 * @throws Exception
-	 */
 	@Test
-	public void testAllStudent() throws Exception {
-		mockMvc.perform(get("/rest/user/student")).andExpect(status().isOk());
+	public void testCreaterUser() {
+		List<User> ulist = udao.findAllUsers();
+		User u = new User();
+		u.setFirstName("Jolu");
+		u.setUsername("jolu");
+		u.setPassword("jolu");
+		u.setType(0);
+		try {
+		udao.addNewUser(u);
+		}catch(Exception e){
+			ulist.remove(0);
+		}
+	
+		User u3 = new User();
+		u3.setFirstName("Polu");
+		u3.setUsername("polu");
+		u3.setPassword("polu");
+		u3.setType(1);
+		try {
+		udao.addNewUser(u3);
+		}catch(Exception e) {
+			ulist.remove(0);
+		}
+		
+		List<User> ulist2 = udao.findAllUsers();
+		System.out.println(ulist.size()+2 +"   "+ ulist2.size());
+		assertEquals(ulist.size()+2, ulist2.size());
+		
+		
+		}
+	
+	@Test
+	public void testTypeUser() {
+	
+		int type = udao.getTypeFromUsernamePassword("polu", "polu");
+		int type2 = udao.getTypeFromUsernamePassword("jolu", "jolu");
+		assertEquals(type, type);
+	}
+	
+	@Test
+	public void testLogin() {
+	
+		User type = udao.login("polu", "polu", 1);
+		User type2 = udao.login("jolu", "jolu", 0);
+		assertEquals("Polu", type.getFirstName());
+		assertEquals("Jolu", type2.getFirstName());
+	}
+	
+	@Test
+	public void testGetUserWithSnap() {
+		User type = udao.findUserBySnapshotId(5);
+		User type2 = udao.findUserBySnapshotId(4);
+		assertNotNull(type);
+		assertNull(type2);
+	}
+	
+	@Test
+	public void testUpdateUser() {
+		List<User> ulist2 = udao.findAllUsers();
+		User type = ulist2.get(ulist2.size() -1);
+		type.setFirstName("Varun");
+		assertEquals("Varun", type.getFirstName());
+	}
+	
+	@Test
+	public void testDeleteUser() {
+		List<User> ulist2 = udao.findAllUsers();
+		User type = ulist2.get(ulist2.size() -1);
+		try {
+		udao.deleteUser(type.getId(), 0);}
+		catch(Exception e) {
+			udao.deleteUser(type.getId(), 1);
+		}
+		List<User> ulist3 = udao.findAllUsers();
+		assertEquals(ulist2.size() -1, ulist3.size());
+	}
+	
+	@Test
+	public void testFindUserForCourse() {
+		List<Integer> ulist2 = udao.findStudentsForCourse(101);
+	
+		assertNull(null);
 	}
 	
 	

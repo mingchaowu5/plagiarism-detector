@@ -337,10 +337,12 @@ public class UserDao {
 			String sql = "Select * from User where User.username = ? AND User.password = ?";
 			RowMapper<User> rowMapper = new BeanPropertyRowMapper<>(User.class);
 			User user =  jdbcTemplate.queryForObject(sql, rowMapper, username, password);
+			try {
 			String sql2 = "Select * from Student where Student.id = ?";
 			RowMapper<Student> map1 = new BeanPropertyRowMapper<>(Student.class);
 			Student s =  jdbcTemplate.queryForObject(sql2, map1, user.getId());
-			if(s == null) {
+			} catch(Exception e) {
+				System.out.println(user.getId());
 				String sql3 = "Select * from Professor where Professor.id = ?";
 				RowMapper<Professor> map2 = new BeanPropertyRowMapper<>(Professor.class);
 				Professor p =  jdbcTemplate.queryForObject(sql3, map2, user.getId());
@@ -403,41 +405,7 @@ public class UserDao {
 		}
 	}
 	
-	/**
-	 * 
-	 * @param studentId
-	 * @param assignmentId
-	 * @param fname
-	 */
-	public void addFileForStudentAssignment(int studentId, int assignmentId, String fname) {
-		int saId = findStudentAssignmentId(studentId, assignmentId);
-		try {
-			String sql = "INSERT INTO StudentAssignmentFileMapping (studentAssignment, file) VALUES(?, ?)";
-			jdbcTemplate.update(sql, new Object[] {saId, fname});
-		}catch(Exception e) {
-			log.log(Level.INFO, e.getMessage());
-		}
-		
-	}
 	
-	/**
-	 * 
-	 * @param saId
-	 * @param fname
-	 * @return
-	 */
-	public Integer findStudentFileId(int saId, String fname) {
-		try {
-			String sql = "SELECT * FROM StudentAssignmentFileMapping WHERE StudentAssignmentFileMapping.studentAssignment = ? AND StudentAssignmentFileMapping.file = ?";
-			RowMapper<FileStructure> mapper = new BeanPropertyRowMapper<>(FileStructure.class);
-			FileStructure u =  jdbcTemplate.queryForObject(sql, mapper, saId, fname);
-			return u.getId();
-		}
-		catch(Exception e) {
-			log.log(Level.INFO, e.getMessage());
-			return null;
-		}
-	}
 	
 	/**
 	 * 
@@ -452,8 +420,8 @@ public class UserDao {
 			return  jdbcTemplate.query(sql, mapper, courseId);
 		}catch(Exception e) {
 			log.log(Level.INFO, e.getMessage());
-			return new ArrayList<>();
-		}
+			return null;
+			}
 	}
 	
 	/**
@@ -490,24 +458,7 @@ public class UserDao {
 		}
 	}
 	
-	/**
-	 * 
-	 * @param studentId
-	 * @param assignmentId
-	 * @return
-	 */
-	public List<FileStructure> findAllFileStructuresStudent(int studentId, int assignmentId) {
-		int saId = findStudentAssignmentId(studentId, assignmentId);
-		try {
-			String sql = "Select * from StudentAssignmentFileMapping WHERE StudentAssignmentFileMapping.studentAssignment = ?";
-			RowMapper<FileStructure> rowMapper = new BeanPropertyRowMapper<>(FileStructure.class);
-			return this.jdbcTemplate.query(sql, rowMapper, saId);
-		}catch(Exception e) {
-			log.log(Level.INFO, e.getMessage());
-			return new ArrayList<>();
-		}
-	}
-	
+
 	/**
 	 * 
 	 * @param sa

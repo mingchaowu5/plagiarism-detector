@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: edu.northeastern.cs5500.controller.CourseTest
+-------------------------------------------------------------------------------
+Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.585 sec - in edu.northeastern.cs5500.controller.CourseTest
