@@ -68,7 +68,7 @@ public class SubmissionController {
 	 * @return	Boolean
 	 */
 	@GetMapping(value = "/multiple")
-	public ResponseEntity<Boolean> multiple(@RequestParam(value = "submissions") int[] subs, @RequestParam(value = "professor_id") int profId) {
+	public ResponseEntity<Boolean> multiple(@RequestParam(value = "submissions[]") int[] subs, @RequestParam(value = "professor_id") int profId) {
 		this.submissionService.compareMultipleSubmissions(subs, profId);
 		return new ResponseEntity<>(true, HttpStatus.OK);
 	}

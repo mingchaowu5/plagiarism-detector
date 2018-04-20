@@ -29,6 +29,33 @@
         vm.cid = $routeParams.cid;
         vm.aid = $routeParams.aid;
 
+        vm.addSubmissionList = addSubmissionList;
+        vm.compareMultiple = compareMultiple
+
+        vm.CollectSubmissions = [];
+        function addSubmissionList(row) {
+            vm.CollectSubmissions.push(row.submission);
+            alert("Added to sending List")
+            
+            // var promise = ProfessorService.multipleSubmission(row)
+        }
+
+        function compareMultiple() {
+            console.log("comapre multiple")
+            var promise = ProfessorService.multipleSubmission(vm.CollectSubmissions, vm.pid);
+
+            promise
+                .then(function (resp) {
+                    if(resp){
+
+                        alert("Successfully sent for submission")
+                    }
+                })
+                .catch(function (err) {
+                    console.log("Error in sending multiple submissions")
+                })
+        }
+
         // vm.semesters = [{
         //         name: "Spring2018",
         //         ID: 111

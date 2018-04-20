@@ -161,13 +161,17 @@ public class UserService {
 	 * @param pId
 	 * @param aId
 	 */
-	public void sendMail(int sId, int pId, int aId) {
+	public void sendMail(int sId1, int sId2, int pId, int aId) {
 		User p = this.userDao.findUserById(pId);
-		User s = this.userDao.findUserById(sId);
+		User s = this.userDao.findUserBySubmissionId(sId1);
 		Assignment a = this.assignmentDao.findAssignmentById(aId);
 		String name = (a == null)?"":a.getName();
 		String text = "Hello "  +s.getFirstName() + ",\n" + "Plagiarism has been detected in your assignment, " + name
 				 + "\n. Please go and meet the professor, " + p.getFirstName() + " " + p.getLastName();
 		mail.sendSimpleMessage(s.getEmail(), "Plagiarism detected in your submission", text);
+		s = this.userDao.findUserBySubmissionId(sId2);
+		text = "Hello "  +s.getFirstName() + ",\n" + "Plagiarism has been detected in your assignment, " + name
+				 + "\n. Please go and meet the professor, " + p.getFirstName() + " " + p.getLastName();
+		mail.sendSimpleMessage(s.getEmail(), "Plagiarism detected in your submission", text);		
 	}
 }

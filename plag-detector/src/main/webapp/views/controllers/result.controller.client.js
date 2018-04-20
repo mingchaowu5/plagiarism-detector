@@ -4,7 +4,7 @@
         .module("PlagApp")
         .controller("resultController", resultController);
 
-    function resultController(ResultsService,$location, $routeParams,$rootScope,$scope) {
+    function resultController(ResultsService,$location, $routeParams,$rootScope,$scope, $cookies) {
          var vm = this;
          vm.assignmentID = $routeParams.aid;
 
@@ -16,9 +16,11 @@
         vm.showDisplay = showDisplay;
 
         vm.takeActionMail = takeActionMail;
+        var localSid1;
+        var localSid2;
 
-        function takeActionMail() {
-            var promise = ResultsService.sendActionMail(vm.results.submission1, vm.results.submission2);
+        function takeActionMail(sid1, sid2) {
+            var promise = ResultsService.sendActionMail(localSid1, localSid2, vm.assignmentID, $cookies.getObject('loggedUser').id);
 
             promise.
                 then(function (params) {
@@ -128,6 +130,7 @@
         }
 
         function showDisplay(row) {
+            
             var promise = ResultsService.fetchEdgeStudents(row.from, row.to, vm.assignmentID);
 
                 promise
@@ -166,6 +169,9 @@
                         console.log(ele.label);
                         fromNode = ele.from;
                         toNode = ele.to;
+
+                        localSid1 = ele.from;
+                        localSid2 = ele.to;
                     }
                 });
 

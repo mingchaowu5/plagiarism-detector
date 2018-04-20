@@ -26,8 +26,8 @@
             return $http.get("/rest/snapshot/file?id="+id);
         }
 
-        function sendActionMail(sid1, sid2) {
-            
+        function sendActionMail(sid1, sid2,aid, pid) {
+            return $http.get("/rest/user/mail?student_id1="+sid1 + "&student_id2="+sid2 + "&assignment_id="+aid + "&professor_id="+pid);
         }
 
     }

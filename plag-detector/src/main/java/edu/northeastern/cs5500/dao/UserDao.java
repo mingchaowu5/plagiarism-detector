@@ -62,6 +62,23 @@ public class UserDao {
 	}
 	
 	/**
+	 * Find user by ID
+	 * @param userId
+	 * @return
+	 */
+	public User findUserBySubmissionId(int subId) {
+		try {
+			String sql = "SELECT User.id, User.firstName, User.lastName, User.email FROM Submission JOIN User ON Submission.student = User.id WHERE Submission.id = ?";
+			RowMapper<User> mapper = new BeanPropertyRowMapper<>(User.class);
+			return jdbcTemplate.queryForObject(sql, mapper, subId);
+		}
+		catch(Exception e) {
+			log.log(Level.INFO, e.getMessage());
+			return null;
+		}
+	}
+	
+	/**
 	 * Find User by type
 	 * @param type
 	 * @return
