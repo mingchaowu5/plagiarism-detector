@@ -1,4 +1,0 @@
--------------------------------------------------------------------------------
-Test set: edu.northeastern.cs5500.models.LanguageTest
--------------------------------------------------------------------------------
-Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0 sec - in edu.northeastern.cs5500.models.LanguageTest
