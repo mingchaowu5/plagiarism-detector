@@ -106,6 +106,11 @@
                 }
             })
 
+            edges.forEach(function (ele) {
+                var num = Math.ceil(ele.value)
+                ele.label = num.toString()+"%";
+            })
+
             // Instantiate our network object.
             var container = document.getElementById('mynetwork');
             var data = {
@@ -113,9 +118,18 @@
                 edges: edges
             };
             var options = {
+                
                 nodes: {
                     shape: 'dot',
+                    label: {
+                        enabled: true,
+                        min: 14,
+                        max: 20,
+                        maxVisible: 20,
+                        drawThreshold: 5
+                      },
                     scaling: {
+                        
                         customScalingFunction: function (min,max,total,value) {
                             return value/total;
                         },

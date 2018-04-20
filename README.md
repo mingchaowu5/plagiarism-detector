@@ -1,4 +1,4 @@
-# Plgiarism Detector Application
+# Plagiarism Detector Application
 Team Name is Team 204 (Section 2, Team 4)
 Team Members: -
 
@@ -13,7 +13,7 @@ This repository is for project work related to Plagiarism Detection System
 
 Youtube Links for the following are: - 
 
-- [System Setup Video]()
+- [System Setup Video](https://youtu.be/QVDLmcSIhV4)
 - [System Demo Video]()
 - [Final Presentation Video]()
 
@@ -23,6 +23,7 @@ Youtube Links for the following are: -
 ## Pre Requistes:
 
 - Need jre and jdk version 8 installed.
+- Need Maven 3.2 + installed. 
 - Make sure you have latest version of Eclipse installed or STS installed.
 - If using Eclipse please install spring tool suite dependencies from market place.
 
@@ -37,9 +38,10 @@ $ git clone https://github.ccs.neu.edu/cs5500/team-204.git
 - Click on **directory**
 - navigate to recently cloned repository. It will be named **team-204** go inside and select **plag-detector**
 - Click on Finish
-- Once the project can be seen in your workspace, right click on project and do **Run as** -> **Spring Boot App**
 - Navigate to src/main/java/edu/northeastern/cs5500.Constants.java
 - Comment the first three lines in the interface and uncomment the next three lines
+- Once the project can be seen in your workspace, right click on project and do **Run as** -> **Spring Boot App**
+
 
 # Some Pre Defined Data
 
