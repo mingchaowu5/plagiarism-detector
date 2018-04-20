@@ -28,6 +28,8 @@
                 return;
             }
             if(user.username == "admin"){
+            	$rootScope.currentUser = user;
+                $cookies.putObject('loggedUser', user);
             		$location.url("/admin");
             }
             UserService

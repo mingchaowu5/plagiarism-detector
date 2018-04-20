@@ -56,15 +56,28 @@ public class ScheduleController {
 				flag = calculateIncrementalResult(snap.getId());
 				t = snap.getId();
 				sendMail(2);
+				sendNotification(snap.getType());
 			}else {
 				flag = calculateTotalResult(snap.getId());
 				log.log(Level.INFO, "Sending Mail");
 				t = snap.getId();
 				sendMail(snap.getId());
+				sendNotification(snap.getType());
 			}
 			if(flag)
 				this.snapshotService.updateStatus(snap.getId(), 1);
 		}
+	}
+	
+	/**
+	 * Send Notification
+	 */
+	private void sendNotification(int type) {
+		String text = "Your requested report is now generated";
+		if(type == 0) {
+			text = "A student submission triggered the report";
+		}
+		this.notificationService.addNotification(text, t);
 	}
 	
 	
@@ -77,7 +90,7 @@ public class ScheduleController {
 		if(user == null)
 			return;
 		mail.sendSimpleMessage(user.getEmail(), "Plag Detector Report", "Hello\nThe plag report was generated on " + 
-			Constants.getCurrentDate() + ".\nYou can log in now and check the report using the following link,\nhttp://localhost:8080/#!/results/"+t+".\nThank You!\nAdmin");
+			Constants.getCurrentDate() + ".\nYou can log in now and check the report using the following link,\nhttp://ec2-18-220-236-121.us-east-2.compute.amazonaws.com:8080/#!/results/"+t+".\nThank You!\nAdmin");
 	}
 	
 	/**

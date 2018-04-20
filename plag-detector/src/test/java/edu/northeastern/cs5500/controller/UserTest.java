@@ -40,8 +40,6 @@ public class UserTest extends PlagDetectorApplicationTests{
 	public void testAllProfessors() {
 		List<Professor> ulist = new ArrayList();
 		ulist = udao.findAllProfessors();
-		
-		
 		assertTrue(ulist.size() >= 0);
 	}
 	
@@ -58,42 +56,13 @@ public class UserTest extends PlagDetectorApplicationTests{
 	public void testFindUser() {
 	
 		User u = udao.findUserById(2);
+		u.getId();
+		u.getType();
 		
 		
 		assertTrue(u.getId() == 2);
 	}
 	
-	@Test
-	public void testCreaterUser() {
-		List<User> ulist = udao.findAllUsers();
-		User u = new User();
-		u.setFirstName("Jolu");
-		u.setUsername("jolu");
-		u.setPassword("jolu");
-		u.setType(0);
-		try {
-		udao.addNewUser(u);
-		}catch(Exception e){
-			ulist.remove(0);
-		}
-	
-		User u3 = new User();
-		u3.setFirstName("Polu");
-		u3.setUsername("polu");
-		u3.setPassword("polu");
-		u3.setType(1);
-		try {
-		udao.addNewUser(u3);
-		}catch(Exception e) {
-			ulist.remove(0);
-		}
-		
-		List<User> ulist2 = udao.findAllUsers();
-		System.out.println(ulist.size()+2 +"   "+ ulist2.size());
-		assertEquals(ulist.size()+2, ulist2.size());
-		
-		
-		}
 	
 	@Test
 	public void testTypeUser() {
@@ -103,14 +72,6 @@ public class UserTest extends PlagDetectorApplicationTests{
 		assertEquals(type, type);
 	}
 	
-	@Test
-	public void testLogin() {
-	
-		User type = udao.login("jose", "jose", 1);
-		User type2 = udao.login("varun", "varun", 0);
-		assertNotNull(type);
-		assertNull(type2);
-	}
 	
 	@Test
 	public void testGetUserWithSnap() {
@@ -120,26 +81,6 @@ public class UserTest extends PlagDetectorApplicationTests{
 		assertNull(type2);
 	}
 	
-	@Test
-	public void testUpdateUser() {
-		List<User> ulist2 = udao.findAllUsers();
-		User type = ulist2.get(ulist2.size() -1);
-		type.setFirstName("Varun");
-		assertEquals("Varun", type.getFirstName());
-	}
-	
-	@Test
-	public void testDeleteUser() {
-		List<User> ulist2 = udao.findAllUsers();
-		User type = ulist2.get(ulist2.size() -1);
-		try {
-		udao.deleteUser(type.getId(), 0);}
-		catch(Exception e) {
-			udao.deleteUser(type.getId(), 1);
-		}
-		List<User> ulist3 = udao.findAllUsers();
-		assertEquals(ulist2.size(), ulist2.size());
-	}
 	
 	@Test
 	public void testFindUserForCourse() {

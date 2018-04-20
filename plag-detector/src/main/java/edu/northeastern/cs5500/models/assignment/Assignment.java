@@ -31,11 +31,12 @@ public class Assignment {
 	public void setCourse(int course) {
 		this.course = course;
 	}
-	public Assignment(int id, String name, int course) {
+	public Assignment(int id, String name, int course, int lang) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.course = course;
+		this.langId = lang;
 	}
 	public Assignment() {
 		super();
