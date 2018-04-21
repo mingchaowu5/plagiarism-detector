@@ -1,0 +1,117 @@
+
+<div class = "content-fluid">
+	
+
+
+	<ul class="nav nav-tabs">
+	  <li class="nav-item">
+	    <a ng-click="model.usersT = true; semesters = false; courses = false" class="nav-link active" >Users</a>
+	  </li>
+	  <li class="nav-item">
+	    <a ng-click="model.usersT = false; semesters = true; courses = false" class="nav-link" >Semesters</a>
+	  </li>
+	  <li class="nav-item">
+	    <a ng-click="model.usersT = false; semesters = false; courses = true" class="nav-link" >Courses</a>
+	  </li>
+	</ul>
+<div class="panel-body" ng-if="model.usersT">
+		<div>
+			<a style="cursor: pointer" href="#!/register">
+				<button type="button" class="btn btn-success">Add New User</button>
+			</a>
+		</div>
+		<br />
+		<table
+			class="table table-bordered bordered table-striped table-condensed"
+			ui-jq=”datatable” ui-options=”options”>
+			<thead>
+				<th>Firstname</th>
+				<th>Lastname</th>
+				<th>Type</th>
+				<th>Action</th>
+			</thead>
+			<tbody>
+				<tr ng-repeat="row in model.users"
+					style="background-color: #EDEBEB; padding: 10px;">
+					<!-- <td>{{row.id}}</td> -->
+					<td>{{row.firstName}}</td>
+					<td>{{row.lastName}}</td>
+					<td>{{row.type == 0 ? 'Student':'Professor'}}</td>
+					<td><a style="cursor: pointer"><span
+							ng-click="model.changeRole(row.id, row.type)"
+							class="glyphicon glyphicon glyphicon-edit"> </span></a> &nbsp; <a
+						style="cursor: pointer"
+						href="#!/admin/profileUpdate/{{row.id}}/{{row.type}}"><span
+							class="glyphicon glyphicon glyphicon-pencil"></span></a>&nbsp; <a
+						style="cursor: pointer"><span
+							class="glyphicon glyphicon glyphicon-remove"
+							ng-click="model.deleteUser(row.id,row.type)"></span></a>&nbsp;</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+
+	<div class="panel-body" ng-if="semesters">
+		<div>
+			<a style="cursor: pointer" href="#!/admin/addSemester">
+				<button type="button" class="btn btn-success">Add New
+					Semesters</button>
+			</a>
+		</div>
+		<br />
+		<table
+			class="table table-bordered bordered table-striped table-condensed"
+			ui-jq=”datatable” ui-options=”options”>
+			<thead>
+				<th>Name</th>
+				<th>Action</th>
+			</thead>
+			<tbody>
+				<tr ng-repeat="row in model.semesters"
+					style="background-color: #EDEBEB; padding: 10px;">
+					<td>{{row.name}}</td>
+					<td><a style="cursor: pointer"
+						href="#!/admin/semesterUpdate/{{row.id}}"><span
+							class="glyphicon glyphicon glyphicon-pencil"></span></a>&nbsp; <a
+						style="cursor: pointer"><span
+							class="glyphicon glyphicon glyphicon-remove"
+							ng-click="model.deleteSemester(row.id)"></span></a>&nbsp;</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+
+	<div class="panel-body" ng-if="courses">
+		<div>
+			<a style="cursor: pointer" href="#!/admin/addCourse">
+				<button type="button" class="btn btn-success">Add New
+					Course</button>
+			</a>
+		</div>
+		<br />
+		<table
+			class="table table-bordered bordered table-striped table-condensed"
+			ui-jq=”datatable” ui-options=”options”>
+			<thead>
+				<th>Name</th>
+				<th>Action</th>
+			</thead>
+			<tbody>
+				<tr ng-repeat="row in model.courses"
+					style="background-color: #EDEBEB; padding: 10px;">
+					<td>{{row.name}}</td>
+					<td><a style="cursor: pointer"
+						href="#!/admin/courseUpdate/{{row.id}}"><span
+							class="glyphicon glyphicon glyphicon-pencil"></span></a>&nbsp; <a
+						style="cursor: pointer"><span
+							class="glyphicon glyphicon glyphicon-remove"
+							ng-click="model.deleteCourse(row.id)"></span></a>&nbsp;</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+
+
+		
+	
+</div>

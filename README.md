@@ -9,13 +9,13 @@ Team Members: -
 
 This repository is for project work related to Plagiarism Detection System
 
-[Click here](http://ec2-18-220-236-121.us-east-2.compute.amazonaws.com:8080/#!/) to navigate to our website.
+[Click here](http://ec2-18-220-236-121.us-east-2.compute.amazonaws.com:8080/#!/) to navigate to our Plagiarism Detector System.
 
 Youtube Links for the following are: - 
 
 - [System Setup Video](https://youtu.be/QVDLmcSIhV4)
-- [System Demo Video]()
-- [Final Presentation Video]()
+- [System Demo Video](https://youtu.be/wXKWnf0Sw0Y)
+- [Final Presentation Video](https://youtu.be/pr6FZ3HxOKk)
 
 
 # Running System Locally
