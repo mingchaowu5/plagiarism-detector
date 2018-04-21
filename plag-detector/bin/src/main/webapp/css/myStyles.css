@@ -295,7 +295,8 @@ html, body, .container-table {
 }
 
 .user-button {
-    background-color: black;
+    background-color: #FBEEC1;
+    color: #8D8741;
 }
 
 .user-action-gly {
@@ -409,3 +410,7 @@ color: #0a568c}
     /*white-space: -o-pre-wrap;   !* Opera 7 *!*/
     word-wrap: break-word;      /* IE */
 }
+
+
+
+

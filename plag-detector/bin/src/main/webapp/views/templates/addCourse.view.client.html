@@ -1,0 +1,34 @@
+<div class="container-fluid marginTop backStyle" style="padding-top: 70px;padding-bottom: 70px" >
+   
+
+    <div class="col-md-8">
+       
+        <form>
+            <div class="">
+
+                <div class="form-group">
+                    <label class="register-label" >Course Name</label>
+                    <input name="courseName" required class="form-control" ng-model="model.newCourse.coursename" type="text" placeholder=" Name"/>
+                </div>
+               
+				 <div>
+				<select class="custom-select" id="inputSemester" ng-model="model.newCourse.semesterId">
+					<option selected>Choose semester..</option>
+					<div >
+					<option  ng-repeat="semester in model.semesters" value={{semester.id}}   id="semestername"  >{{semester.name}}</option>
+					
+					</div>
+					<option value="All">All</option>
+				</select>
+    		</div>
+                <!--<input class="input-sm" type="text" name="cid" value="{{model.newCourse.sid}}" hidden="true">-->
+
+                <div class="form-group" style="padding-top: 2%">
+                    <button ng-click="model.createCourse(model.newCourse)" type="button" class="btn btn-primary col-md-12 col-sm-12 col-xs-12">Add</button>
+                </div>
+
+            </div>
+        </form>
+    </div>
+   
+</div>

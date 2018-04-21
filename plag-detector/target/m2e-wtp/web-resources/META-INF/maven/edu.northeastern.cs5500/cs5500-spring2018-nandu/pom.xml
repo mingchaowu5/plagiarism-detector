@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>edu.northeastern.cs5500</groupId>
+	<artifactId>cs5500-spring2018-nandu</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>war</packaging>
+
+	<name>cs5200-spring2018-nandu</name>
+	<description>Demo project for Spring Boot</description>
+	
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>1.5.9.RELEASE</version>
+		<relativePath/> <!-- lookup parent from repository -->
+	</parent>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<java.version>1.8</java.version>
+		
+		<sonar.exclusions>
+		src/main/webapp/**, src/main/java/edu/northeastern/cs5500/controller/**, src/main/java/edu/northeastern/cs5500/jobs/**, src/main/java/edu/northeastern/cs5500/mail/**, src/main/java/edu/northeastern/cs5500/dao/**,
+	      src/main/java/edu/northeastern/cs5500/mail/**, src/main/java/edu/northeastern/cs5500/models/results/**, src/main/java/edu/northeastern/cs5500/models/file/**, src/main/java/edu/northeastern/cs5500/Constants.java, src/main/java/edu/northeastern/cs5500/ServletInitializer.java
+	    </sonar.exclusions>
+	    <sonar.coverage.exclusions>
+	      src/main/webapp/**,src/main/java/edu/northeastern/cs5500/controller/**, src/main/java/edu/northeastern/cs5500/jobs/**, src/main/java/edu/northeastern/cs5500/ServletInitializer.java, src/main/java/edu/northeastern/cs5500/mail/**,
+	      src/main/java/edu/northeastern/cs5500/mail/**, src/main/java/edu/northeastern/cs5500/models/results/**, src/main/java/edu/northeastern/cs5500/models/file/**, src/main/java/edu/northeastern/cs5500/Constants.java
+	    </sonar.coverage.exclusions>
+
+	    <sonar.host.url>http://www.example.com/</sonar.host.url>
+	    <sonar.jdbc.url>jdbc:postgresql://www.example.com/sonar</sonar.jdbc.url>
+	    <sonar.jdbc.driver>org.postgresql.Driver</sonar.jdbc.driver>
+	    <sonar.jdbc.username>sonar</sonar.jdbc.username>
+	    <sonar.jdbc.password>sonar</sonar.jdbc.password>
+	    <sonar.dynamic>reuseReports</sonar.dynamic>
+	    <sonar.sources>src/main</sonar.sources>
+	    <sonar.tests>src/test</sonar.tests>
+	</properties>
+
+	<dependencies>
+		<dependency>
+  			<groupId>it.zielke</groupId>
+  			<artifactId>moji</artifactId>
+  			<version>1.0.2</version>
+  		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.derby</groupId>
+			<artifactId>derby</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-tomcat</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+		    <groupId>net.lingala.zip4j</groupId>
+		    <artifactId>zip4j</artifactId>
+		    <version>1.2.5</version>
+		</dependency>
+		<dependency>
+		    <groupId>org.jsoup</groupId>
+    			<artifactId>jsoup</artifactId>
+    			<version>1.9.1</version>
+  		</dependency>
+  		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-jpa</artifactId>
+		</dependency>
+		<dependency>
+		    <groupId>org.hibernate</groupId>
+		    <artifactId>hibernate-core</artifactId>
+		    <version>4.1.4.Final</version>
+		</dependency>
+		<dependency>
+		    <groupId>org.hibernate</groupId>
+		    <artifactId>hibernate-entitymanager</artifactId>
+		    <version>5.2.3.Final</version>
+		</dependency>
+		<dependency>
+		    <groupId>org.springframework.boot</groupId>
+		    <artifactId>spring-boot-starter-mail</artifactId>
+		    <version>1.4.3.RELEASE</version>
+		</dependency>
+		<dependency>
+			<groupId>org.eclipse.jgit</groupId>
+		    <artifactId>org.eclipse.jgit</artifactId>
+		    <version>4.7.0.201704051617-r</version>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+			
+			<plugin>
+			   <groupId>org.jacoco</groupId>
+			   <artifactId>jacoco-maven-plugin</artifactId>
+			   <version>0.7.6.201602180812</version>
+			   <executions>
+			     <execution>
+			       <id>default-prepare-agent</id>
+			         <goals>
+			           <goal>prepare-agent</goal>
+			         </goals>
+			     </execution>
+			     <execution>
+			       <id>default-report</id>
+			       <phase>test</phase>
+			         <goals>
+			           <goal>report</goal>
+			         </goals>
+			     </execution>
+			  </executions>
+			</plugin>
+			
+		</plugins>
+	</build>
+
+
+</project>
